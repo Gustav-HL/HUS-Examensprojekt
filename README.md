@@ -2,6 +2,11 @@
 Examens Projekt Malmö Universitet för Hållbar Utveckling Skåne
 
 
+## Navigate to the project folder
+```powershell
+cd SuSearch
+```
+
 ## Create and start local virutual enviroment
 ```powershell
 python -m venv .venv
