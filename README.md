@@ -22,6 +22,9 @@ npm --prefix frontend install
 ## Start command
 ```powershell
 .\start.ps1
+
+
+npm --prefix frontend run dev
 ```
 
 
