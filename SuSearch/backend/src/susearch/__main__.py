@@ -8,7 +8,6 @@ if str(SRC_DIR) not in sys.path:
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 app = FastAPI(title="SuSearch API")
 
