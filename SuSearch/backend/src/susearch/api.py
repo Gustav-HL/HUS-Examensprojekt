@@ -92,9 +92,10 @@ def get_all_files():
     drive_data = drive_response.json()
     drive_id = drive_data.get("id")
     print(f"Drive ID: {drive_id}")
+    
 
     # /root/children: Fetches all files that are childen to the root folder
-    # $expand=listItem($expand=fields): Fetches fitting data not printed atm
+    # $expand=listItem($expand=fields): Expanded metadata, connects the filesystem to the SharePoint database,
     file_url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root/children?$expand=listItem($expand=fields)"
     print(f"Fil URL: {file_url}")
 
