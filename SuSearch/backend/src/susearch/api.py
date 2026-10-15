@@ -92,7 +92,7 @@ def get_all_files():
     drive_data = drive_response.json()
     drive_id = drive_data.get("id")
     print(f"Drive ID: {drive_id}")
-    
+
 
     # /root/children: Fetches all files that are childen to the root folder
     # $expand=listItem($expand=fields): Expanded metadata, connects the filesystem to the SharePoint database,
@@ -115,15 +115,52 @@ def get_all_files():
     else:
         print(f"\n Fel vid hämtning av fil ({file_response.status_code}): {file_response.text}")
 
+
+def download_file(download_url: str = None, save_path: str = None):
+    if not download_url:
+        token = get_access_token()
+        headers = {"Authorization": f"Bearer {token}"}
+
+        drive_lookup_url = f"https://graph.microsoft.com/v1.0/sites/{SHAREPOINT_HOSTNAME}/drive"
+        drive_response = httpx.get(drive_lookup_url, headers=headers)
+        drive_id = drive_response.json().get("id")
+
+        clean_file_path = FILE_PATH.strip("/")
+        encoded_file_path = quote(clean_file_path, safe="/")
+        file_url = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root:/{encoded_file_path}"
+
+        file_response = httpx.get(file_url, headers=headers)
+
+        file_data = file_response.json()
+        download_url = file_data.get("@microsoft.graph.downloadUrl")
+        
+   
+        save_path = file_data.get("name", FILE_PATH.split("/")[-1])
+
+    print(f"Downloading: {save_path}")
+    with httpx.Client(follow_redirects=True) as client:
+        response = client.get(download_url)
+        if response.status_code == 200:
+            with open(save_path, "wb") as f:
+                f.write(response.content)
+
+            print(f"Saved: {save_path}")
+        else:
+            print(f"Error ({response.status_code}): {response.text}")
+
+
 def menu():
     while True:
-        print("1. To print one file \n 2. to print all files \n 0. Close")
+        print("1. To print one file \n 2. to print all files \n 3. Download file \n 0. Close")
         menu_input = input("")
         if menu_input == "1":
 
             get_file_metadata()
         elif menu_input == "2":
             get_all_files()
+
+        elif menu_input == "3":
+            download_file()
 
         elif menu_input == "0":
             break
