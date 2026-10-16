@@ -154,8 +154,8 @@ def menu():
         print("1. To print one file \n 2. to print all files \n 3. Download file \n 0. Close")
         menu_input = input("")
         if menu_input == "1":
-
             get_file_metadata()
+            
         elif menu_input == "2":
             get_all_files()
 
