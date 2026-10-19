@@ -16,6 +16,8 @@ python -m venv .venv
 ## Install backend packets
 ```powershell
 pip install fastapi uvicorn pydantic ruff pytest
+
+pip install pandas sentence-transformers torch scipy
 ```
 
 
@@ -47,3 +49,9 @@ npm --prefix frontend run dev
 **`pydantic`** – Data validation and parsing
 **`ruff`** – Python Linter
 **`pytest`** – Testing framework
+
+**`pandas`** – Data analysis, CSV manipulation and DataFrame structures
+**`sentence-transformers`** – Framework for computing dense vector representations and sentence embeddings
+**`torch`** – Deep learning engine running the underlying transformer tensor computations
+**`scipy`** – Scientific computing library used for statistical correlations and similarity metrics
+**`transformers`** – Hugging Face core library for downloading, tokenizing, and running BERT and NER models
