@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Prototyp2." />
+    <title>Projektsök – Hållbar Utveckling Skåne</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <div class="brand">
+          <span class="mark" aria-hidden="true">HUT</span>
+          <span>Hållbar Utveckling Skåne</span>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Byt till mörkt tema">
+          <span id="themeIcon" aria-hidden="true">☾</span>
+          <span id="themeLabel">Mörkt läge</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="wrap intro" id="sok">
+        <div class="intro-copy">
+          <div>
+            <span class="eyebrow">Projektsök</span>
+            <h1>Sök bland exempel</h1>
+          </div>
+        </div>
+
+        <div class="search-card">
+          <div class="search-row">
+            <input id="fileInput" type="file" accept=".pdf,.doc,.docx,.txt" hidden />
+
+            <button class="doc-button" id="fileButton" type="button" title="Välj ett dokument">
+              <img class="doc-icon" src="images/document.svg" alt="" aria-hidden="true" />
+              <span>Dokument</span>
+            </button>
+
+            <div class="search-box">
+              <input id="searchInput" type="search" placeholder="Sök på till exempel matsvinn" 
+              aria-label="Sök bland exempel" autocomplete="off" />
+            </div>
+
+            <button class="search-button" id="searchButton" type="button" aria-label="Sök">
+              <img class="search-icon" src="images/search.svg" alt="" aria-hidden="true" />
+            </button>
+          </div>
+
+          <p class="hint">Ingen riktig matchningfunktion än.</p>
+
+          <div class="chosen-file" id="chosenFile" aria-live="polite">
+            <div>
+              <strong>Valt dokument</strong>
+              <span id="fileName"></span>
+            </div>
+            <button class="remove-file" id="removeFile" type="button">Ta bort</button>
+          </div>
+
+          <div class="filter-line">
+            <button class="filter-button" id="filterButton" type="button" 
+            aria-expanded="false" aria-controls="filterPanel">
+              <img class="filter-icon" src="images/filter.svg" alt="" aria-hidden="true" />
+              <span>Filtrera</span>
+            </button>
+            <span class="active-filters" id="activeFilters">Inga filter valda</span>
+          </div>
+
+          <div class="filter-panel" id="filterPanel">
+            <div class="filter-grid">
+              <div class="filter-field">
+                <label for="themeFilter">Område</label>
+                <select id="themeFilter">
+                  <option value="">Alla områden</option>
+                  <option>Cirkulär ekonomi</option>
+                  <option>Klimatanpassning</option>
+                  <option>Transporter</option>
+                  <option>Energi</option>
+                  <option>Mat och konsumtion</option>
+                  <option>Biodiversitet</option>
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label for="methodFilter">Arbetssätt</label>
+                <select id="methodFilter">
+                  <option value="">Alla arbetssätt</option>
+                  <option>Workshop</option>
+                  <option>Co-design</option>
+                  <option>Dialogmöten</option>
+                  <option>Pilotstudie</option>
+                  <option>Utbildning</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-actions">
+              <button class="clear-button" id="clearFilters" type="button">Nollställ</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap results" aria-labelledby="results-title">
+        <div class="results-head">
+          <div>
+            <span class="eyebrow">Resultat</span>
+            <h2 id="results-title">Exempel</h2>
+          </div>
+          <span class="count" id="resultCount">6 exempel</span>
+        </div>
+
+        <div class="loading-state" id="loadingState" hidden>
+          <div>
+            <div class="spinner"></div>
+            <strong id="loadingText">Letar bland projekten...</strong>
+          </div>
+        </div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <div>
+            <div class="empty-symbol">⌕</div>
+            <h3>Inga exempel matchade</h3>
+            <p>Prova färre ord eller ändra filtren.</p>
+          </div>
+        </div>
+
+        <div class="result-list" id="resultList"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">Prototyp</div>
+    </footer>
+
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <aside class="drawer" id="projectDrawer" role="dialog" aria-modal="true" 
+    aria-labelledby="detailTitle" aria-hidden="true">
+      <div class="drawer-top">
+        <span class="eyebrow">Exempel</span>
+        <button class="close-button" id="closeDrawer" type="button" aria-label="Stäng exempel">×</button>
+      </div>
+      <div id="drawerContent"></div>
+    </aside>
+
+    <div class="prototype-toast" id="toast" role="status">
+      Exempel-länk.
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
