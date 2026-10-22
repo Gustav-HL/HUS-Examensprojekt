@@ -18,6 +18,8 @@ python -m venv .venv
 pip install fastapi uvicorn pydantic ruff pytest
 
 pip install pandas sentence-transformers torch scipy
+
+pip install "psycopg[binary]" pgvector
 ```
 
 
