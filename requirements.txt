@@ -1,1 +1,2 @@
 pytest
+langchain-text-splitters==1.1.3
