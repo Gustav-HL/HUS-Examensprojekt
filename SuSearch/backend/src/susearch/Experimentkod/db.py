@@ -8,10 +8,11 @@ cursor = conn.cursor()
 cursor.execute("CREATE TABLE dokument (data TEXT);")
 
 # Insert data inro the table
-cursor.execute(
+values = [("Hej",), ("Hejsan",), ("hej",) ]
+cursor.executemany(
     "INSERT INTO dokument (data) VALUES (?)",
-    ("Hej | Hejsan | hej",)
-)
+    values,)
+
 conn.commit()
 
 # Search
