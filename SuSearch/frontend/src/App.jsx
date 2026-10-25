@@ -1,52 +1,55 @@
-import { useState } from 'react'
-
-import './App.css'
-
 function App() {
-  const [count, setCount] = useState(0)
-  const [apiResponse, setApiResponse] = useState('')
+import { useState } from 'react';
 
-  const handleClick = async () => {
-    setCount((prev) => prev + 1)
+export default function App() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    try {
-      const res = await fetch('/api/health')
-      const data = await res.json()
-      setApiResponse(JSON.stringify(data))
-    } catch (err) {
-      setApiResponse('Failed to connect to backend')
+  const handleSearch = async () => {
+    if (!query.trim()) return;
+
+    if (window.pywebview && window.pywebview.api) {
+      setLoading(true);
+      try {
+        const data = await window.pywebview.api.execute_search(query);
+        setResults(data);
+        console.log(data)
+      } catch (err) {
+        console.error('Fel vid anrop till Python:', err);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      console.warn('Använd inte webläsaren kör main.py');
     }
-  }
+  };
 
   return (
-    <>
-      <section id="center">
+    <div>
+      <h1>Testo</h1>
 
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-      <div>
-        <button type="button" className="counter" onClick={handleClick}>
-          Count is {count}
+      <div style={{ display: 'flex' }}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          style={{ flex: 1, padding: '8px' }}
+        />
+        <button onClick={handleSearch} disabled={loading} style={{ padding: '8px 16px' }}>
+          {loading ? 'Söker' : 'Sök'}
         </button>
-
-        {apiResponse && (
-          <p style={{ marginTop: '1rem' }}>
-            Backend response: <code>{apiResponse}</code>
-          </p>
-        )}
       </div>
-      </section>
 
-      <div className="ticks"></div>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <div>
+        {results.map((item, index) => (
+          <div
+            key={index}>
+            <p>{item.text}</p>
+            <p>{item.score}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-
-export default App

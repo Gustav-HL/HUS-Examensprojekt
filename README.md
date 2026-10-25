@@ -20,6 +20,8 @@ pip install fastapi uvicorn pydantic ruff pytest
 pip install pandas sentence-transformers torch scipy
 
 pip install "psycopg[binary]" pgvector
+
+pip install pywebview
 ```
 
 
@@ -34,6 +36,10 @@ npm --prefix frontend install
 
 
 npm --prefix frontend run dev
+
+
+cd SuSearch/frontend/src
+cd SuSearch/backend/src/susearch
 ```
 
 
