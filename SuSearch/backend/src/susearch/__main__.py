@@ -1,7 +1,6 @@
 import torch
 import torch.nn.functional as F
-from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModelForTokenClassification, AutoTokenizer, AutoModel, pipeline
 import webview
 import gc
 
@@ -17,6 +16,7 @@ def mean_pooling(model_output, attention_mask):
 class DataExtractor:
     def __init__(self, corpus):
         print("Loading Model")
+        self.corpus = corpus
         self.tokenizer = AutoTokenizer.from_pretrained("KBLab/sentence-bert-swedish-cased")
         self.model = AutoModel.from_pretrained("KBLab/sentence-bert-swedish-cased")
         
@@ -50,7 +50,7 @@ class DataExtractor:
         query_emb = mean_pooling(output, encoded_query["attention_mask"])
         query_emb = F.normalize(query_emb, p=2, dim=1)[0]
 
-        self.ner_results = self.ner(corpus)
+        # self.ner_results = self.ner(corpus)
 
         scores = torch.mv(self.corpus_embeddings, query_emb)
         ranked = sorted(zip(self.corpus, scores.tolist()), key=lambda x: x[1], reverse=True)
@@ -75,7 +75,7 @@ class DataExtractor:
 class DesktopBridge:
     def __init__(self, data_extractor: DataExtractor):
         self._data_extractor = data_extractor
-        self._window = None  # Sätts när fönstret skapas
+        self._window = None 
     
     def execute_search(self, query: str):
         return self._data_extractor.search(query)

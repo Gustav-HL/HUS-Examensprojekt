@@ -10,16 +10,23 @@ export default function App() {
 
     if (window.pywebview && window.pywebview.api) {
       setLoading(true);
+      
       try {
         const data = await window.pywebview.api.execute_search(query);
         setResults(data);
         console.log(data)
-      } catch (err) {
+      } 
+      
+      catch (err) {
         console.error('Fel vid anrop till Python:', err);
-      } finally {
+      } 
+      
+      finally {
         setLoading(false);
       }
-    } else {
+    } 
+    
+    else {
       console.warn('Använd inte webläsaren kör main.py');
     }
   };
