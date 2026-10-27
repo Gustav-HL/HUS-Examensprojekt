@@ -12,6 +12,11 @@ cd SuSearch
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
+### Chromebook
+```powershell
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 ## Install backend packets
 ```powershell
