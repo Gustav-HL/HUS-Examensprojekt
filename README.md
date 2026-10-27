@@ -27,6 +27,8 @@ pip install pandas sentence-transformers torch scipy
 pip install "psycopg[binary]" pgvector
 
 pip install pywebview
+
+pip install langchain-text-splitters yake
 ```
 
 

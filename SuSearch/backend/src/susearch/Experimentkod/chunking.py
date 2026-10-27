@@ -172,3 +172,16 @@ for i, chunk in enumerate(chunks):
     print("-----CHUNK NUMBER", i, f"({len(chunk)} tecken)-----")
     print(chunk)
     print(" " * 40)
+
+import yake
+
+kw_extractor = yake.KeywordExtractor(
+    lan="sv", 
+    n=3,              
+    dedupLim=0.4,     
+    top=15
+)
+
+keywords = kw_extractor.extract_keywords(chunks[0])
+for kw, score in keywords:
+    print(f"{kw} ({score:.4f})")

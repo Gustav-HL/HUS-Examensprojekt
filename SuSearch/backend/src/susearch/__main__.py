@@ -3,75 +3,21 @@ import torch.nn.functional as F
 from transformers import AutoModelForTokenClassification, AutoTokenizer, AutoModel, pipeline
 import webview
 import gc
-
-def mean_pooling(model_output, attention_mask):
-    token_embeddings = model_output[0]
-    input_mask_expanded = (
-        attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
-    )
-    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(
-        input_mask_expanded.sum(1), min=1e-9
-    )
+from models.document_chunker import DocumentChunker
+from services.keyword_extractor import KeywordExtractor
 
 class DataExtractor:
-    def __init__(self, corpus):
-        print("Loading Model")
-        self.corpus = corpus
-        self.tokenizer = AutoTokenizer.from_pretrained("KBLab/sentence-bert-swedish-cased")
-        self.model = AutoModel.from_pretrained("KBLab/sentence-bert-swedish-cased")
+    def __init__(self, raw_document: str):
+        self._chunker = DocumentChunker(raw_document)
         
-        self.ner_tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
-        self.ner_model = AutoModelForTokenClassification.from_pretrained(
-            "KBLab/bert-base-swedish-cased-ner"
-        )
-        self.ner = pipeline(
-            "ner",
-            model=self.ner_model,
-            tokenizer=self.ner_tokenizer,
-            # Combines part words to whole words
-            aggregation_strategy="simple",  
-        )
+        self.chunks = self._chunker.chunk_document()
+        
+        self._embedding_service = None
+        self._keyword_service = None
 
-        encoded = self.tokenizer(self.corpus, padding=True, truncation=True, return_tensors="pt")
-        with torch.no_grad():
-            output = self.model(**encoded)
-        embeddings = mean_pooling(output, encoded["attention_mask"])
-        self.corpus_embeddings = F.normalize(embeddings, p=2, dim=1)
-        print("Done Loading")
-
-    def search(self, query: str):
-        if not query or not query.strip():
-            return []
-
-        encoded_query = self.tokenizer([query], padding=True, truncation=True, return_tensors="pt")
-        with torch.no_grad():
-            output = self.model(**encoded_query)
-
-        query_emb = mean_pooling(output, encoded_query["attention_mask"])
-        query_emb = F.normalize(query_emb, p=2, dim=1)[0]
-
-        # self.ner_results = self.ner(corpus)
-
-        scores = torch.mv(self.corpus_embeddings, query_emb)
-        ranked = sorted(zip(self.corpus, scores.tolist()), key=lambda x: x[1], reverse=True)
-
-        return [{"text": text, "score": round(score, 4)} for text, score in ranked]
-
-    def cleanup(self):
-        print("Closing Model")
-        if hasattr(self, 'model'):
-            del self.model
-        if hasattr(self, 'tokenizer'):
-            del self.tokenizer
-        if hasattr(self, 'corpus_embeddings'):
-            del self.corpus_embeddings
-            
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-        print("Cleared")
-
-
+    def get_chunks(self) -> list[str]:
+        return self.chunks
+    
 class DesktopBridge:
     def __init__(self, data_extractor: DataExtractor):
         self._data_extractor = data_extractor
@@ -80,51 +26,194 @@ class DesktopBridge:
     def execute_search(self, query: str):
         return self._data_extractor.search(query)
 
-# List of test data
-corpus = [
-    # Tema: Hållbarhet & Energi
-    "Vi behöver minska våra koldioxidutsläpp för att bromsa klimatförändringarna.",
-    "Solceller och vindkraft är viktiga delar i övergången till förnybar energi.",
-    "Fastigheten är certifierad enligt miljöbyggnad guld och sparar mycket energi.",
-    "Sopsortering och återvinning av plast minskar belastningen på naturen.",
-    "Fan! Vilket jävla skit. Sade Jesus år 12 efter kristus när han slog stortån på en list.",
-    # Tema: IT, Kod & Databaser
-    "Databasen har indexerats om för att snabba upp söktiderna i backend-systemet.",
-    "Ett nytt REST API har implementerats med FastAPI och Pydantic.",
-    "Utvecklingsteamet åtgärdade flera kritiska buggar inför fredagens produktionssättning.",
-    "Versionshantering med Git gör det enklare att samarbeta i stora projekt.",
-    "Bästa Leauge champions: Nunu, Kindred och såklart Mästarn",
-    "HUT-produkten gör framsteg",
-    # Tema: Matlagning & Bakning
-    "Surdegsbrödet fick jäsa långsamt i kylskåpet över natten.",
-    "Till såsen används schalottenlök, vitt vin och en klick smör.",
-    "Rätten kryddas rikligt med färsk koriander, ingefära och chili.",
-    "Pastan kokas tills den är al dente och vänds sedan i olivolja.",
-    "Ge mig en påse chips.",
-    "Snälla Kalle ge mig en påse chips! Jag svälter.",
-    # Tema: Vardag, Resor & Vinter
-    "Tåget mot Stockholm blev inställt på grund av en signalstörning.",
-    "Idag är det fredagen den 16e October 2026",
-    "Under vintern fryser sjöarna till is och folk åker långfärdsskridskor.",
-    "Katten sover på mattan framför den öppna spisen.",
-    "Jag glömde mitt paraply hemma och blev genomblöt på väg till jobbet.",
-    "Glen reste till Danmark med sin kompis Sven Svensson den förste av sitt namn",
-]
+document = """Kriterier för Region Skånes stöd till Miljö-
+och Naturvårdsföreningar
 
+1 Syfte med bidraget
+Region Skåne samarbetar med och stödjer den idéburna sektorn för
+att skapa ett långsiktigt hållbart Skåne och möta komplexa
+samhällsutmaningar som Skåne står inför. Bidraget utgår från
+hållbarhetsperspektivet med fokus på miljö- och klimat i den
+regionala utvecklingsstrategin och syftar till att skapa ökade
+möjligheter för idéburna organisationer att ta en aktiv roll i Skånes
+miljöarbete.
+Bidraget syftar till att skapa förutsättningar för organisationens
+ordinarie verksamhet.
+
+2 Vem kan söka?
+Bidrag ges till idéburna organisationer, vars huvudsakliga syfte är att
+bedriva naturvård, kulturmiljövård eller andra typer av miljö- och
+klimatarbete. Organisationerna ska ha en tydlig regional prägel, där
+verksamheten företrädesvis ska beröra hela Skåne. Verksamhet ska
+kunna vara generaliserbar och tillämpbar i större delen av Skåne.
+
+3 Övergripande kriterier
+Föreningens verksamhet ska bidra till det strategiska området ”Hela
+Skåne”, i den regionala utvecklingsstrategin ”Det Öppna Skåne 2030”.
+vilket handlar om att det ska vara möjligt att bo, verka och leva i hela
+
+3 (6)
+
+DokumentID Ange dokumentID
+
+Original lagras elektroniskt. Användaren ansvarar för att gällande version används.
+Skåne. De frågor inom ”Hela Skåne” som är mest relevanta för detta
+bidrag är tillgången till rekreation och friluftsliv samt behovet av en
+ökad regional energiproduktion. Föreningens verksamhet ska därför
+adressera minst en av dessa frågor. När det gäller rekreation och
+
+friluftsliv ska föreningens verksamhet värna om det skånska natur-
+och kulturlandskapet och därigenom skapa förutsättningar för att
+
+bibehålla möjligheten till rekreation och friluftsliv i Skåne.
+Föreningens verksamhet ska även bidra till de tvärgående
+perspektiven ”Miljömässig, social och ekonomisk hållbarhet” samt
+”Beredskap och resiliens” i den regionala utvecklingsstrategin ”Det
+Öppna Skåne”. Inom hållbarhetsperspektivet ska föreningen
+fokusera på det miljömässiga perspektivet. Det innebär att
+föreningens verksamhet ska främja ekosystem, ekosystemtjänster
+och biologisk mångfald, motverka klimatförändringar samt värna om
+Skånes kultur- och naturlandskap. När det gäller beredskap och
+resiliens innebär det för föreningens verksamhet framför allt att
+bidra till den skånska natur- och kulturmiljöns förmåga att hantera
+klimatförändringar samt att bidra till att skapa ett
+energiförsörjningssystem med hög krisberedskap.
+
+https://www.skane.se/regional-utveckling/regional-
+utvecklingsstrategi/
+
+4 Ska-krav
+Föreningens verksamhet ska:
+1. Vara huvudsakligen inriktad på antingen naturvård,
+kulturmiljövård eller andra typer av miljö- och klimatarbete.
+2. Bidra till det strategiska området ”Hela Skåne” samt de
+tvärgående perspektiven ”Miljömässig, social och ekonomisk
+hållbarhet” och ”Beredskap och resiliens” i den regionala
+utvecklingsstrategin ”Det Öppna Skåne”.
+3. Vara generaliserbar och tillämpbar i större delen av Skåne.
+
+4 (6)
+
+DokumentID Ange dokumentID
+
+Original lagras elektroniskt. Användaren ansvarar för att gällande version används.
+4. Vara öppen för medlemmar från hela Skåne.
+5. Innefatta informationsspridning om föreningens verksamhet
+till andra än de egna medlemmarna, genom att arrangera eller
+delta i minst en (1) fysisk aktivitet per år med fokus på
+informationsspridning.
+6. Följa regionala utvecklingsnämndens riktlinjer för idéburna
+organisationer.
+
+https://utveckling.skane.se/siteassets/publikationer/riktlinjer-
+bidrag-riktat-mot-ideburen-sektor.pdf
+
+5 Bedömningsgrunder
+Detta bidrag är ett av Region Skånes verksamhetsbidrag till idéburen
+sektor. Alla ansökningar som uppfyller ska-kraven enligt ovan
+beviljas medel men beloppet kan reduceras om budgeterade medel
+från Region Skåne inte täcker summan av ansökningarna. Region
+Skåne förbehåller sig rätten att bedöma ansökan utifrån kriterierna
+beskrivna i detta dokument. De ansökningar som uppfyller samtliga
+ska-krav utvärderas utifrån en modell. En kvalitativ bedömning görs
+utifrån hur väl verksamheten uppnår ska-kraven (1=bra, 2=mycket
+bra, 3=utmärkt). Resultatet vägs in i bedömningen av hur medlen ska
+fördelas mellan kvalificerade föreningar.
+
+6 Utlysning
+Bidraget utlyses på Region Skånes hemsida. Utlysningstiden är
+normalt 1 mars - 2 maj.
+
+https://utveckling.skane.se/soka-stod/bidrag-att-soka/miljo--och-
+naturvardsforeningar/
+
+5 (6)
+
+DokumentID Ange dokumentID
+
+Original lagras elektroniskt. Användaren ansvarar för att gällande version används.
+7 Ansökan
+Föreningen ska efter att tagit del av riktlinjer och kriterier inkomma
+med sin ansökan till Region Skåne, senast det datum som annonseras
+på hemsidan. En ansökan består av ett ifyllt ansökningsformulär som
+finns att ladda ner på hemsidan, samt ett antal bilagor. Formuläret
+ska vara fullständigt ifyllt och undertecknat och samtliga bilagor ska
+finnas med när ansökan skickas in till Region Skåne.
+Ansökan skickas via e-post till miljoforeningsbidrag@skane.se
+Det ges en (1) möjlighet till att göra kompletteringar. Dessa måste
+inkomma senast två veckor från att den ansökande kontaktats av
+Region Skåne i ärendet. Handlingar som inkommer efter det kommer
+inte att behandlas.
+
+7.1 Bilagor ansökan
+Till ansökan ska bifogas:
+1. Aktuella stadgar, om det är första gången föreningen söker
+eller om förändringar gjorts sedan stadgarna senast skickades
+in.
+2. Verksamhetsplan och budget för innevarande år.
+3. Förteckning över styrelsens ledamöter samt antal medlemmar.
+4. Av styrelsen undertecknad årsredovisning från senast
+upprättade år, eller årsbokslut alternativt förenklat bokslut
+(Bokföringslag, 1999:1078 och Bokföringsnämndens
+rekommendationer). Till årsredovisningen ska bifogas:
+• Revisionsberättelse som beskriver ansvarsfrihet för
+styrelsen och som är undertecknad av revisor.
+• Verksamhetsberättelse som har antagits vid årsmötet.
+• Årsmötesprotokoll som är undertecknat av ordförande
+samt justerat.
+
+6 (6)
+
+DokumentID Ange dokumentID
+
+Original lagras elektroniskt. Användaren ansvarar för att gällande version används.
+8 Beslut
+Beslut om stöd till miljö- och naturvårdsföreningar tas av regionala
+utvecklingsnämnden, genom delegation. Avdelningen för regional
+utveckling bereder ärendet. Godkända ansökningar betalas ut efter
+att beslutet vunnit laga kraft.
+
+9 Miljökriterier vid beviljande av bidrag
+Idéburna organisationer som med sin verksamhet, helt eller delvis,
+finansieras av Region Skåne ska ta ansvar för sin miljöpåverkan och
+bidra till att Region Skånes miljöpolicy och miljömål uppnås.
+Verksamheter som får bidrag på minst tio prisbasbelopp per år
+omfattas av särskilda krav som bidrar till Region Skånes miljöarbete,
+enligt Region Skånes Miljöbevis. De verksamheter som får under tio
+prisbasbelopp per år (2025: 588 000 kr) i finansiering ska genom sitt
+miljöarbete bidra till Region Skåne miljöpolicy och miljöprogram,
+men behöver inte beskriva eller rapportera det till Region Skåne.
+"""
 if __name__ == '__main__':
-    data_extractor = DataExtractor(corpus)
-    bridge = DesktopBridge(data_extractor)
+    data_extractor = DataExtractor(document)
+    chunks = data_extractor.get_chunks()
 
-    window = webview.create_window(
-        title="SuSearch",
-        url="http://localhost:5173",
-        js_api=bridge
-    )
+    keyword_extractor = KeywordExtractor()
+    yake_results = keyword_extractor.get_yake(chunks)
 
-    def on_closing():
-            print("Closing start cleanup.")
-            data_extractor.cleanup()
+    print(f"\n--- Antal skapade chunks: {len(chunks)} ---")
+    
+    for index, (chunk, keywords) in enumerate(zip(chunks, yake_results), start=1):
+        print(f"Chunk {index} YAKE words")
+        for item in keywords:
+            print(f"   {item['keyword']} (score: {item['score']})")
 
-    window.events.closing += on_closing
+        print("\n" + " " * 20  + "\n")
 
-    webview.start(debug=True)
+
+    # bridge = DesktopBridge(data_extractor)
+
+
+    # window = webview.create_window(
+    #     title="SuSearch",
+    #     url="http://localhost:5173",
+    #     js_api=bridge
+    # )
+
+    # def on_closing():
+    #         print("Closing start cleanup.")
+    #         data_extractor.cleanup()
+
+    # window.events.closing += on_closing
+
+    # webview.start(debug=True)
