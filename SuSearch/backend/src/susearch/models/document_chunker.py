@@ -9,17 +9,16 @@ class DocumentChunker:
             chunk_overlap= 250,
             length_function = len,
         )
+
         self.extractor = yake.KeywordExtractor(
-        lan = "sv", 
-        n = 3,              
-        dedupLim = 0.4,     
-        top = 15
-    )
+            lan = "sv", 
+            n = 3,              
+            dedupLim = 0.4,     
+            top = 15
+        )
 
 
     def chunk_document(self) -> list[str]:
-        if not self.raw_text:
-            return []
         return self.text_splitter.split_text(self.raw_text)
 
     def extract_keywords_from_chunk(self, chunk: str) -> list[tuple[str, float]]:

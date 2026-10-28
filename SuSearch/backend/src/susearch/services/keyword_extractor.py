@@ -2,19 +2,23 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer, pipelin
 import yake
 
 class KeywordExtractor:
+    """
+    Extracts entities such as names, locations and time. Aswell as words and phrases.
+    """
     def __init__(self):
         self.tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
         self.model = AutoModelForTokenClassification.from_pretrained(
             "KBLab/bert-base-swedish-cased-ner"
         )
 
-        self.ner = pipeline(
+        self._ner = pipeline(
             "ner",
             model = self.model,
             tokenizer = self.tokenizer,
             aggregation_strategy = "simple",  # Combines part words to whole words
         )
-        self._kw_extractor = yake.KeywordExtractor(
+
+        self._keyword_yake = yake.KeywordExtractor(
             lan = "sv",
             n = 3,
             dedupLim = 0.4,
@@ -22,21 +26,56 @@ class KeywordExtractor:
             features = None
         )
 
-    def get_NER(self):
-        ner_results = self.ner(self.document_chunks)
-        return ner_results
+    def get_ner(self, chunks: list[str]) -> list[list[dict]]:
+        """
+        Run a chunk of text through NER model and return the resultning enteties
+            Args:
+                chunks: a list of strings representing chunks of a document
+
+            Returns:
+                List: dictionary representing a single entity found, inside a list inside a list
+        """
+        raw_results = self._ner(chunks, batch_size=8)
+        print(raw_results)
+        results = []
+
+        for chunk_entities in raw_results:
+            cleaned_entities = []
+
+            for ent in chunk_entities:
+
+                cleaned_entities.append({
+                    "entity_group": ent["entity_group"],
+                    "word": ent["word"].strip(),
+                    "score": round(float(ent["score"]), 4)
+                })
+                
+            results.append(cleaned_entities)
+
+        return results
+    
 
     def get_yake(self, chunks: list[str]) -> list[list[dict]]:
+        """
+        Run a chunk of text through YAKE model and return the resultning words or phrases
+            Args:
+                chunks: a list of strings representing chunks of a document
+
+            Returns:
+                List: dictionary containing keyword and score(lower means better with YAKE), inside a list inside a list
+        """
         results = []
+
         for chunk in chunks:
             if not chunk or not chunk.strip():
                 results.append([])
                 continue
             
-            # YAKE operates on individual text strings
-            keywords = self._kw_extractor.extract_keywords(chunk)
+            keywords = self._keyword_yake.extract_keywords(chunk)
+
             results.append([
-                {"keyword": kw, "score": round(float(score), 4)}
-                for kw, score in keywords
+                {"keyword": keyword, "score": round(float(score), 4)}
+                for keyword, score in keywords
             ])
+
         return results

@@ -1,12 +1,11 @@
-import torch
-import torch.nn.functional as F
-from transformers import AutoModelForTokenClassification, AutoTokenizer, AutoModel, pipeline
 import webview
-import gc
 from models.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 
 class DataExtractor:
+    """
+    
+    """
     def __init__(self, raw_document: str):
         self._chunker = DocumentChunker(raw_document)
         
@@ -19,6 +18,9 @@ class DataExtractor:
         return self.chunks
     
 class DesktopBridge:
+    """ 
+    Acts as a bridge between frontend and backend.
+    """
     def __init__(self, data_extractor: DataExtractor):
         self._data_extractor = data_extractor
         self._window = None 
@@ -184,19 +186,28 @@ prisbasbelopp per år (2025: 588 000 kr) i finansiering ska genom sitt
 miljöarbete bidra till Region Skåne miljöpolicy och miljöprogram,
 men behöver inte beskriva eller rapportera det till Region Skåne.
 """
+
+
 if __name__ == '__main__':
     data_extractor = DataExtractor(document)
     chunks = data_extractor.get_chunks()
 
     keyword_extractor = KeywordExtractor()
     yake_results = keyword_extractor.get_yake(chunks)
+    ner_results = keyword_extractor.get_ner(chunks)
 
-    print(f"\n--- Antal skapade chunks: {len(chunks)} ---")
+    print(f"\nAmount of chunks: {len(chunks)}")
     
-    for index, (chunk, keywords) in enumerate(zip(chunks, yake_results), start=1):
+    for index, (chunk, keywords, ner) in enumerate(zip(chunks, yake_results, ner_results), start=1):
+
         print(f"Chunk {index} YAKE words")
         for item in keywords:
             print(f"   {item['keyword']} (score: {item['score']})")
+
+        print(" ")
+        print(f"Chunk {index} NER words")
+        for ent in ner:
+                print(f"   {ent['word']} ({ent['entity_group']}, score: {ent['score']})")
 
         print("\n" + " " * 20  + "\n")
 
