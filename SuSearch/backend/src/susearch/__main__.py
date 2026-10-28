@@ -201,6 +201,7 @@ if __name__ == '__main__':
     for index, (chunk, keywords, ner) in enumerate(zip(chunks, yake_results, ner_results), start=1):
 
         print(f"Chunk {index} YAKE words")
+        print(chunk)
         for item in keywords:
             print(f"   {item['keyword']} (score: {item['score']})")
 

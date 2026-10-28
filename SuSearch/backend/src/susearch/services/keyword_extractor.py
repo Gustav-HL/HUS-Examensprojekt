@@ -20,9 +20,9 @@ class KeywordExtractor:
 
         self._keyword_yake = yake.KeywordExtractor(
             lan = "sv",
-            n = 3,
-            dedupLim = 0.4,
-            top = 10,
+            n = 1, # Amount of words per phrase
+            dedupLim = 0.4, # Let duplicates
+            top = 15,  # Amount of results
             features = None
         )
 

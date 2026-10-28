@@ -98,9 +98,9 @@ my-project/
 │   │       ├── __main__.py
 │   │       ├── config.py
 │   │       ├── exceptions.py
-│   │       ├── models/
-│   │       ├── repositories/
-│   │       └── services/
+│   │       ├── models/      # What is this shape of data?
+│   │       ├── repositories/# Where/how do we read or write it?
+│   │       └── services/    # What do we do with the data?
 │   └── tests/
 │       ├── conftest.py
 │       └── unit/

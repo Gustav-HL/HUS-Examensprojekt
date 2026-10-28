@@ -20,7 +20,7 @@ source .venv/bin/activate
 
 ## Install backend packets
 ```powershell
-pip install fastapi uvicorn pydantic ruff pytest
+pip install uvicorn pydantic ruff pytest
 
 pip install pandas sentence-transformers torch scipy
 
