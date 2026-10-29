@@ -31,7 +31,9 @@ class DesktopBridge:
         return self._data_extractor.search(query)
 
 file_handler = FileHandler()
-folder = Path(input("Choose folder: "))
+current_directory = current_dir = Path(__file__).resolve().parent
+folder_input = input("Choose folder: ") 
+folder = Path(folder_input) if folder_input else current_directory 
 name = input("Enter file name and file suffix: ")
 path = folder / name
 document = file_handler.extract_text(path)
@@ -47,7 +49,6 @@ if __name__ == '__main__':
     print(f"\nAmount of chunks: {len(chunks)}")
     
     for index, (chunk, keywords, ner) in enumerate(zip(chunks, yake_results, ner_results), start=1):
-
         print(f"Chunk {index} YAKE words")
         print(chunk)
         for item in keywords:
