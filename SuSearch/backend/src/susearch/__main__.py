@@ -33,7 +33,9 @@ class DesktopBridge:
         return self._data_extractor.search(query)
 
 file_handler = FileHandler()
-folder = Path(input("Choose folder: "))
+current_directory = current_dir = Path(__file__).resolve().parent
+folder_input = input("Choose folder: ") 
+folder = Path(folder_input) if folder_input else current_directory 
 name = input("Enter file name and file suffix: ")
 path = folder / name
 document = file_handler.extract_text(path)
