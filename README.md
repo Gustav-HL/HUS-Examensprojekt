@@ -20,13 +20,15 @@ source .venv/bin/activate
 
 ## Install backend packets
 ```powershell
-pip install fastapi uvicorn pydantic ruff pytest
+pip install uvicorn pydantic ruff pytest
 
 pip install pandas sentence-transformers torch scipy
 
 pip install "psycopg[binary]" pgvector
 
 pip install pywebview
+
+pip install langchain-text-splitters yake
 ```
 
 

@@ -81,3 +81,63 @@ def search(corpus):
 while True:
     print("Sök")
     search(corpus)
+
+
+
+# Some code i wrote when object orienting code
+    # def __init__(self, corpus):
+    #     print("Loading Model")
+    #     self.corpus = corpus
+    #     self.tokenizer = AutoTokenizer.from_pretrained("KBLab/sentence-bert-swedish-cased")
+    #     self.model = AutoModel.from_pretrained("KBLab/sentence-bert-swedish-cased")
+        
+    #     self.ner_tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
+    #     self.ner_model = AutoModelForTokenClassification.from_pretrained(
+    #         "KBLab/bert-base-swedish-cased-ner"
+    #     )
+    #     self.ner = pipeline(
+    #         "ner",
+    #         model=self.ner_model,
+    #         tokenizer=self.ner_tokenizer,
+    #         # Combines part words to whole words
+    #         aggregation_strategy="simple",  
+    #     )
+
+    #     encoded = self.tokenizer(self.corpus, padding=True, truncation=True, return_tensors="pt")
+    #     with torch.no_grad():
+    #         output = self.model(**encoded)
+    #     embeddings = mean_pooling(output, encoded["attention_mask"])
+    #     self.corpus_embeddings = F.normalize(embeddings, p=2, dim=1)
+    #     print("Done Loading")
+
+    # def search(self, query: str):
+    #     if not query or not query.strip():
+    #         return []
+
+    #     encoded_query = self.tokenizer([query], padding=True, truncation=True, return_tensors="pt")
+    #     with torch.no_grad():
+    #         output = self.model(**encoded_query)
+
+    #     query_emb = mean_pooling(output, encoded_query["attention_mask"])
+    #     query_emb = F.normalize(query_emb, p=2, dim=1)[0]
+
+    #     # self.ner_results = self.ner(corpus)
+
+    #     scores = torch.mv(self.corpus_embeddings, query_emb)
+    #     ranked = sorted(zip(self.corpus, scores.tolist()), key=lambda x: x[1], reverse=True)
+
+    #     return [{"text": text, "score": round(score, 4)} for text, score in ranked]
+
+    # def cleanup(self):
+    #     print("Closing Model")
+    #     if hasattr(self, 'model'):
+    #         del self.model
+    #     if hasattr(self, 'tokenizer'):
+    #         del self.tokenizer
+    #     if hasattr(self, 'corpus_embeddings'):
+    #         del self.corpus_embeddings
+            
+    #     gc.collect()
+    #     if torch.cuda.is_available():
+    #         torch.cuda.empty_cache()
+    #     print("Cleared")
