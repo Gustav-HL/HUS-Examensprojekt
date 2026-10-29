@@ -3,13 +3,15 @@ from models.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
 from pathlib import Path
+from models.chunk import Chunk
+from services.testing_kblab import Vectorizer
 
 class DataExtractor:
     """
     
     """
-    def __init__(self, raw_document: str):
-        self._chunker = DocumentChunker(raw_document)
+    def __init__(self, raw_document: str, document_name: str):
+        self._chunker = DocumentChunker(raw_document, document_name)
         
         self.chunks = self._chunker.chunk_document()
         
@@ -39,18 +41,22 @@ path = folder / name
 document = file_handler.extract_text(path)
 
 if __name__ == '__main__':
-    data_extractor = DataExtractor(document)
+    data_extractor = DataExtractor(document, name)
     chunks = data_extractor.get_chunks()
-
     keyword_extractor = KeywordExtractor()
     yake_results = keyword_extractor.get_yake(chunks)
     ner_results = keyword_extractor.get_ner(chunks)
 
     print(f"\nAmount of chunks: {len(chunks)}")
-    
-    for index, (chunk, keywords, ner) in enumerate(zip(chunks, yake_results, ner_results), start=1):
+
+    vectorizer = Vectorizer()
+    vector_result = vectorizer.vectorize_chunks(chunks)
+
+    for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
         print(f"Chunk {index} YAKE words")
         print(chunk)
+        ultimate_chunk = Chunk(text=chunk, source=None, keywords=keywords, vector=vector)
+
         for item in keywords:
             print(f"   {item['keyword']} (score: {item['score']})")
 
@@ -60,6 +66,7 @@ if __name__ == '__main__':
                 print(f"   {ent['word']} ({ent['entity_group']}, score: {ent['score']})")
 
         print("\n" + " " * 20  + "\n")
+        print(ultimate_chunk)
 
 
     # bridge = DesktopBridge(data_extractor)
