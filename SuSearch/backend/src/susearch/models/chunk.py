@@ -7,6 +7,26 @@ class Chunk:
         self.vector = vector
 
     def __str__(self):
-        return f"text: {self.text}, source: {self.source}, keywords: {self.keywords}, ner: {self.keynames} vector: {self.vector}"
+
+
+        ner_items = getattr(self, "keynames", []) 
+        formatted_ner = [
+            f"{e['word']} ({e.get('entity_group', '')}) "
+            for e in ner_items
+        ]
+
+        keyword_items = getattr(self, "keywords", []) 
+        formatted_keywords = [
+            f"{k['keyword']} ({k['score']:.4f}) "
+            for k in keyword_items
+        ]
+
+        return (
+            f"text: {self.text}, "
+            f"source: {self.source}, \n"
+            f"keywords: {formatted_keywords}, \n"
+            f"ner: {formatted_ner}, \n"
+            f"vector: {self.vector}"
+        )
 
     

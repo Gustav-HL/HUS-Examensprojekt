@@ -76,7 +76,6 @@ def process_document(data_extractor: DataExtractor):
 
 if __name__ == '__main__':
     data_extractor = DataExtractor()
-    bridge = DesktopBridge(data_extractor)
 
     process_document(data_extractor)
 
