@@ -1,0 +1,778 @@
+{
+    "folders": {
+        "Bifogade filer": {
+            "id": "f1",
+            "name": "Bifogade filer"
+        },
+        "Bilder": {
+            "id": "f2",
+            "name": "Bilder"
+        },
+        "Dokument": {
+            "id": "f3",
+            "name": "Dokument"
+        },
+        "Hälsodeklaration": {
+            "id": "f4",
+            "name": "Hälsodeklaration"
+        },
+        "TBS": {
+            "id": "f5",
+            "name": "TBS"
+        },
+        "Bilder\\iCloud Photos": {
+            "id": "f6",
+            "name": "iCloud Photos"
+        },
+        "Bilder\\Ny mapp": {
+            "id": "f7",
+            "name": "Ny mapp"
+        },
+        "Bilder\\Progress": {
+            "id": "f8",
+            "name": "Progress"
+        },
+        "Bilder\\Skärmbilder": {
+            "id": "f9",
+            "name": "Skärmbilder"
+        },
+        "Bilder\\Wafi Fucked Up": {
+            "id": "f10",
+            "name": "Wafi Fucked Up"
+        },
+        "Bilder\\Skärmbilder\\NCC": {
+            "id": "f11",
+            "name": "NCC"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Ny mapp": {
+            "id": "f12",
+            "name": "Ny mapp"
+        },
+        "Dokument\\1IK031": {
+            "id": "f13",
+            "name": "1IK031"
+        },
+        "Dokument\\Adobe": {
+            "id": "f14",
+            "name": "Adobe"
+        },
+        "Dokument\\Anpassade Office-mallar": {
+            "id": "f15",
+            "name": "Anpassade Office-mallar"
+        },
+        "Dokument\\SU": {
+            "id": "f16",
+            "name": "SU"
+        },
+        "TBS\\Engelska 7": {
+            "id": "f17",
+            "name": "Engelska 7"
+        },
+        "TBS\\Gymnasiearbete": {
+            "id": "f18",
+            "name": "Gymnasiearbete"
+        },
+        "TBS\\Psykologi 1": {
+            "id": "f19",
+            "name": "Psykologi 1"
+        },
+        "TBS\\Svenska 3": {
+            "id": "f20",
+            "name": "Svenska 3"
+        }
+    },
+    "files": {
+        ".849C9593-D756-4E56-8D6E-42412F2A707B": {
+            "id": "d1",
+            "name": ".849C9593-D756-4E56-8D6E-42412F2A707B"
+        },
+        "Bok 1.xlsx": {
+            "id": "d2",
+            "name": "Bok 1.xlsx"
+        },
+        "Bok.xlsx": {
+            "id": "d3",
+            "name": "Bok.xlsx"
+        },
+        "Conspiracy Theory Manus.docx": {
+            "id": "d4",
+            "name": "Conspiracy Theory Manus.docx"
+        },
+        "CV - Leonard Werder Eng.docx": {
+            "id": "d5",
+            "name": "CV - Leonard Werder Eng.docx"
+        },
+        "da336a_proketförslag_grupp_15.pptx": {
+            "id": "d6",
+            "name": "da336a_proketförslag_grupp_15.pptx"
+        },
+        "desktop.ini": {
+            "id": "d7",
+            "name": "desktop.ini"
+        },
+        "Dokument 1.docx": {
+            "id": "d8",
+            "name": "Dokument 1.docx"
+        },
+        "Dokument 2.docx": {
+            "id": "d9",
+            "name": "Dokument 2.docx"
+        },
+        "Dokument 3.docx": {
+            "id": "d10",
+            "name": "Dokument 3.docx"
+        },
+        "Dokument.docx": {
+            "id": "d11",
+            "name": "Dokument.docx"
+        },
+        "Filmanalys Beteende Perspektiv Leonard Werder.docx": {
+            "id": "d12",
+            "name": "Filmanalys Beteende Perspektiv Leonard Werder.docx"
+        },
+        "Filmanalys Mean Girls.docx": {
+            "id": "d13",
+            "name": "Filmanalys Mean Girls.docx"
+        },
+        "Fullmaktsgivare 123.docx": {
+            "id": "d14",
+            "name": "Fullmaktsgivare 123.docx"
+        },
+        "Hemtenta - Leonard Werder.pdf": {
+            "id": "d15",
+            "name": "Hemtenta - Leonard Werder.pdf"
+        },
+        "Hemtenta 2.0 - Leonard Werder.pdf": {
+            "id": "d16",
+            "name": "Hemtenta 2.0 - Leonard Werder.pdf"
+        },
+        "InkedIMG-3011_LI.jpg": {
+            "id": "d17",
+            "name": "InkedIMG-3011_LI.jpg"
+        },
+        "INLÄMNING+Ma2b+geomet.pdf": {
+            "id": "d18",
+            "name": "INLÄMNING+Ma2b+geomet.pdf"
+        },
+        "Joe Biden Inagural Address by Leonard Werder.docx": {
+            "id": "d19",
+            "name": "Joe Biden Inagural Address by Leonard Werder.docx"
+        },
+        "Leonard BP18a Prov.docx": {
+            "id": "d20",
+            "name": "Leonard BP18a Prov.docx"
+        },
+        "Logga+UF (1).png": {
+            "id": "d21",
+            "name": "Logga+UF (1).png"
+        },
+        "Logga+UF.png": {
+            "id": "d22",
+            "name": "Logga+UF.png"
+        },
+        "Matte 2B Uppgift Söndag.docx": {
+            "id": "d23",
+            "name": "Matte 2B Uppgift Söndag.docx"
+        },
+        "moas.docx": {
+            "id": "d24",
+            "name": "moas.docx"
+        },
+        "new-instagram-logo-png-transparent-light.png": {
+            "id": "d25",
+            "name": "new-instagram-logo-png-transparent-light.png"
+        },
+        "Nyckeltal.docx": {
+            "id": "d26",
+            "name": "Nyckeltal.docx"
+        },
+        "Personligt Brev - Leonard Werder.docx": {
+            "id": "d27",
+            "name": "Personligt Brev - Leonard Werder.docx"
+        },
+        "Personligt valv.lnk": {
+            "id": "d28",
+            "name": "Personligt valv.lnk"
+        },
+        "personligt-brev-mall 1.docx": {
+            "id": "d29",
+            "name": "personligt-brev-mall 1.docx"
+        },
+        "personligt-brev-mall 2.docx": {
+            "id": "d30",
+            "name": "personligt-brev-mall 2.docx"
+        },
+        "personligt-brev-mall.docx": {
+            "id": "d31",
+            "name": "personligt-brev-mall.docx"
+        },
+        "Presentation.pptx": {
+            "id": "d32",
+            "name": "Presentation.pptx"
+        },
+        "Redovisning.docx": {
+            "id": "d33",
+            "name": "Redovisning.docx"
+        },
+        "Religion.docx": {
+            "id": "d34",
+            "name": "Religion.docx"
+        },
+        "Replay_2021-09-23_01-51-28_Trim.mp4": {
+            "id": "d35",
+            "name": "Replay_2021-09-23_01-51-28_Trim.mp4"
+        },
+        "report.pdf": {
+            "id": "d36",
+            "name": "report.pdf"
+        },
+        "RPReplay_Final1632943818.mov": {
+            "id": "d37",
+            "name": "RPReplay_Final1632943818.mov"
+        },
+        "Sys_Demo_Tenta.docx": {
+            "id": "d38",
+            "name": "Sys_Demo_Tenta.docx"
+        },
+        "Sys_Demo_Tenta.minkopia1.docx": {
+            "id": "d39",
+            "name": "Sys_Demo_Tenta.minkopia1.docx"
+        },
+        "UF Logga, Pris.docx": {
+            "id": "d40",
+            "name": "UF Logga, Pris.docx"
+        },
+        "UF.jpg": {
+            "id": "d41",
+            "name": "UF.jpg"
+        },
+        "unnamed.jpg": {
+            "id": "d42",
+            "name": "unnamed.jpg"
+        },
+        "Bilder\\Progress\\Fråga 1 1.jpg": {
+            "id": "d43",
+            "name": "Fråga 1 1.jpg"
+        },
+        "Bilder\\Progress\\Fråga 1 2.jpg": {
+            "id": "d44",
+            "name": "Fråga 1 2.jpg"
+        },
+        "Bilder\\Progress\\Fråga 1 3.jpg": {
+            "id": "d45",
+            "name": "Fråga 1 3.jpg"
+        },
+        "Bilder\\Progress\\Fråga 1+2.jpg": {
+            "id": "d46",
+            "name": "Fråga 1+2.jpg"
+        },
+        "Bilder\\Progress\\Fråga 2 1.jpg": {
+            "id": "d47",
+            "name": "Fråga 2 1.jpg"
+        },
+        "Bilder\\Progress\\Fråga 2 2.jpg": {
+            "id": "d48",
+            "name": "Fråga 2 2.jpg"
+        },
+        "Bilder\\Progress\\Fråga 2 3.jpg": {
+            "id": "d49",
+            "name": "Fråga 2 3.jpg"
+        },
+        "Bilder\\Progress\\Matte+2b+Statistik.docx": {
+            "id": "d50",
+            "name": "Matte+2b+Statistik.docx"
+        },
+        "Bilder\\Progress\\Treasure Island.pdf": {
+            "id": "d51",
+            "name": "Treasure Island.pdf"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09 (1).png": {
+            "id": "d52",
+            "name": "2020-05-09 (1).png"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09 (2).png": {
+            "id": "d53",
+            "name": "2020-05-09 (2).png"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09 (3).png": {
+            "id": "d54",
+            "name": "2020-05-09 (3).png"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09 (3)_LI.jpg": {
+            "id": "d55",
+            "name": "2020-05-09 (3)_LI.jpg"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09 (4)_LI.jpg": {
+            "id": "d56",
+            "name": "2020-05-09 (4)_LI.jpg"
+        },
+        "Bilder\\Skärmbilder\\2020-05-09.png": {
+            "id": "d57",
+            "name": "2020-05-09.png"
+        },
+        "Bilder\\Skärmbilder\\2020-05-12 (2).png": {
+            "id": "d58",
+            "name": "2020-05-12 (2).png"
+        },
+        "Bilder\\Skärmbilder\\2020-05-12.png": {
+            "id": "d59",
+            "name": "2020-05-12.png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild (1).png": {
+            "id": "d60",
+            "name": "Skärmbild (1).png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild (2).png": {
+            "id": "d61",
+            "name": "Skärmbild (2).png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild (3).png": {
+            "id": "d62",
+            "name": "Skärmbild (3).png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild (4).png": {
+            "id": "d63",
+            "name": "Skärmbild (4).png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild (5).png": {
+            "id": "d64",
+            "name": "Skärmbild (5).png"
+        },
+        "Bilder\\Skärmbilder\\Skärmbild 2021-09-26 041955.png": {
+            "id": "d65",
+            "name": "Skärmbild 2021-09-26 041955.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Behövs Inte 2.png": {
+            "id": "d66",
+            "name": "Behövs Inte 2.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Behövs Inte 3.png": {
+            "id": "d67",
+            "name": "Behövs Inte 3.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Behövs Inte.png": {
+            "id": "d68",
+            "name": "Behövs Inte.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 10.png": {
+            "id": "d69",
+            "name": "Fråga 10.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 3(2).png": {
+            "id": "d70",
+            "name": "Fråga 3(2).png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 3.png": {
+            "id": "d71",
+            "name": "Fråga 3.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 7 och 8.png": {
+            "id": "d72",
+            "name": "Fråga 7 och 8.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 9(3).png": {
+            "id": "d73",
+            "name": "Fråga 9(3).png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Fråga 9.png": {
+            "id": "d74",
+            "name": "Fråga 9.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Kanske 2.png": {
+            "id": "d75",
+            "name": "Kanske 2.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Kanske.png": {
+            "id": "d76",
+            "name": "Kanske.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\NCC.pdf": {
+            "id": "d77",
+            "name": "NCC.pdf"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Vet Inte 2.png": {
+            "id": "d78",
+            "name": "Vet Inte 2.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Vet Inte.png": {
+            "id": "d79",
+            "name": "Vet Inte.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Balansräkning Del 1.png": {
+            "id": "d80",
+            "name": "Balansräkning Del 1.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Balansräkning Del 2.png": {
+            "id": "d81",
+            "name": "Balansräkning Del 2.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Resultat.png": {
+            "id": "d82",
+            "name": "Resultat.png"
+        },
+        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Totalt Resultat.png": {
+            "id": "d83",
+            "name": "Totalt Resultat.png"
+        },
+        "Bilder\\Wafi Fucked Up\\beroende.png": {
+            "id": "d84",
+            "name": "beroende.png"
+        },
+        "Bilder\\Wafi Fucked Up\\beroende2.png": {
+            "id": "d85",
+            "name": "beroende2.png"
+        },
+        "Bilder\\Wafi Fucked Up\\Namnlos_video_Gjord_med_Clipchamp_5.mp4": {
+            "id": "d86",
+            "name": "Namnlos_video_Gjord_med_Clipchamp_5.mp4"
+        },
+        "Bilder\\Wafi Fucked Up\\Replay_2021-09-27_22-04-29_Trim.mp4": {
+            "id": "d87",
+            "name": "Replay_2021-09-27_22-04-29_Trim.mp4"
+        },
+        "Bilder\\Wafi Fucked Up\\Skärmbild 2021-12-16 164933.png": {
+            "id": "d88",
+            "name": "Skärmbild 2021-12-16 164933.png"
+        },
+        "Bilder\\Wafi Fucked Up\\unknown.png": {
+            "id": "d89",
+            "name": "unknown.png"
+        },
+        "Bilder\\Wafi Fucked Up\\wafi paint 2.png": {
+            "id": "d90",
+            "name": "wafi paint 2.png"
+        },
+        "Bilder\\Wafi Fucked Up\\Wafi paint.png": {
+            "id": "d91",
+            "name": "Wafi paint.png"
+        },
+        "Bilder\\Wafi Fucked Up\\Wafi.mp4": {
+            "id": "d92",
+            "name": "Wafi.mp4"
+        },
+        "Bilder\\Wafi Fucked Up\\XERATHEN.png": {
+            "id": "d93",
+            "name": "XERATHEN.png"
+        },
+        "Dokument\\35.docx": {
+            "id": "d94",
+            "name": "35.docx"
+        },
+        "Dokument\\39.docx": {
+            "id": "d95",
+            "name": "39.docx"
+        },
+        "Dokument\\49.docx": {
+            "id": "d96",
+            "name": "49.docx"
+        },
+        "Dokument\\Anteckningar GyA.docx": {
+            "id": "d97",
+            "name": "Anteckningar GyA.docx"
+        },
+        "Dokument\\Argumenterande Tal.docx": {
+            "id": "d98",
+            "name": "Argumenterande Tal.docx"
+        },
+        "Dokument\\Argumenterande Tal.pptx": {
+            "id": "d99",
+            "name": "Argumenterande Tal.pptx"
+        },
+        "Dokument\\Argumenterande text.docx": {
+            "id": "d100",
+            "name": "Argumenterande text.docx"
+        },
+        "Dokument\\Brottsligt Beteende.docx": {
+            "id": "d101",
+            "name": "Brottsligt Beteende.docx"
+        },
+        "Dokument\\Budget Student.xlsx": {
+            "id": "d102",
+            "name": "Budget Student.xlsx"
+        },
+        "Dokument\\Coronakrisen.docx": {
+            "id": "d103",
+            "name": "Coronakrisen.docx"
+        },
+        "Dokument\\Dansak Ord .docx": {
+            "id": "d104",
+            "name": "Dansak Ord .docx"
+        },
+        "Dokument\\Dansk Kap 2.pdf": {
+            "id": "d105",
+            "name": "Dansk Kap 2.pdf"
+        },
+        "Dokument\\Danska Artikel.docx": {
+            "id": "d106",
+            "name": "Danska Artikel.docx"
+        },
+        "Dokument\\Database1.accdb": {
+            "id": "d107",
+            "name": "Database1.accdb"
+        },
+        "Dokument\\GyA färdiga arbetet 2.0.docx": {
+            "id": "d108",
+            "name": "GyA färdiga arbetet 2.0.docx"
+        },
+        "Dokument\\GyA Mall för arbete.docx": {
+            "id": "d109",
+            "name": "GyA Mall för arbete.docx"
+        },
+        "Dokument\\Gymnasiearbete Leonard Werder.docx": {
+            "id": "d110",
+            "name": "Gymnasiearbete Leonard Werder.docx"
+        },
+        "Dokument\\Historiebruk.docx": {
+            "id": "d111",
+            "name": "Historiebruk.docx"
+        },
+        "Dokument\\Install STAR WARS The Old Republic.log": {
+            "id": "d112",
+            "name": "Install STAR WARS The Old Republic.log"
+        },
+        "Dokument\\Instuderingsfrågor 1-13.docx": {
+            "id": "d113",
+            "name": "Instuderingsfrågor 1-13.docx"
+        },
+        "Dokument\\Instuderingsfrågor.docx": {
+            "id": "d114",
+            "name": "Instuderingsfrågor.docx"
+        },
+        "Dokument\\Leonadimproved.docx": {
+            "id": "d115",
+            "name": "Leonadimproved.docx"
+        },
+        "Dokument\\Leonard's Notebook.url": {
+            "id": "d116",
+            "name": "Leonard's Notebook.url"
+        },
+        "Dokument\\Mall___Gymnasiearbete.docx": {
+            "id": "d117",
+            "name": "Mall___Gymnasiearbete.docx"
+        },
+        "Dokument\\Michael Jackson.pptx": {
+            "id": "d118",
+            "name": "Michael Jackson.pptx"
+        },
+        "Dokument\\OneTab.txt": {
+            "id": "d119",
+            "name": "OneTab.txt"
+        },
+        "Dokument\\Pitch uppgift.docx": {
+            "id": "d120",
+            "name": "Pitch uppgift.docx"
+        },
+        "Dokument\\Pitch.docx": {
+            "id": "d121",
+            "name": "Pitch.docx"
+        },
+        "Dokument\\PM Final.docx": {
+            "id": "d122",
+            "name": "PM Final.docx"
+        },
+        "Dokument\\PM Uppgift 2.docx": {
+            "id": "d123",
+            "name": "PM Uppgift 2.docx"
+        },
+        "Dokument\\PM-upggift2.docx": {
+            "id": "d124",
+            "name": "PM-upggift2.docx"
+        },
+        "Dokument\\sammanställning inför provet- ekologi kort.docx": {
+            "id": "d125",
+            "name": "sammanställning inför provet- ekologi kort.docx"
+        },
+        "Dokument\\sammanställning inför provet- ekologi.docx": {
+            "id": "d126",
+            "name": "sammanställning inför provet- ekologi.docx"
+        },
+        "Dokument\\Språkförändring.docx": {
+            "id": "d127",
+            "name": "Språkförändring.docx"
+        },
+        "Dokument\\språkförändring_uppgft3_1.docx": {
+            "id": "d128",
+            "name": "språkförändring_uppgft3_1.docx"
+        },
+        "Dokument\\Statement of Nathan Watts.docx": {
+            "id": "d129",
+            "name": "Statement of Nathan Watts.docx"
+        },
+        "Dokument\\The truth is a cave in the black mountain.docx": {
+            "id": "d130",
+            "name": "The truth is a cave in the black mountain.docx"
+        },
+        "Dokument\\TombRaider.log": {
+            "id": "d131",
+            "name": "TombRaider.log"
+        },
+        "Dokument\\Treasure Island - Leonard Werder BP18a.docx": {
+            "id": "d132",
+            "name": "Treasure Island - Leonard Werder BP18a.docx"
+        },
+        "Dokument\\Treasure Island 2.docx": {
+            "id": "d133",
+            "name": "Treasure Island 2.docx"
+        },
+        "Dokument\\Treasure Island.docx": {
+            "id": "d134",
+            "name": "Treasure Island.docx"
+        },
+        "Dokument\\Träninglära 2.docx": {
+            "id": "d135",
+            "name": "Träninglära 2.docx"
+        },
+        "Dokument\\UF presentation.docx": {
+            "id": "d136",
+            "name": "UF presentation.docx"
+        },
+        "Dokument\\Uninstall STAR WARS The Old Republic.log": {
+            "id": "d137",
+            "name": "Uninstall STAR WARS The Old Republic.log"
+        },
+        "Dokument\\Vetenskaplig analys Leonard 3.docx": {
+            "id": "d138",
+            "name": "Vetenskaplig analys Leonard 3.docx"
+        },
+        "Dokument\\Vinstdisposition UF.docx": {
+            "id": "d139",
+            "name": "Vinstdisposition UF.docx"
+        },
+        "Dokument\\1IK031\\0. Inroduktion organisation.pdf": {
+            "id": "d140",
+            "name": "0. Inroduktion organisation.pdf"
+        },
+        "Dokument\\1IK031\\0. Strategy planning.pdf": {
+            "id": "d141",
+            "name": "0. Strategy planning.pdf"
+        },
+        "Dokument\\1IK031\\1. Business analysis.pdf": {
+            "id": "d142",
+            "name": "1. Business analysis.pdf"
+        },
+        "Dokument\\1IK031\\1. Den praktiska uppgiften.pdf": {
+            "id": "d143",
+            "name": "1. Den praktiska uppgiften.pdf"
+        },
+        "Dokument\\1IK031\\2. Development Process.pdf": {
+            "id": "d144",
+            "name": "2. Development Process.pdf"
+        },
+        "Dokument\\1IK031\\2. GAP-analys (exempel).pdf": {
+            "id": "d145",
+            "name": "2. GAP-analys (exempel).pdf"
+        },
+        "Dokument\\1IK031\\3. Concepts.pdf": {
+            "id": "d146",
+            "name": "3. Concepts.pdf"
+        },
+        "Dokument\\1IK031\\Business Analysis Techniques  99 essential tools for success by Cadle, James Paul, Debra Turner, Paul (z-lib.org).pdf": {
+            "id": "d147",
+            "name": "Business Analysis Techniques  99 essential tools for success by Cadle, James Paul, Debra Turner, Paul (z-lib.org).pdf"
+        },
+        "Dokument\\1IK031\\Rapportmall 2020.odt": {
+            "id": "d148",
+            "name": "Rapportmall 2020.odt"
+        },
+        "Dokument\\1IK031\\Skärmbild 2021-12-15 210706.png": {
+            "id": "d149",
+            "name": "Skärmbild 2021-12-15 210706.png"
+        },
+        "Dokument\\1IK031\\SSAB - Verksamhetsanalys 2.0.pdf": {
+            "id": "d150",
+            "name": "SSAB - Verksamhetsanalys 2.0.pdf"
+        },
+        "Dokument\\1IK031\\SSAB - Verksamhetsanalys.pdf": {
+            "id": "d151",
+            "name": "SSAB - Verksamhetsanalys.pdf"
+        },
+        "Dokument\\1IK031\\Workshop1.pdf": {
+            "id": "d152",
+            "name": "Workshop1.pdf"
+        },
+        "Dokument\\1IK031\\Workshop2.pdf": {
+            "id": "d153",
+            "name": "Workshop2.pdf"
+        },
+        "Dokument\\1IK031\\Workshop3.pdf": {
+            "id": "d154",
+            "name": "Workshop3.pdf"
+        },
+        "Dokument\\1IK031\\Workshop4.pdf": {
+            "id": "d155",
+            "name": "Workshop4.pdf"
+        },
+        "Dokument\\Adobe\\PhotoshopPrefsManager-20181006-013808.log": {
+            "id": "d156",
+            "name": "PhotoshopPrefsManager-20181006-013808.log"
+        },
+        "Hälsodeklaration\\CV-Leonard Werder.docx": {
+            "id": "d157",
+            "name": "CV-Leonard Werder.docx"
+        },
+        "Hälsodeklaration\\Hälsodeklaration.htm": {
+            "id": "d158",
+            "name": "Hälsodeklaration.htm"
+        },
+        "Hälsodeklaration\\IMG_20210519_0001.jpg": {
+            "id": "d159",
+            "name": "IMG_20210519_0001.jpg"
+        },
+        "Hälsodeklaration\\Leonard Werder Hälsodeklaration pdf.pdf": {
+            "id": "d160",
+            "name": "Leonard Werder Hälsodeklaration pdf.pdf"
+        },
+        "TBS\\Engelska 7\\A Modest Proposal(Manslaughter).docx": {
+            "id": "d161",
+            "name": "A Modest Proposal(Manslaughter).docx"
+        },
+        "TBS\\Engelska 7\\A Modest Proposal.docx": {
+            "id": "d162",
+            "name": "A Modest Proposal.docx"
+        },
+        "TBS\\Engelska 7\\Michael Jackson.pptx": {
+            "id": "d163",
+            "name": "Michael Jackson.pptx"
+        },
+        "TBS\\Gymnasiearbete\\Enkät frågor Leonard.docx": {
+            "id": "d164",
+            "name": "Enkät frågor Leonard.docx"
+        },
+        "TBS\\Psykologi 1\\Barns utveckling enligt Freud [sparad automatiskt].pptx": {
+            "id": "d165",
+            "name": "Barns utveckling enligt Freud [sparad automatiskt].pptx"
+        },
+        "TBS\\Psykologi 1\\Det humanistiska perspektivet.pptx": {
+            "id": "d166",
+            "name": "Det humanistiska perspektivet.pptx"
+        },
+        "TBS\\Psykologi 1\\Detbehavioristiskaperspektivet (1).ppt": {
+            "id": "d167",
+            "name": "Detbehavioristiskaperspektivet (1).ppt"
+        },
+        "TBS\\Psykologi 1\\instuderingsfragor psykologi infor prov 2.docx": {
+            "id": "d168",
+            "name": "instuderingsfragor psykologi infor prov 2.docx"
+        },
+        "TBS\\Psykologi 1\\Instuderingsfrågor.docx": {
+            "id": "d169",
+            "name": "Instuderingsfrågor.docx"
+        },
+        "TBS\\Psykologi 1\\Komplettering+the+pe.docx": {
+            "id": "d170",
+            "name": "Komplettering+the+pe.docx"
+        },
+        "TBS\\Psykologi 1\\Psykologi 1.docx": {
+            "id": "d171",
+            "name": "Psykologi 1.docx"
+        },
+        "TBS\\Svenska 3\\Ett halvt ark papper 2.docx": {
+            "id": "d172",
+            "name": "Ett halvt ark papper 2.docx"
+        },
+        "TBS\\Svenska 3\\PM Final.docx": {
+            "id": "d173",
+            "name": "PM Final.docx"
+        }
+    }
+}
