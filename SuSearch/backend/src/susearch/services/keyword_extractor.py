@@ -5,7 +5,7 @@ class KeywordExtractor:
     """
     Extracts entities such as names, locations and time. Aswell as words and phrases.
     """
-    def __init__(self):
+    def __init__(self, lan, n, dedupLim, top, features ):
         self.tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
         self.model = AutoModelForTokenClassification.from_pretrained(
             "KBLab/bert-base-swedish-cased-ner"
@@ -19,11 +19,11 @@ class KeywordExtractor:
         )
 
         self._keyword_yake = yake.KeywordExtractor(
-            lan = "sv",
-            n = 1, # Amount of words per phrase
-            dedupLim = 0.4, # Let duplicates
-            top = 15,  # Amount of results
-            features = None
+            lan = lan,
+            n = n, 
+            dedupLim = dedupLim, 
+            top = top,  
+            features = features
         )
 
     def get_ner(self, chunks: list[str]) -> list[list[dict]]:
@@ -36,7 +36,7 @@ class KeywordExtractor:
                 List: dictionary representing a single entity found, inside a list inside a list
         """
         raw_results = self._ner(chunks, batch_size=8)
-        print(raw_results)
+        # print(raw_results)
         results = []
 
         for chunk_entities in raw_results:

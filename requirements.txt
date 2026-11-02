@@ -1,4 +1,26 @@
-pytest
-langchain-text-splitters==1.1.3
+# Web & validation
+uvicorn
+pydantic
+
+# Document handlers
 pypdf
 python-docx
+langchain-text-splitters==1.1.3
+
+# models and Data processing
+pandas
+sentence-transformers
+torch
+scipy
+yake
+
+# Database
+psycopg[binary]
+pgvector
+
+# GUI
+pywebview
+
+# Tooling & Testing
+ruff
+pytest
