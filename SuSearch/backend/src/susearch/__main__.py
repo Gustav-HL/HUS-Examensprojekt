@@ -54,7 +54,7 @@ def process_document(data_extractor: DataExtractor):
     folder_data = file_scanner.fetch_data()
     
     
-    name = input("Enter file name and file suffix: ")
+    name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
 
     for file_path, file_info in folder_data.get("files", {}).items():
         #print(f"{file_path} {file_info['name']}")
@@ -79,7 +79,7 @@ def process_document(data_extractor: DataExtractor):
                         print(f" -> Created {len(chunks)} chunks.")
 
 
-                        yake_results = [[] for _ in chunks] # Empty lists so that the chunk strucutre still works with no chunk yake data
+                        yake_results = [[] for _ in chunks]
                         ner_results = _keyword_extractor.get_ner(chunks)
 
                         _vectorizer = data_extractor._vectorizer
