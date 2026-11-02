@@ -1,6 +1,6 @@
 from pathlib import Path
 import hashlib
-from chunk import Chunk
+from .chunk import Chunk
 
 
 class Document:
