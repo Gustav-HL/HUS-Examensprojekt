@@ -111,12 +111,12 @@ def process_document(data_extractor: DataExtractor):
     #name = input("Enter file name and file suffix: ") # Dokument.docx
     else:
         
-        
-        
         for (root, dirs, files) in os.walk(folder):
             if name in files:
                 find_path = os.path.join(root, name)
                 break
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+        #Detta är till för att kunna söka efter vilken fil som helst när man är i sitt start folder
         if find_path:
             document = file_handler.extract_text(find_path)
             metadata = file_handler.extract_metadata(find_path)
