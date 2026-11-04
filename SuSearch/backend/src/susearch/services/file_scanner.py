@@ -2,14 +2,9 @@ import os
 from pathlib import Path
 import json
 
+current_directory = Path(__file__).resolve().parent
 
 class DocumentScanner:
-
-    def __init__(self):
-        pass 
-
-    def __str__(self):
-        pass
 
     def create_id(self, prefix, f_dict):
         highest_id = 0
@@ -24,7 +19,8 @@ class DocumentScanner:
                     pass
         return highest_id
 
-    def scan_and_track(self, target_dir, json_file="file_tracker.json"):
+    def scan_and_track(self, target_dir, json_file= current_directory/"file_tracker.json"):
+
         target_path = Path(target_dir).resolve()
         if not target_path.exists():
             print(f"Error: Directory '{target_path}' does not exist.")
@@ -99,6 +95,25 @@ class DocumentScanner:
         #         print(f"{folder}")
         #     for file in added_files:
         #         print(f"{file}")
+
+        return target_path
+
+    def fetch_data(self, json_file= current_directory/"file_tracker.json"):
+        if os.path.exists(json_file):
+            with open(json_file, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {"folders": {}, "files": {}}
+
+    # def fetch_data(self, target_dir):
+    #     # Combine the directory path with your json filename
+    #     json_path = Path(target_dir) / "file_tracker.json"
+        
+    #     if json_path.exists():
+    #         with open(json_path, "r", encoding="utf-8") as f:
+    #             return json.load(f)
+        
+    #     # Return empty structure if the file doesn't exist there yet
+    #     return {"folders": {}, "files": {}}
 
 if __name__ == "__main__":
     path = (r"C:\Users\leona\OneDrive")
