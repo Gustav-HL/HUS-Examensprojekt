@@ -52,14 +52,14 @@ export default function FilterPanel({
         id="filterPanel"
       >
         <div className="filter-grid">
-         <AreaFilter
-          value={area}
-           onChange={onAreaChange}
+          <AreaFilter
+            value={area}
+            onChange={onAreaChange}
           />
 
-         <MethodFilter
-          value={method}
-           onChange={onMethodChange}
+          <MethodFilter
+            value={method}
+            onChange={onMethodChange}
           />
         </div>
 
