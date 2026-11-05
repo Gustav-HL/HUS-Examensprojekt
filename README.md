@@ -21,6 +21,8 @@ source .venv/bin/activate
 ## Install backend packets
 ```powershell
 pip install -r requirements.txt
+pip install langchain-text-splitters yake
+pip install transformers torch
 ```
 
 
