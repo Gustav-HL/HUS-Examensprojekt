@@ -1,6 +1,7 @@
-
 import { useState } from 'react';
 import AreaFilter from './AreaFilter';
+import MethodFilter from './MethodFilter';
+import ActiveFilters from './ActiveFilters';
 /**
  * Displays the filter panel and allows users to filter projects.
  * Handles opening and closing the panel and shows active filter count.
@@ -9,16 +10,19 @@ import AreaFilter from './AreaFilter';
  * @param {string} props.area - Currently selected area.
  * @param {Function} props.onAreaChange - Updates the selected area.
  * @param {Function} props.onClearFilters - Clears selected filters.
+ * @param {string} props.method - Currently selected method.
+ * @param {Function} props.onMethodChange - Updates the selected method.
  */
 
 export default function FilterPanel({
   area,
+  method,
   onAreaChange,
+  onMethodChange,
   onClearFilters
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const activeCount = area ? 1 : 0;
 
   return (
     <>
@@ -40,11 +44,7 @@ export default function FilterPanel({
           <span>Filtrera</span>
         </button>
 
-        <span className="active-filters">
-          {activeCount === 0
-            ? 'Inga filter valda'
-            : '1 filter valt'}
-        </span>
+        <ActiveFilters area={area} method={method} />
       </div>
 
       <div
@@ -52,9 +52,14 @@ export default function FilterPanel({
         id="filterPanel"
       >
         <div className="filter-grid">
-          <AreaFilter
-            value={area}
-            onChange={onAreaChange}
+         <AreaFilter
+          value={area}
+           onChange={onAreaChange}
+          />
+
+         <MethodFilter
+          value={method}
+           onChange={onMethodChange}
           />
         </div>
 
