@@ -26,7 +26,7 @@ class Vectorizer:
     # counts the amount of chunks with more tokens than max_tokens
     def _warn_if_truncated(self, texts: list[str]) -> None:
         too_long = sum(
-            len(self.tokenizer(t, add_special_tokens=True)["input_ids"]) > self.max_tokens
+            len(self.tokenizer(str(t), add_special_tokens=True)["input_ids"]) > self.max_tokens
             for t in texts
         )
         if too_long:
@@ -40,7 +40,7 @@ class Vectorizer:
 
         self._warn_if_truncated(texts)
 
-        order = sorted(range(len(texts)), key=lambda i: len(texts[i]))
+        order = sorted(range(len(texts)), key=lambda i: len(self.tokenizer(str(texts[i]), add_special_tokens=False)["input_ids"]))
         embeddings = [None] * len(texts)
 
         for start in range(0, len(order), self.batch_size):

@@ -7,6 +7,7 @@ class KeywordExtractor:
     """
     def __init__(self, lan, n, dedupLim, top, features ):
         self.tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
+        self.tokenizer.model_max_length = 512
         self.model = AutoModelForTokenClassification.from_pretrained(
             "KBLab/bert-base-swedish-cased-ner"
         )
