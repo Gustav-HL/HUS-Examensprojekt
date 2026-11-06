@@ -1,0 +1,28 @@
+
+#wrapper{
+    min-height: 100vh;
+    position: relative;
+}
+
+#test-box {
+    position: fixed;
+    bottom: 60px;
+    right: 16px;
+    width: 450px;
+    max-width: 90vw;
+    max-height: 75vh;
+    background-color: #ffffff;
+    z-index: 9998;
+    overflow-y: auto;
+}
+
+#test-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  padding: 8px 14px;
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}

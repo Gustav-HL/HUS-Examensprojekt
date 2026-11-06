@@ -1,6 +1,4 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-import yake
-from models.chunk import Chunk
 
 class DocumentChunker:
     def __init__(self, raw_text: str, document_name: str):

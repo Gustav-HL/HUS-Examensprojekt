@@ -18,7 +18,7 @@ class Document:
     def add_chunk(self, chunk: Chunk):
 
         chunk.document_id = self.id
-        chunk.chunk_index = len(self.chunks)
+        chunk.chunk_index = len(self.chunks) + 1
         chunk.id = f"{self.id}_{chunk.chunk_index}"
 
         self.chunks.append(chunk)
@@ -33,14 +33,14 @@ class Document:
 
         keyword_items = getattr(self, "keywords", []) 
         formatted_keywords = [
-            f"{keyword['keyword']} ({keyword['score']:.4f}) "
-            for keyword in keyword_items
+           ", ".join(f"{k['keyword']} ({k['score']:.4f})" 
+            for k in keyword_items) or "None"
         ]
 
         return(
             f"Document: {self.name}, \n"
             f"ID: {self.id}, \n"
             f"Total Chunks: {len(self.chunks)}, \n" 
-            #f"keywords: {formatted_keywords}, \n"
-            f"Metadata: {self.metadata}"
+            f"Metadata: {self.metadata}, \n"
+            f"keywords: {formatted_keywords}"
         ) 

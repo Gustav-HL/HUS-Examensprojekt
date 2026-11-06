@@ -8,7 +8,6 @@ class Chunk:
         self.id = id
 
     def __str__(self):
-
         ner_items = getattr(self, "keynames", []) 
         formatted_ner = [
             f"{entity['word']} ({entity.get('entity_group', '')}) "
@@ -22,12 +21,12 @@ class Chunk:
         ]
 
         return (
-            #f"text: {self.text}, \n"
+            f"text: {self.text}, \n"
             f"id: {self.id}, \n"
             f"source: {self.source}, \n"
             f"keywords: {formatted_keywords}, \n"
             f"ner: {formatted_ner}, \n"
-            f"vector: {self.vector}" # Enable if you want to print ALOT of numbers
+            # f"vector: {self.vector}" # Enable if you want to print ALOT of numbers
         )
 
     

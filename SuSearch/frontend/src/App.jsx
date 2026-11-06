@@ -1,61 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Test from './BackendTest';
+import './app.css'
 
 export default function App() {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async () => {
-    if (!query.trim()) return;
-
-    if (window.pywebview && window.pywebview.api) {
-      setLoading(true);
-      
-      try {
-        const data = await window.pywebview.api.execute_search(query);
-        setResults(data);
-        console.log(data)
-      } 
-      
-      catch (err) {
-        console.error('Fel vid anrop till Python:', err);
-      } 
-      
-      finally {
-        setLoading(false);
-      }
-    } 
-    
-    else {
-      console.warn('Använd inte webläsaren kör main.py');
-    }
-  };
+  const [showTest, setShowTest] = useState(false);
 
   return (
-    <div>
-      <h1>Testo</h1>
+    <div id='wrapepr'>
+      <main>
 
-      <div style={{ display: 'flex' }}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={{ flex: 1, padding: '8px' }}
-        />
-        <button onClick={handleSearch} disabled={loading} style={{ padding: '8px 16px' }}>
-          {loading ? 'Söker' : 'Sök'}
-        </button>
-      </div>
+      </main>
 
-      <div>
-        {results.map((item, index) => (
-          <div
-            key={index}>
-            <p>{item.text}</p>
-            <p>{item.score}</p>
-          </div>
-        ))}
-      </div>
+      {/* Testing the backend connection please dont change this or the child component //GHL */}
+      <button id='test-btn'
+        onClick={() => setShowTest((prev) => !prev)}>
+        {showTest ? 'Close Backend' : 'Test Backend'}
+      </button>
+      {showTest && (
+        <div id='test-box'>
+          <Test />
+        </div>
+      )}
     </div>
   );
 }
