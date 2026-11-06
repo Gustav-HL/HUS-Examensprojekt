@@ -1,3 +1,11 @@
+/**
+ * Displays a project card with its title, description,
+ * optional details, tags section, and navigation link.
+ * 
+ * @param {Object} props - Component properties.
+ * @param {Object} props.project - Project data to display.
+ */
+
 function ProjectCard({ project }) {
     return (
         <article>
@@ -12,7 +20,7 @@ function ProjectCard({ project }) {
             <footer>
                 {project.tags?.length > 0 && (
                     <div className="project-card-tags">
-                        {/* Place ProjectTags component here */}
+                        {/* TODO: Integrate ProjectTags component */}
                     </div>
                 )}
 
