@@ -8,24 +8,24 @@
             "id": "f2",
             "name": "models"
         },
-        "repositories": {
-            "id": "f3",
-            "name": "repositories"
-        },
         "services": {
             "id": "f4",
             "name": "services"
+        },
+        "repositories": {
+            "id": "f3",
+            "name": "repositories"
         },
         "__pycache__": {
             "id": "f5",
             "name": "__pycache__"
         },
-        "models\\__pycache__": {
-            "id": "f6",
+        "models/__pycache__": {
+            "id": "f8",
             "name": "__pycache__"
         },
-        "services\\__pycache__": {
-            "id": "f7",
+        "services/__pycache__": {
+            "id": "f9",
             "name": "__pycache__"
         }
     },
@@ -38,117 +38,121 @@
             "id": "d2",
             "name": "__main__.py"
         },
-        "Experimentkod\\api.py": {
-            "id": "d3",
+        "Experimentkod/api.py": {
+            "id": "d31",
             "name": "api.py"
         },
-        "Experimentkod\\bert-combo.py": {
-            "id": "d4",
+        "Experimentkod/bert-combo.py": {
+            "id": "d32",
             "name": "bert-combo.py"
         },
-        "Experimentkod\\chunker.py": {
-            "id": "d5",
+        "Experimentkod/chunker.py": {
+            "id": "d33",
             "name": "chunker.py"
         },
-        "Experimentkod\\db.py": {
-            "id": "d6",
+        "Experimentkod/db.py": {
+            "id": "d34",
             "name": "db.py"
         },
-        "Experimentkod\\ner-bert.py": {
-            "id": "d7",
+        "Experimentkod/ner-bert.py": {
+            "id": "d35",
             "name": "ner-bert.py"
         },
-        "Experimentkod\\semantic-bert.py": {
-            "id": "d8",
+        "Experimentkod/semantic-bert.py": {
+            "id": "d36",
             "name": "semantic-bert.py"
         },
-        "models\\chunk.py": {
-            "id": "d9",
+        "Experimentkod/database_test.py": {
+            "id": "d37",
+            "name": "database_test.py"
+        },
+        "models/chunk.py": {
+            "id": "d38",
             "name": "chunk.py"
         },
-        "models\\document.py": {
-            "id": "d10",
+        "models/document.py": {
+            "id": "d39",
             "name": "document.py"
         },
-        "models\\__pycache__\\chunk.cpython-311.pyc": {
-            "id": "d11",
-            "name": "chunk.cpython-311.pyc"
+        "models/__pycache__/document_chunker.cpython-313.pyc": {
+            "id": "d40",
+            "name": "document_chunker.cpython-313.pyc"
         },
-        "models\\__pycache__\\document.cpython-311.pyc": {
-            "id": "d12",
-            "name": "document.cpython-311.pyc"
+        "models/__pycache__/document.cpython-313.pyc": {
+            "id": "d41",
+            "name": "document.cpython-313.pyc"
         },
-        "models\\__pycache__\\document_chunker.cpython-311.pyc": {
-            "id": "d13",
-            "name": "document_chunker.cpython-311.pyc"
+        "models/__pycache__/chunk.cpython-313.pyc": {
+            "id": "d42",
+            "name": "chunk.cpython-313.pyc"
         },
-        "models\\__pycache__\\document_manager.cpython-311.pyc": {
-            "id": "d14",
-            "name": "document_manager.cpython-311.pyc"
-        },
-        "services\\document_chunker.py": {
-            "id": "d15",
-            "name": "document_chunker.py"
-        },
-        "services\\document_text_extractor.py": {
-            "id": "d16",
+        "services/document_text_extractor.py": {
+            "id": "d43",
             "name": "document_text_extractor.py"
         },
-        "services\\file_handler.py": {
-            "id": "d17",
+        "services/file_handler.py": {
+            "id": "d44",
             "name": "file_handler.py"
         },
-        "services\\file_scanner.py": {
-            "id": "d18",
+        "services/file_scanner.py": {
+            "id": "d45",
             "name": "file_scanner.py"
         },
-        "services\\file_tracker.json": {
-            "id": "d19",
+        "services/document_chunker.py": {
+            "id": "d46",
+            "name": "document_chunker.py"
+        },
+        "services/file_tracker.json": {
+            "id": "d47",
             "name": "file_tracker.json"
         },
-        "services\\keyword_extractor.py": {
-            "id": "d20",
+        "services/keyword_extractor.py": {
+            "id": "d48",
             "name": "keyword_extractor.py"
         },
-        "services\\search_engine.py": {
-            "id": "d21",
+        "services/search_engine.py": {
+            "id": "d49",
             "name": "search_engine.py"
         },
-        "services\\vector_extractor.py": {
-            "id": "d22",
+        "services/vector_extractor.py": {
+            "id": "d50",
             "name": "vector_extractor.py"
         },
-        "services\\__pycache__\\document_chunker.cpython-311.pyc": {
-            "id": "d23",
-            "name": "document_chunker.cpython-311.pyc"
+        "services/__pycache__/testing_kblab.cpython-313.pyc": {
+            "id": "d51",
+            "name": "testing_kblab.cpython-313.pyc"
         },
-        "services\\__pycache__\\file_handler.cpython-311.pyc": {
-            "id": "d24",
-            "name": "file_handler.cpython-311.pyc"
+        "services/__pycache__/document_chunker.cpython-313.pyc": {
+            "id": "d52",
+            "name": "document_chunker.cpython-313.pyc"
         },
-        "services\\__pycache__\\file_scanner.cpython-311.pyc": {
-            "id": "d25",
-            "name": "file_scanner.cpython-311.pyc"
+        "services/__pycache__/keyword_extractor.cpython-313.pyc": {
+            "id": "d53",
+            "name": "keyword_extractor.cpython-313.pyc"
         },
-        "services\\__pycache__\\keyword_extractor.cpython-311.pyc": {
-            "id": "d26",
-            "name": "keyword_extractor.cpython-311.pyc"
+        "services/__pycache__/file_handler.cpython-313.pyc": {
+            "id": "d54",
+            "name": "file_handler.cpython-313.pyc"
         },
-        "services\\__pycache__\\search_engine.cpython-311.pyc": {
-            "id": "d27",
-            "name": "search_engine.cpython-311.pyc"
+        "services/__pycache__/vector_extractor.cpython-313.pyc": {
+            "id": "d55",
+            "name": "vector_extractor.cpython-313.pyc"
         },
-        "services\\__pycache__\\testing_kblab.cpython-311.pyc": {
-            "id": "d28",
-            "name": "testing_kblab.cpython-311.pyc"
+        "services/__pycache__/file_scanner.cpython-313.pyc": {
+            "id": "d56",
+            "name": "file_scanner.cpython-313.pyc"
         },
-        "services\\__pycache__\\vector_extractor.cpython-311.pyc": {
-            "id": "d29",
-            "name": "vector_extractor.cpython-311.pyc"
+        "services/__pycache__/search_engine.cpython-313.pyc": {
+            "id": "d57",
+            "name": "search_engine.cpython-313.pyc"
         },
-        "__pycache__\\__main__.cpython-311.pyc": {
-            "id": "d30",
-            "name": "__main__.cpython-311.pyc"
+        "repositories/HUT_test.db": {
+            "id": "d58",
+            "name": "HUT_test.db"
+        },
+        "__pycache__/__main__.cpython-313.pyc": {
+            "id": "d59",
+            "name": "__main__.cpython-313.pyc"
         }
     }
 }
