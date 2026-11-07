@@ -17,3 +17,4 @@ frontend/.env.local
 "@ | Out-File -FilePath .gitignore -Encoding utf8
 # Ignore macOS files
 .DS_Store
+SuSearch/backend/src/susearch/services/file_tracker.json
