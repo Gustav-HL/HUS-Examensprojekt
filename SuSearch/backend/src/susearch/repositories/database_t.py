@@ -3,7 +3,6 @@ from pathlib import Path
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
-
 # Create a path to the database file from repositories folder.
 DB_PATH_TEST = BASE_DB / "HUT_test.db"
 
@@ -43,12 +42,10 @@ class LocalDataStorage:
         
         conn.close()    
 
-
     def print_data(self):
         pass
 
 if __name__ == "__main__":
-
     # 1. Instansiera klassen med DB_PATH
     storage = LocalDataStorage(DB_PATH_TEST)
 
