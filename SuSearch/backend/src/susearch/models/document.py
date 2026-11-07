@@ -41,6 +41,6 @@ class Document:
             f"Document: {self.name}, \n"
             f"ID: {self.id}, \n"
             f"Total Chunks: {len(self.chunks)}, \n" 
-            f"keywords: {formatted_keywords}, \n"
+            #f"keywords: {formatted_keywords}, \n"
             f"Metadata: {self.metadata}"
         ) 
