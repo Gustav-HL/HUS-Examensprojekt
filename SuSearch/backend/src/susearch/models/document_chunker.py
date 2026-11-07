@@ -12,5 +12,5 @@ class DocumentChunker:
             length_function = len,
         )
 
-    def chunk_document(self) -> list[Chunk]:
+    def chunk_document(self) -> str:
         return self.text_splitter.split_text(self.raw_text) 
