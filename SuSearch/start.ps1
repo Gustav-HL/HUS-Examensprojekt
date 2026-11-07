@@ -10,5 +10,5 @@ Start-Sleep -Seconds 3
 # 3. Starta backend i det aktiva fönstret
 # Aktivera virtuella miljön och kör modulen från backend-mappen
 .venv\Scripts\Activate.ps1
-$env:PYTHONPATH = "backend/src"
+$env:PYTHONPATH = "backend/src;backend/src/susearch"
 python -m susearch

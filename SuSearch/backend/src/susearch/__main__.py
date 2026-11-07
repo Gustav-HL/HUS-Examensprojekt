@@ -1,12 +1,12 @@
 import webview
 import os
-from models.document_chunker import DocumentChunker
+from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
 from pathlib import Path
 from models.document import Document
 from models.chunk import Chunk
-from services.testing_kblab import Vectorizer
+from services.vector_extractor import Vectorizer
 
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
@@ -17,31 +17,27 @@ class DataExtractor:
     """
     def __init__(self):
         self._keyword_extractor = KeywordExtractor(     
-                    lan = "sv",
-                    n = 3, # Amount of words per phrase
-                    dedupLim = 0.4, # Let duplicates
-                    top = 30,  # Amount of results
-                    features = None
-                    )
+            lan = "sv",
+            n = 3, # Amount of words per phrase
+            dedupLim = 0.4, # Let duplicates
+            top = 30,  # Amount of results
+            features = None
+        )
         self._vectorizer = Vectorizer()
 
     def get_chunks(self, raw_document: str, document_name: str) -> list[str]:
         chunker = DocumentChunker(raw_document, document_name)
         return chunker.chunk_document()
-    
-    
+     
 class DesktopBridge:
     """ 
     Acts as a bridge between frontend and backend.
     """
-    def __init__(self, data_extractor: DataExtractor):
-        self._data_extractor = data_extractor
-        self._window = None 
-    
-    def execute_search(self, query: str):
-        return self._data_extractor.search(query)
+    def __init__(self, search_engine: SearchEngine):
+        self.search_engine = search_engine
 
-
+    def search_text(self, query: str):
+        return self.search_engine.process_query(query)
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path):
     file_handler = FileHandler()
@@ -75,7 +71,7 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                 vector_result = _vectorizer.vectorize_chunks(chunks)
 
                 for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
-                    print(f"Chunk {index} YAKE words")
+                    print(f"Chunk {index}")
                     ultimate_chunk = Chunk(text=chunk, source=name, keywords=keywords, keynames=ner, vector=vector )
                     doc.add_chunk(ultimate_chunk)
                     print(ultimate_chunk)
@@ -108,6 +104,10 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
         doc = Document(name=name, path=find_path, raw_text=document, keywords=full_yake, metadata=metadata)
 
         chunks = data_extractor.get_chunks(document, name)
+
+        # _keyword_extractor = KeywordExtractor()
+        # yake_results = _keyword_extractor.get_yake(chunks) # Disabled atm to test whole document keywords
+
         yake_results = [[] for _ in chunks]
         ner_results = _keyword_extractor.get_ner(chunks)
 
@@ -115,7 +115,7 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
         vector_result = _vectorizer.vectorize_chunks(chunks)
 
         for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
-            print(f"Chunk {index} YAKE words")
+            print(f"Chunk {index}")
             ultimate_chunk = Chunk(text=chunk, source=name, keywords=keywords, keynames=ner, vector=vector )
 
             doc.add_chunk(ultimate_chunk)
@@ -147,43 +147,42 @@ if __name__ == "__main__":
     file_scanner = DocumentScanner()
     search_engine = SearchEngine(data_extractor)
 
-    choice = input("1. Search \n2. Scan \n")
-    if choice == "1":
-        search(search_engine)
+    start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n")
+    if start_view == "1":
+        print("Started  terminal")
+        choice = input("   1.Search \n   2.Scan \n")
 
-    elif choice == "2":
-        folder_input = input("Choose folder: ")
-        current_dir = Path(__file__).resolve().parent
-        folder_res = (
-            file_scanner.scan_and_track(folder_input)
-            if folder_input
-            else file_scanner.scan_and_track(str(current_dir))
-        )
-        folder = Path(folder_res)
+        if choice == "1":
+            search(search_engine)
 
-        name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
+        elif choice == "2":
+            folder_input = input("Choose folder: ") # C:\Users\leona\OneDrive
+            current_dir = Path(__file__).resolve().parent
+            folder_res = (
+                file_scanner.scan_and_track(folder_input)
+                if folder_input
+                else file_scanner.scan_and_track(str(current_dir))
+            )
+            folder = Path(folder_res)
+            name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
 
-        if name.lower() == "all files":
-            process_all_documents(data_extractor, file_scanner, folder)
+            if name.lower() == "all files":
+                process_all_documents(data_extractor, file_scanner, folder)
+            else:
+                process_document(data_extractor, file_scanner, folder, name)
+
         else:
-            process_document(data_extractor, file_scanner, folder, name)
+            print("Wrong Choice Buddy")
+
+    elif start_view == "2":
+        bridge = DesktopBridge(search_engine)
+        window = webview.create_window(
+            title="SuSearch",
+            url="http://localhost:5173",
+            js_api=bridge
+        )
+
+        webview.start(debug=True)
 
     else:
         print("Wrong Choice Buddy")
-
-    # bridge = DesktopBridge(data_extractor)
-
-
-    # window = webview.create_window(
-    #     title="SuSearch",
-    #     url="http://localhost:5173",
-    #     js_api=bridge
-    # )
-
-    # def on_closing():
-    #         print("Closing start cleanup.")
-    #         data_extractor.cleanup()
-
-    # window.events.closing += on_closing
-
-    # webview.start(debug=True)
