@@ -1,4 +1,11 @@
 import sqlite3
+from pathlib import Path
+
+# Get the directory where database_test file is located
+BASE_DB = Path(__file__).resolve().parent
+
+# Create a path to the database file from repositories folder.
+DB_PATH_TEST = BASE_DB / "HUT_test.db"
 
 class LocalDataStorage:
     def __init__(self, DB_PATH):
@@ -40,4 +47,8 @@ class LocalDataStorage:
 
 if __name__ == "__main__":
 
-    LocalDataStorage.test_database()
+    # 1. Instansiera klassen med DB_PATH
+  storage = LocalDataStorage(DB_PATH_TEST)
+
+  # 2. Anropa metoden på objektet (Python skickar med 'self' automatiskt)
+  storage.test_database(document=None)
