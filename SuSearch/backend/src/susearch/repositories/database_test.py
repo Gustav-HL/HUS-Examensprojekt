@@ -8,16 +8,18 @@ BASE_DB = Path(__file__).resolve().parent
 DB_PATH_TEST = BASE_DB / "HUT_test.db"
 
 class LocalDataStorage:
-    def __init__(self, DB_PATH):
-        self.DB_PATH = DB_PATH
+    def __init__(self, DB_PATH=None):
+        self.DB_PATH = DB_PATH or DB_PATH_TEST
     
     def test_database(self, document):
         #Connect to sqLite database
         conn = sqlite3.connect(self.DB_PATH)
-        print(document)
+
         # Check that the database file exists
-        if not self.DB_PATH.is_file():
-            raise FileNotFoundError(f"Database not found: {self.DB_PATH}")
+        # if not self.DB_PATH.is_file():
+        #     raise FileNotFoundError(f"Database not found: {self.DB_PATH}")
+        
+        print(document)
 
         #Create a cursor to execute SQL queries.
         cursor = conn.cursor()
@@ -42,13 +44,13 @@ class LocalDataStorage:
         conn.close()    
 
 
-    def print_data():
+    def print_data(self):
         pass
 
 if __name__ == "__main__":
 
     # 1. Instansiera klassen med DB_PATH
-  storage = LocalDataStorage(DB_PATH_TEST)
+    storage = LocalDataStorage(DB_PATH_TEST)
 
-  # 2. Anropa metoden på objektet (Python skickar med 'self' automatiskt)
-  storage.test_database(document=None)
+    # 2. Anropa metoden på objektet (Python skickar med 'self' automatiskt)
+    storage.test_database(document=None)
