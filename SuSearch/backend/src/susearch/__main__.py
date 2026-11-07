@@ -17,7 +17,7 @@ from repositories.database_test import LocalDataStorage
 BASE_DB = Path(__file__).resolve().parent
 
 # Create a path to the database file from repositories folder.
-DB_PATH = BASE_DB / "HUT_test.db"
+DB_PATH = BASE_DB / "repositories" / "HUT_test.db"
 
 class DataExtractor:
     """
