@@ -35,9 +35,16 @@ class DesktopBridge:
     """
     def __init__(self, search_engine: SearchEngine):
         self.search_engine = search_engine
+        self._window = None
 
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
+
+    def select_folder(self):
+        result = self._window.create_file_dialog(
+            dialog_type=webview.FileDialog.FOLDER
+        )
+        return result[0] if result else None
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path):
     file_handler = FileHandler()
@@ -181,6 +188,7 @@ if __name__ == "__main__":
             url="http://localhost:5173",
             js_api=bridge
         )
+        bridge._window = window
 
         webview.start(debug=True)
 
