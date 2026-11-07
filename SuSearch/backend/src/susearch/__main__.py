@@ -17,12 +17,12 @@ class DataExtractor:
     """
     def __init__(self):
         self._keyword_extractor = KeywordExtractor(     
-                    lan = "sv",
-                    n = 3, # Amount of words per phrase
-                    dedupLim = 0.4, # Let duplicates
-                    top = 30,  # Amount of results
-                    features = None
-                    )
+            lan = "sv",
+            n = 3, # Amount of words per phrase
+            dedupLim = 0.4, # Let duplicates
+            top = 30,  # Amount of results
+            features = None
+        )
         self._vectorizer = Vectorizer()
 
     def get_chunks(self, raw_document: str, document_name: str) -> list[str]:

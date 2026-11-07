@@ -21,7 +21,7 @@ class Chunk:
         ]
 
         return (
-            f"text: {self.text}, \n"
+            # f"text: {self.text}, \n"
             f"id: {self.id}, \n"
             f"source: {self.source}, \n"
             f"keywords: {formatted_keywords}, \n"
