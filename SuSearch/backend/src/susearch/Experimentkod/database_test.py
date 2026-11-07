@@ -5,11 +5,11 @@ from pathlib import Path
 BASE_DB = Path(__file__).resolve().parent
 
 # Create a path to the database file from repositories folder.
-DB_PATH = BASE_DB / "repositories" / "HUT_test.db"
+DB_PATH = BASE_DB.parent / "repositories" / "HUT_test.db"
 
 def test_database():
     #Connect to sqLite database
-    conn = sqlite3.connect("DB_PATH")
+    conn = sqlite3.connect(DB_PATH)
     
     # Check that the database file exists
     if not DB_PATH.is_file():
