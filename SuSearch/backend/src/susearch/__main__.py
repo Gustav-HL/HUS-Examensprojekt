@@ -11,6 +11,14 @@ from services.vector_extractor import Vectorizer
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 
+from repositories.database_test import LocalDataStorage
+
+# Get the directory where database_test file is located
+BASE_DB = Path(__file__).resolve().parent
+
+# Create a path to the database file from repositories folder.
+DB_PATH = BASE_DB / "HUT_test.db"
+
 class DataExtractor:
     """
     
@@ -39,7 +47,7 @@ class DesktopBridge:
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
 
-def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path):
+def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
     file_handler = FileHandler()
     folder_data = file_scanner.fetch_data()
 
@@ -77,15 +85,18 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                     print(ultimate_chunk)
 
                 print(doc)
+
+                # Send document object to database
+                database.test_database(doc)
             else:
                 print("Skipped (No text found or unsupported format).")
         except Exception as e:
             print(f"Error processing file: {e}")
 
 
-def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, name: str,):
+def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, name: str, database: LocalDataStorage):
     file_handler = FileHandler()
-
+    
     find_path = None
     for root, dirs, files in os.walk(folder):
         if name in files:
@@ -121,7 +132,10 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
             doc.add_chunk(ultimate_chunk)
             print(ultimate_chunk)
 
-        print(doc)
+        # print(doc)
+
+        # Send document object to database
+        database.test_database(doc)
     else:
         print(f"File {name} not found in {folder}\n :(")
 
@@ -146,7 +160,7 @@ if __name__ == "__main__":
     data_extractor = DataExtractor()
     file_scanner = DocumentScanner()
     search_engine = SearchEngine(data_extractor)
-
+    database = LocalDataStorage(DB_PATH)
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n")
     if start_view == "1":
         print("Started  terminal")
@@ -167,9 +181,9 @@ if __name__ == "__main__":
             name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
 
             if name.lower() == "all files":
-                process_all_documents(data_extractor, file_scanner, folder)
+                process_all_documents(data_extractor, file_scanner, folder,  database)
             else:
-                process_document(data_extractor, file_scanner, folder, name)
+                process_document(data_extractor, file_scanner, folder, name, database)
 
         else:
             print("Wrong Choice Buddy")
