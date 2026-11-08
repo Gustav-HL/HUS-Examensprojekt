@@ -10,7 +10,7 @@ class Vectorizer:
         max_tokens: int = 384,  
         batch_size: int = 16,
         device: str | None = None,
-    ):
+        ):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name).to(self.device).eval()
