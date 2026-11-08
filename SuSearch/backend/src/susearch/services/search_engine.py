@@ -3,12 +3,18 @@ from .file_handler import FileHandler
 
 
 class SearchEngine:
-
     def __init__(self, data_extractor):
         self._data_extractor = data_extractor
         self._file_handler = FileHandler()
 
     def process_query_document(self, file_path: Path):
+        """
+        Extract text, chunk the document and generate vectors for each chunk.
+
+            Args: Path(str): The filepath
+            Returns: list[tuple[Any, Any]]: A list of tuples where each element contains a chunk
+            and its vector. Returns an empty list if text extraction fails or no chunks are generated.
+        """
         document = self._file_handler.extract_text(file_path)
         if not document:
             return []
@@ -20,7 +26,13 @@ class SearchEngine:
         vectors = self._data_extractor._vectorizer.vectorize_chunks(chunks)
         return list(zip(chunks, vectors))
 
-    def process_query(self, query: str):
+    def process_query(self, query: str) -> dict:
+        """
+        Process a text query into its vector, keywords, and NER entities.
+
+            Args: query(str): The text query entered by user
+            Returns: Dict: A dictionary contaiting data extracted
+        """
         search_query = query.strip()
         if not search_query:
             return {}

@@ -20,3 +20,4 @@ frontend/.env.local
 SuSearch/backend/src/susearch/services/file_tracker.json
 SuSearch/backend/src/susearch/repositories/HUT_test.db
 SuSearch/backend/src/susearch/HUT_test.db
+SuSearch/backend/src/susearch/repositories/doc_1e428502f9bf.json

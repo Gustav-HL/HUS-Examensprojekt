@@ -28,7 +28,7 @@ class DataExtractor:
             lan = "sv",
             n = 3, # Amount of words per phrase
             dedupLim = 0.4, # Let duplicates
-            top = 30,  # Amount of results
+            top = 20,  # Amount of results
             features = None
         )
         self._vectorizer = Vectorizer()
@@ -132,6 +132,8 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
             doc.add_chunk(ultimate_chunk)
             print(ultimate_chunk)
 
+        saved_file = doc.save_to_json()
+        print(f"Saved JSON export to: {saved_file}")
         # print(doc)
 
         # Send document object to database

@@ -11,6 +11,10 @@ class LocalDataStorage:
         self.DB_PATH = DB_PATH or DB_PATH_TEST
     
     def test_database(self, document):
+        """
+        
+            Args: document(Document): Object representing a Document storing all data extracted from one document
+        """
         #Connect to sqLite database
         conn = sqlite3.connect(self.DB_PATH)
 
