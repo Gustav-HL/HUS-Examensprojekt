@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Test from './BackendTest';
 import TextSearch from './components/search/TextSearch';
+import DocumentSearch from './components/search/DocumentSearch';
 import './app.css'
 
 export default function App() {
     const [showTest, setShowTest] = useState(false);
     const [query, setQuery] = useState('');
+    const [selectedDocument, setSelectedDocument] = useState(null);
 
     return (
       <div id='wrapepr'>
@@ -14,6 +16,9 @@ export default function App() {
           value={query}
           onChange={setQuery}
           onSearch={(event) => event.preventDefault()} 
+          />
+          <DocumentSearch 
+          onFileChange={setSelectedDocument} 
           />
         </main>
 
