@@ -1,4 +1,4 @@
-export default function DocumentSearch({onFileChange}){
+export default function DocumentSearch({onFileChange}) {
     
     return (
         <div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Test from './BackendTest';
 import TextSearch from './components/search/TextSearch';
 import DocumentSearch from './components/search/DocumentSearch';
+import DisplaySelectedDocument from './components/search/DisplaySelectedDocument';
 import './app.css'
 
 export default function App() {
@@ -18,7 +19,12 @@ export default function App() {
           onSearch={(event) => event.preventDefault()} 
           />
           <DocumentSearch 
+          file={selectedDocument}
           onFileChange={setSelectedDocument} 
+          />
+          <DisplaySelectedDocument
+          file={selectedDocument}
+          onRemove={() => setSelectedDocument(null)}
           />
         </main>
 
