@@ -16,7 +16,7 @@ export default function App() {
           <TextSearch
           value={query}
           onChange={setQuery}
-          onSearch={(event) => event.preventDefault()} 
+          onSearch={(event) => console.log('Söktext: ', query)}
           />
           <DocumentSearch 
           file={selectedDocument}
