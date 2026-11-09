@@ -1,156 +1,162 @@
 <!doctype html>
 <html lang="sv">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Prototyp2." />
-    <title>Projektsök – Hållbar Utveckling Skåne</title>
-    <link rel="stylesheet" href="style.css" />
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Sök bland exempel</title>
+      <!-- Loads the shared visual styles for the site. -->
+    <link rel="stylesheet" href="./brand-base.css" />
   </head>
-  <body>
-    <header>
-      <div class="wrap nav">
-        <div class="brand">
-          <span class="mark" aria-hidden="true">HUT</span>
-          <span>Hållbar Utveckling Skåne</span>
-        </div>
+   <link rel="stylesheet" href="./brand-base.css" />
+ </head>
+ <body class="search-page">
+   <header class="site-header">
+       <h1 id="page-title">H.U.N.D</h1>
+   </header>
 
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Byt till mörkt tema">
-          <span id="themeIcon" aria-hidden="true">☾</span>
-          <span id="themeLabel">Mörkt läge</span>
-        </button>
-      </div>
-    </header>
 
-    <main>
-      <section class="wrap intro" id="sok">
-        <div class="intro-copy">
-          <div>
-            <span class="eyebrow">Projektsök</span>
-            <h1>Sök bland exempel</h1>
-          </div>
-        </div>
+   <main class="page">
+     <section class="search-section" aria-labelledby="page-title">
+       <h1 id="page-title">Hitta HUT</h1>
 
-        <div class="search-card">
-          <div class="search-row">
-            <input id="fileInput" type="file" accept=".pdf,.doc,.docx,.txt" hidden />
 
-            <button class="doc-button" id="fileButton" type="button" title="Välj ett dokument">
-              <img class="doc-icon" src="images/document.svg" alt="" aria-hidden="true" />
-              <span>Dokument</span>
-            </button>
+       <form class="search-panel" role="search">
+         <div class="search-row">
 
-            <div class="search-box">
-              <input id="searchInput" type="search" placeholder="Sök på till exempel matsvinn" 
-              aria-label="Sök bland exempel" autocomplete="off" />
-            </div>
 
-            <button class="search-button" id="searchButton" type="button" aria-label="Sök">
-              <img class="search-icon" src="images/search.svg" alt="" aria-hidden="true" />
-            </button>
-          </div>
+<!-- Lets the user enter a search query. -->
+           <label class="visually-hidden" for="search-input">Sök bland exempel</label>
+           <input
+             id="search-input"
+             class="search-input"
+             type="text"
+             placeholder=""/>
 
-          <p class="hint">Ingen riktig matchningfunktion än.</p>
 
-          <div class="chosen-file" id="chosenFile" aria-live="polite">
-            <div>
-              <strong>Valt dokument</strong>
-              <span id="fileName"></span>
-            </div>
-            <button class="remove-file" id="removeFile" type="button">Ta bort</button>
-          </div>
+           <button class="search-button" type="submit">Sök</button>
+         </div>
 
-          <div class="filter-line">
-            <button class="filter-button" id="filterButton" type="button" 
-            aria-expanded="false" aria-controls="filterPanel">
-              <img class="filter-icon" src="images/filter.svg" alt="" aria-hidden="true" />
-              <span>Filtrera</span>
-            </button>
-            <span class="active-filters" id="activeFilters">Inga filter valda</span>
-          </div>
 
-          <div class="filter-panel" id="filterPanel">
-            <div class="filter-grid">
-              <div class="filter-field">
-                <label for="themeFilter">Område</label>
-                <select id="themeFilter">
-                  <option value="">Alla områden</option>
-                  <option>Cirkulär ekonomi</option>
-                  <option>Klimatanpassning</option>
-                  <option>Transporter</option>
-                  <option>Energi</option>
-                  <option>Mat och konsumtion</option>
-                  <option>Biodiversitet</option>
-                </select>
-              </div>
 
-              <div class="filter-field">
-                <label for="methodFilter">Arbetssätt</label>
-                <select id="methodFilter">
-                  <option value="">Alla arbetssätt</option>
-                  <option>Workshop</option>
-                  <option>Co-design</option>
-                  <option>Dialogmöten</option>
-                  <option>Pilotstudie</option>
-                  <option>Utbildning</option>
-                </select>
-              </div>
-            </div>
 
-            <div class="filter-actions">
-              <button class="clear-button" id="clearFilters" type="button">Nollställ</button>
-            </div>
-          </div>
-        </div>
-      </section>
+           <div class="filter-row">
+               <label for="category-select">Kategori</label>
+               <select id="category-select">
+               <option value="">Alla kategorier</option>
+               <option value="mat">Mat och konsumtion</option>
+               <option value="cirkular">Cirkulär ekonomi</option>
+               <option value="klimat">Klimatanpassning</option>
+               <option value="transport">Transporter</option>
+               <option value="energi">Energi</option>
+               <option value="biodiversitet">Biodiversitet</option>
+               </select>
+  
+               <label for="tag-select">Nyckelord</label>
+               <select id="tag-select">
+               <option value="">Alla nyckelord</option>
+               <option value="matsvinn">Matsvinn</option>
+               <option value="återbruk">Återbruk</option>
+               <option value="resurser">Resurser</option>
+               <option value="klimat">Klimat</option>
+               <option value="stadsutveckling">Stadsutveckling</option>
+               <option value="mobilitet">Mobilitet</option>
+               <option value="transport">Transport</option>
+               <option value="energi">Energi</option>
+               <option value="ekosystem">Ekosystem</option>
+               <option value="natur">Natur</option>
+               </select>
+  
+               <button class="filter-button" type="submit">
+               Filtrera
+               </button>
+         </div>
+       </form>
+     </section>
 
-      <section class="wrap results" aria-labelledby="results-title">
-        <div class="results-head">
-          <div>
-            <span class="eyebrow">Resultat</span>
-            <h2 id="results-title">Exempel</h2>
-          </div>
-          <span class="count" id="resultCount">6 exempel</span>
-        </div>
 
-        <div class="loading-state" id="loadingState" hidden>
-          <div>
-            <div class="spinner"></div>
-            <strong id="loadingText">Letar bland projekten...</strong>
-          </div>
-        </div>
+     <section class="results-section" aria-labelledby="results-title">
+       <div class="results-heading">
+         <div>
+           <h2 id="results-title">Resultat</h2>
+         </div>
+         <p class="result-count">6 exempel</p>
+       </div>
 
-        <div class="empty-state" id="emptyState" hidden>
-          <div>
-            <div class="empty-symbol">⌕</div>
-            <h3>Inga exempel matchade</h3>
-            <p>Prova färre ord eller ändra filtren.</p>
-          </div>
-        </div>
 
-        <div class="result-list" id="resultList"></div>
-      </section>
-    </main>
+       <div class="result-grid">
+         <article class="result-card">
+           <p class="category">Mat och konsumtion</p>
+           <h3>Matsvinn</h3>
+           <p class="description">
+             Ett enkelt exempel om att minska matsvinn i skolor och offentliga kök.
+           </p>
+           <div class="card-footer">
+             <p class="tags">Mat <span>·</span> Matsvinn</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
 
-    <footer>
-      <div class="wrap">Prototyp</div>
-    </footer>
 
-    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+         <article class="result-card">
+           <p class="category">Cirkulär ekonomi</p>
+           <h3>Cirkulär ekonomi</h3>
+           <p class="description">
+             Ett exempel om återbruk, delning och hur material kan användas längre.
+           </p>
+           <div class="card-footer">
+             <p class="tags">Återbruk <span>·</span> Resurser</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
 
-    <aside class="drawer" id="projectDrawer" role="dialog" aria-modal="true" 
-    aria-labelledby="detailTitle" aria-hidden="true">
-      <div class="drawer-top">
-        <span class="eyebrow">Exempel</span>
-        <button class="close-button" id="closeDrawer" type="button" aria-label="Stäng exempel">×</button>
-      </div>
-      <div id="drawerContent"></div>
-    </aside>
 
-    <div class="prototype-toast" id="toast" role="status">
-      Exempel-länk.
-    </div>
+         <article class="result-card">
+           <p class="category">Klimatanpassning</p>
+           <h3>Klimatanpassning</h3>
+           <p class="description">
+             Ett exempel om skyfall, värme och grönare bostadsområden.
+           </p>
+           <div class="card-footer">
+             <p class="tags">Klimat <span>·</span> Stadsutveckling</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
 
-    <script src="script.js"></script>
-  </body>
+
+         <article class="result-card">
+           <p class="category">Transporter</p>
+           <h3>Hållbara transporter</h3>
+           <p class="description">Ett exempel om hållbara resor och transporter.</p>
+           <div class="card-footer">
+             <p class="tags">Mobilitet <span>·</span> Transport</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
+
+
+         <article class="result-card">
+           <p class="category">Energi</p>
+           <h3>Energi</h3>
+           <p class="description">Ett exempel om lokal och hållbar energianvändning.</p>
+           <div class="card-footer">
+             <p class="tags">Energi <span>·</span> Klimat</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
+
+
+         <article class="result-card">
+           <p class="category">Biodiversitet</p>
+           <h3>Biologisk mångfald</h3>
+           <p class="description">Ett exempel om att stärka den biologiska mångfalden.</p>
+           <div class="card-footer">
+             <p class="tags">Ekosystem <span>·</span> Natur</p>
+             <a class="card-action" href="./result.html">Visa</a>
+           </div>
+         </article>
+       </div>
+     </section>
+   </main>
+ </body>
 </html>
+
