@@ -1,24 +1,7 @@
-export default function TextSearch({value, onChange, onSearch}) {
-    
-    /**
-     * When the user clicks on the Search button 
-     * or presses Enter in the searchfield. The page gets prevented from reloading.
-     * If the textfield is empty, a message is displayed and stops the search.
-     * If the search is valid the function continues the search.
-     */
-    function handleSubmit(event){
-        event.preventDefault();
-
-        if (!value.trim()){
-            alert('OBS! Ange sökord eller mening.');
-            return;
-        }
-        onSearch(event);
-    }
-
+export default function TextSearch({value, onChange}) {
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <label htmlFor="searchText"> Sök efter projekt </label>
 
             <input
@@ -30,7 +13,7 @@ export default function TextSearch({value, onChange, onSearch}) {
             />
 
             <button type="submit">Sök</button>
-        </form>
+        </div>
     );
 }
 
