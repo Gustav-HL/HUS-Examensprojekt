@@ -8,7 +8,7 @@ import DisplaySelectedDocumentTitle from '../components/search/DisplaySelectedDo
 import FilterPanel from '../components/filters/FilterPanel';
 
 //import ResultCount from '../components/results/ResultCount';
-//import SearchResults from '../components/results/SearchResults';
+import SearchResults from '../components/results/SearchResults';
 
 /**
  * Main search page for SuSearch.
@@ -131,7 +131,7 @@ export default function SearchPage({
             <ResultCount count={results.length} />
           )}
            */}  
-            
+
           {loading ? (
             <p role="status">
               Söker efter projekt...
