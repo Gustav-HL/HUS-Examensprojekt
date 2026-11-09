@@ -3,7 +3,7 @@ import Test from './BackendTest';
 import TextSearch from './components/search/TextSearch';
 import DocumentSearch from './components/search/DocumentSearch';
 import DisplaySelectedDocument from './components/search/DisplaySelectedDocument';
-import './app.css'
+import './App.css'
 
 export default function App() {
     const [showTest, setShowTest] = useState(false);
