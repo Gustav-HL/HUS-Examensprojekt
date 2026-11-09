@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projektdetalj - H.U.N.D</title>
+    <link rel="stylesheet" href="./brand-base.css" />
+  </head>
+
+  <body class="min-h-screen bg-background font-body text-body leading-body tracking-body text-text">
+    <header class="border-b border-light-gray">
+      <a class="mx-auto flex min-h-20 max-w-6xl items-center justify-center px-4 font-heading text-h2 font-bold tracking-heading-tight text-primary no-underline"
+        href="./index.html"
+        aria-label="H.U.N.D - Hittad HUT">
+        <span class="text-center">
+          <span class="block">H.U.N.D</span>
+          <span class="block font-body text-sm font-medium text-text">Hittad HUT</span>
+        </span>
+      </a>
+    </header>
+
+    <nav
+      class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2 px-4 py-3" aria-label="Huvudnavigation">
+      <a class="rounded-lg px-3 py-2 font-medium text-text hover:bg-light-gray" href="./index.html">
+        Sök
+      </a>
+      <a class="rounded-lg px-3 py-2 font-medium text-text hover:bg-light-gray" href="#">
+        Arkiv
+      </a>
+      <a class="rounded-lg px-3 py-2 font-medium text-text hover:bg-light-gray" href="#">
+        Tema
+      </a>
+      <a class="rounded-lg px-3 py-2 font-medium text-text hover:bg-light-gray" href="#">
+        Projekt
+      </a>
+    </nav>
+
+    <main class="mx-auto max-w-6xl px-4 py-6">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1fr)_16rem]">
+        <article class="flex min-w-0 flex-col justify-between gap-12 py-6">
+          <section aria-labelledby="project-title">
+            <p class="mb-2 text-sm font-bold uppercase tracking-heading-wide text-secondary">
+              Hittad HUT
+            </p>
+            <h1
+              id="project-title"
+              class="mb-2 font-heading text-h1 font-extrabold leading-tight tracking-heading-tight text-primary"
+            >
+              Titel
+            </h1>
+            <p class="max-w-prose">
+              Kort sammanfattning av projektet. Vad handlar det om? Vad är syftet?
+            </p>
+          </section>
+
+          <section aria-labelledby="related-title">
+            <h2
+              id="related-title"
+              class="mb-4 font-heading text-h3 font-bold tracking-heading-tight text-primary">
+              Relaterade projekt
+            </h2>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <a
+                class="rounded-card bg-related-card p-4 text-text no-underline hover:shadow-sm"href="#">
+                <span class="mb-2 block text-sm font-bold uppercase tracking-heading-wide text-secondary">
+                  Tema
+                </span>
+                <span class="mb-2 block font-heading text-h5 font-bold text-primary">Titel</span>
+                <span class="text-sm text-primary underline">Läs projekt</span>
+              </a>
+
+              <a
+                class="rounded-card bg-related-card p-4 text-text no-underline hover:shadow-sm"
+                href="#">
+                <span class="mb-2 block text-sm font-bold uppercase tracking-heading-wide text-secondary">
+                  Tema
+                </span>
+                <span class="mb-2 block font-heading text-h5 font-bold text-primary">
+                  Relaterat projekt
+                </span>
+                <span class="text-sm text-primary underline">Läs projekt</span>
+              </a>
+            </div>
+          </section>
+        </article>
+
+        <aside class="grid content-start gap-4" aria-label="Projektinformation">
+          <section
+            class="rounded-card bg-facts-panel p-4"
+            aria-labelledby="facts-title"
+          >
+            <h2 class="mb-3 font-heading text-h5 font-bold text-primary" id="facts-title">
+              Projektfakta
+            </h2>
+            <dl class="grid gap-2 text-sm">
+              <div class="flex justify-between gap-4">
+                <dt class="text-text/70">Finansiär</dt>
+           
+        
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-text/70">Period</dt>
+          
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-text/70">Plats</dt>
+        
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-text/70">Finansiering</dt>
+    
+              </div>
+              <div class="flex justify-between gap-4">
+                <dt class="text-text/70">Status</dt>
+    
+              </div>
+            </dl>
+          </section>
+
+          <section
+            class="rounded-card border border-light-gray bg-surface p-4"
+            aria-labelledby="documents-title">
+            <h2 class="mb-3 font-heading text-h5 font-bold text-primary" id="documents-title">
+              Dokument
+            </h2>
+            <ul class="m-0 grid list-none gap-3 p-0 text-sm">
+              <li>
+                <a class="flex justify-between gap-3 text-text hover:text-link-hover" href="#">
+                  <span>Namn och filstorlek</span>
+                  <span class="text-secondary">Ladda ner</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex justify-between gap-3 text-text hover:text-link-hover" href="#">
+                  <span>Dokumentnamn</span>
+                  <span class="text-secondary">Ladda ner</span>
+                </a>
+              </li>
+              <li>
+                <a class="flex justify-between gap-3 text-text hover:text-link-hover" href="#">
+                  <span>Dokumentnamn</span>
+                  <span class="text-secondary">Ladda ner</span>
+                </a>
+              </li>
+            </ul>
+            <p class="mb-0 mt-3 text-xs">Klicka på ett dokument för att öppna det.</p>
+          </section>
+
+          <section
+            class="rounded-card bg-navy p-4 text-white"
+            aria-labelledby="contact-title">
+            <p class="mb-1 text-sm text-white/80">Person</p>
+
+          </section>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
