@@ -43,6 +43,7 @@ class DesktopBridge:
     """
     def __init__(self, search_engine: SearchEngine):
         self.search_engine = search_engine
+        self._window = None
 
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
@@ -197,6 +198,7 @@ if __name__ == "__main__":
             url="http://localhost:5173",
             js_api=bridge
         )
+        bridge._window = window
 
         webview.start(debug=True)
 

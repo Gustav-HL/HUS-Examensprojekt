@@ -4,7 +4,7 @@
  * 
  * @param {Object} props - Component properties.
  * @param {string} props.selectedFolder - Currently selected folder path.
- * @param {Function} props.OnSelectFolder - Handles folder selection.
+ * @param {Function} props.onSelectFolder - Handles folder selection.
  */
 export default function FolderSelector({selectedFolder, onSelectFolder}) {
     return (
