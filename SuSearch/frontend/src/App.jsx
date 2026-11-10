@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
+import TextSearch from './components/search/TextSearch';
+import DocumentSearch from './components/search/DocumentSearch';
+import DisplaySelectedDocument from './components/search/DisplaySelectedDocument';
 import SearchPage from './pages/SearchPage';
 import './App.css'
 
