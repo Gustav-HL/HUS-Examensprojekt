@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import Test from './BackendTest';
-import TextSearch from './components/search/TextSearch';
-import DocumentSearch from './components/search/DocumentSearch';
-import DisplaySelectedDocument from './components/search/DisplaySelectedDocument';
+import SearchPage from './pages/SearchPage';
 import './app.css'
 
 export default function App() {
     const [showTest, setShowTest] = useState(false);
-    const [query, setQuery] = useState('');
-    const [selectedDocument, setSelectedDocument] = useState(null);
+    const mockProjects = [
+      { id: 'doc_1', name: 'Hållbara transporter.pdf'},
+      { id: 'doc_2', name: 'Återbruk i Malmö.docx'}
+    ];
 
     return (
       <div id='wrapepr'>
-        <main>
-          <TextSearch
-          value={query}
-          onChange={setQuery}
-          onSearch={(event) => console.log('Söktext: ', query)}
-          />
-          <DocumentSearch 
-          file={selectedDocument}
-          onFileChange={setSelectedDocument} 
-          />
-          <DisplaySelectedDocument
-          file={selectedDocument}
-          onRemove={() => setSelectedDocument(null)}
-          />
-        </main>
+      
+      {/* When the user submits a search, 
+        searchData receives the search text, filters and selected document. 
+        The data is then logged to the console. */}
+      <SearchPage
+        results={mockProjects}
+        onSearch={(searchData) => console.log('Sökning: ', searchData)}
+      />  
+
+    
 
         {/* Testing the backend connection please dont change this or the child component //GHL */}
         <button id='test-btn'
