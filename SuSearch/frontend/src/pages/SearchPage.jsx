@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 import TextSearch from '../components/search/TextSearch';
 import DocumentSearch from '../components/search/DocumentSearch';
-import DisplaySelectedDocument from '../components/search/DisplaySelectedDocument';
+import DisplaySelectedDocumentTitle from '../components/search/DisplaySelectedDocumentTitle';
 
 import FilterPanel from '../components/filters/FilterPanel';
 
-import ResultCount from '../components/results/ResultCount';
+//import ResultCount from '../components/results/ResultCount';
 import SearchResults from '../components/results/SearchResults';
 
 /**
@@ -37,6 +37,11 @@ export default function SearchPage({
    */
   const handleSearch = (event) => {
     event?.preventDefault();
+
+    if(!searchTerm.trim() && !selectedDocument){
+      alert('OBS! Ange sökord, mening eller välj ett dokument.');
+      return;
+    }
 
     setHasSearched(true);
 
@@ -82,20 +87,19 @@ export default function SearchPage({
             från tidigare projekt.
           </p>
 
-          <TextSearch
+          <form onSubmit={handleSearch}>
+            <DocumentSearch
+            onFileChange={setSelectedDocument}
+            />
+
+            <TextSearch
             value={searchTerm}
             onChange={setSearchTerm}
-            onSearch={handleSearch}
-          />
-
-          <DocumentSearch
-            file={selectedDocument}
-            onFileChange={setSelectedDocument}
-            onSearch={handleSearch}
-          />
+            />
+          </form>
 
           {selectedDocument && (
-            <DisplaySelectedDocument
+            <DisplaySelectedDocumentTitle
               file={selectedDocument}
               onRemove={handleRemoveDocument}
             />
@@ -122,10 +126,11 @@ export default function SearchPage({
           <h2 id="results-heading">
             Sökresultat
           </h2>
-
+          {/*
           {!loading && hasSearched && (
             <ResultCount count={results.length} />
           )}
+           */}  
 
           {loading ? (
             <p role="status">
