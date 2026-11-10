@@ -1,4 +1,4 @@
-export default function DisplaySelectedDocument({ file, onRemove }) {
+export default function DisplaySelectedDocumentTitle({ file, onRemove }) {
     if (!file) return null;
 
     return (
