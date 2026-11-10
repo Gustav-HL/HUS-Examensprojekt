@@ -39,17 +39,25 @@ class KeywordExtractor:
         raw_results = self._ner(chunks, batch_size=8)
         # print(raw_results)
         results = []
+        ALLOWED_TYPES = {"ORG", "PER", "LOC"}
 
         for chunk_entities in raw_results:
             cleaned_entities = []
+            seen = set()
 
             for ent in chunk_entities:
+                word = ent.get("word", "").strip()
+                if ent["entity_group"] not in ALLOWED_TYPES:
+                    continue
 
-                cleaned_entities.append({
-                    "entity_group": ent["entity_group"],
-                    "word": ent["word"].strip(),
-                    "score": round(float(ent["score"]), 4)
-                })
+                dedup_key = word.lower()
+                if dedup_key not in seen:
+                    seen.add(dedup_key)
+                    cleaned_entities.append({
+                        "entity_group": ent["entity_group"],
+                        "word": ent["word"].strip(),
+                        "score": round(float(ent["score"]), 4)
+                    })
                 
             results.append(cleaned_entities)
 

@@ -1,778 +1,194 @@
 {
     "folders": {
-        "Bifogade filer": {
-            "id": "f1",
-            "name": "Bifogade filer"
+        "repositories": {
+            "id": "f21",
+            "name": "repositories"
         },
-        "Bilder": {
-            "id": "f2",
-            "name": "Bilder"
+        "models": {
+            "id": "f22",
+            "name": "models"
         },
-        "Dokument": {
-            "id": "f3",
-            "name": "Dokument"
+        "Experimentkod": {
+            "id": "f23",
+            "name": "Experimentkod"
         },
-        "Hälsodeklaration": {
-            "id": "f4",
-            "name": "Hälsodeklaration"
+        "services": {
+            "id": "f24",
+            "name": "services"
         },
-        "TBS": {
-            "id": "f5",
-            "name": "TBS"
+        "repositories/__pycache__": {
+            "id": "f25",
+            "name": "__pycache__"
         },
-        "Bilder\\iCloud Photos": {
-            "id": "f6",
-            "name": "iCloud Photos"
+        "models/__pycache__": {
+            "id": "f26",
+            "name": "__pycache__"
         },
-        "Bilder\\Ny mapp": {
-            "id": "f7",
-            "name": "Ny mapp"
-        },
-        "Bilder\\Progress": {
-            "id": "f8",
-            "name": "Progress"
-        },
-        "Bilder\\Skärmbilder": {
-            "id": "f9",
-            "name": "Skärmbilder"
-        },
-        "Bilder\\Wafi Fucked Up": {
-            "id": "f10",
-            "name": "Wafi Fucked Up"
-        },
-        "Bilder\\Skärmbilder\\NCC": {
-            "id": "f11",
-            "name": "NCC"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Ny mapp": {
-            "id": "f12",
-            "name": "Ny mapp"
-        },
-        "Dokument\\1IK031": {
-            "id": "f13",
-            "name": "1IK031"
-        },
-        "Dokument\\Adobe": {
-            "id": "f14",
-            "name": "Adobe"
-        },
-        "Dokument\\Anpassade Office-mallar": {
-            "id": "f15",
-            "name": "Anpassade Office-mallar"
-        },
-        "Dokument\\SU": {
-            "id": "f16",
-            "name": "SU"
-        },
-        "TBS\\Engelska 7": {
-            "id": "f17",
-            "name": "Engelska 7"
-        },
-        "TBS\\Gymnasiearbete": {
-            "id": "f18",
-            "name": "Gymnasiearbete"
-        },
-        "TBS\\Psykologi 1": {
-            "id": "f19",
-            "name": "Psykologi 1"
-        },
-        "TBS\\Svenska 3": {
-            "id": "f20",
-            "name": "Svenska 3"
+        "services/__pycache__": {
+            "id": "f27",
+            "name": "__pycache__"
         }
     },
     "files": {
-        ".849C9593-D756-4E56-8D6E-42412F2A707B": {
-            "id": "d10",
-            "name": ".849C9593-D756-4E56-8D6E-42412F2A707B"
-        },
-        "Bok 1.xlsx": {
-            "id": "d11",
-            "name": "Bok 1.xlsx"
-        },
-        "Bok.xlsx": {
-            "id": "d12",
-            "name": "Bok.xlsx"
-        },
-        "Conspiracy Theory Manus.docx": {
-            "id": "d13",
-            "name": "Conspiracy Theory Manus.docx"
-        },
-        "CV - Leonard Werder Eng.docx": {
-            "id": "d14",
-            "name": "CV - Leonard Werder Eng.docx"
-        },
-        "da336a_proketförslag_grupp_15.pptx": {
-            "id": "d15",
-            "name": "da336a_proketförslag_grupp_15.pptx"
-        },
-        "desktop.ini": {
-            "id": "d16",
-            "name": "desktop.ini"
-        },
-        "Dokument 1.docx": {
-            "id": "d17",
-            "name": "Dokument 1.docx"
-        },
-        "Dokument 2.docx": {
-            "id": "d18",
-            "name": "Dokument 2.docx"
-        },
-        "Dokument 3.docx": {
-            "id": "d19",
-            "name": "Dokument 3.docx"
-        },
-        "Dokument.docx": {
-            "id": "d20",
-            "name": "Dokument.docx"
-        },
-        "Filmanalys Beteende Perspektiv Leonard Werder.docx": {
-            "id": "d21",
-            "name": "Filmanalys Beteende Perspektiv Leonard Werder.docx"
-        },
-        "Filmanalys Mean Girls.docx": {
-            "id": "d22",
-            "name": "Filmanalys Mean Girls.docx"
-        },
-        "Fullmaktsgivare 123.docx": {
-            "id": "d23",
-            "name": "Fullmaktsgivare 123.docx"
-        },
-        "Hemtenta - Leonard Werder.pdf": {
-            "id": "d24",
-            "name": "Hemtenta - Leonard Werder.pdf"
-        },
-        "Hemtenta 2.0 - Leonard Werder.pdf": {
-            "id": "d25",
-            "name": "Hemtenta 2.0 - Leonard Werder.pdf"
-        },
-        "InkedIMG-3011_LI.jpg": {
-            "id": "d26",
-            "name": "InkedIMG-3011_LI.jpg"
-        },
-        "INLÄMNING+Ma2b+geomet.pdf": {
-            "id": "d27",
-            "name": "INLÄMNING+Ma2b+geomet.pdf"
-        },
-        "Joe Biden Inagural Address by Leonard Werder.docx": {
-            "id": "d28",
-            "name": "Joe Biden Inagural Address by Leonard Werder.docx"
-        },
-        "Leonard BP18a Prov.docx": {
-            "id": "d29",
-            "name": "Leonard BP18a Prov.docx"
-        },
-        "Logga+UF (1).png": {
-            "id": "d30",
-            "name": "Logga+UF (1).png"
-        },
-        "Logga+UF.png": {
-            "id": "d31",
-            "name": "Logga+UF.png"
-        },
-        "Matte 2B Uppgift Söndag.docx": {
-            "id": "d32",
-            "name": "Matte 2B Uppgift Söndag.docx"
-        },
-        "moas.docx": {
-            "id": "d33",
-            "name": "moas.docx"
-        },
-        "new-instagram-logo-png-transparent-light.png": {
-            "id": "d34",
-            "name": "new-instagram-logo-png-transparent-light.png"
-        },
-        "Nyckeltal.docx": {
-            "id": "d35",
-            "name": "Nyckeltal.docx"
-        },
-        "Personligt Brev - Leonard Werder.docx": {
-            "id": "d36",
-            "name": "Personligt Brev - Leonard Werder.docx"
-        },
-        "Personligt valv.lnk": {
-            "id": "d37",
-            "name": "Personligt valv.lnk"
-        },
-        "personligt-brev-mall 1.docx": {
-            "id": "d38",
-            "name": "personligt-brev-mall 1.docx"
-        },
-        "personligt-brev-mall 2.docx": {
-            "id": "d39",
-            "name": "personligt-brev-mall 2.docx"
-        },
-        "personligt-brev-mall.docx": {
-            "id": "d40",
-            "name": "personligt-brev-mall.docx"
-        },
-        "Presentation.pptx": {
-            "id": "d41",
-            "name": "Presentation.pptx"
-        },
-        "Redovisning.docx": {
-            "id": "d42",
-            "name": "Redovisning.docx"
-        },
-        "Religion.docx": {
-            "id": "d43",
-            "name": "Religion.docx"
-        },
-        "Replay_2021-09-23_01-51-28_Trim.mp4": {
-            "id": "d44",
-            "name": "Replay_2021-09-23_01-51-28_Trim.mp4"
-        },
-        "report.pdf": {
-            "id": "d45",
-            "name": "report.pdf"
-        },
-        "RPReplay_Final1632943818.mov": {
-            "id": "d46",
-            "name": "RPReplay_Final1632943818.mov"
-        },
-        "Sys_Demo_Tenta.docx": {
-            "id": "d47",
-            "name": "Sys_Demo_Tenta.docx"
-        },
-        "Sys_Demo_Tenta.minkopia1.docx": {
-            "id": "d48",
-            "name": "Sys_Demo_Tenta.minkopia1.docx"
-        },
-        "UF Logga, Pris.docx": {
-            "id": "d49",
-            "name": "UF Logga, Pris.docx"
-        },
-        "UF.jpg": {
-            "id": "d50",
-            "name": "UF.jpg"
-        },
-        "unnamed.jpg": {
-            "id": "d51",
-            "name": "unnamed.jpg"
-        },
-        "Bilder\\Progress\\Fråga 1 1.jpg": {
-            "id": "d52",
-            "name": "Fråga 1 1.jpg"
-        },
-        "Bilder\\Progress\\Fråga 1 2.jpg": {
-            "id": "d53",
-            "name": "Fråga 1 2.jpg"
-        },
-        "Bilder\\Progress\\Fråga 1 3.jpg": {
-            "id": "d54",
-            "name": "Fråga 1 3.jpg"
-        },
-        "Bilder\\Progress\\Fråga 1+2.jpg": {
-            "id": "d55",
-            "name": "Fråga 1+2.jpg"
-        },
-        "Bilder\\Progress\\Fråga 2 1.jpg": {
-            "id": "d56",
-            "name": "Fråga 2 1.jpg"
-        },
-        "Bilder\\Progress\\Fråga 2 2.jpg": {
-            "id": "d57",
-            "name": "Fråga 2 2.jpg"
-        },
-        "Bilder\\Progress\\Fråga 2 3.jpg": {
-            "id": "d58",
-            "name": "Fråga 2 3.jpg"
-        },
-        "Bilder\\Progress\\Matte+2b+Statistik.docx": {
-            "id": "d59",
-            "name": "Matte+2b+Statistik.docx"
-        },
-        "Bilder\\Progress\\Treasure Island.pdf": {
-            "id": "d60",
-            "name": "Treasure Island.pdf"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09 (1).png": {
-            "id": "d61",
-            "name": "2020-05-09 (1).png"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09 (2).png": {
-            "id": "d62",
-            "name": "2020-05-09 (2).png"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09 (3).png": {
-            "id": "d63",
-            "name": "2020-05-09 (3).png"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09 (3)_LI.jpg": {
-            "id": "d64",
-            "name": "2020-05-09 (3)_LI.jpg"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09 (4)_LI.jpg": {
-            "id": "d65",
-            "name": "2020-05-09 (4)_LI.jpg"
-        },
-        "Bilder\\Skärmbilder\\2020-05-09.png": {
-            "id": "d66",
-            "name": "2020-05-09.png"
-        },
-        "Bilder\\Skärmbilder\\2020-05-12 (2).png": {
-            "id": "d67",
-            "name": "2020-05-12 (2).png"
-        },
-        "Bilder\\Skärmbilder\\2020-05-12.png": {
-            "id": "d68",
-            "name": "2020-05-12.png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild (1).png": {
-            "id": "d69",
-            "name": "Skärmbild (1).png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild (2).png": {
-            "id": "d70",
-            "name": "Skärmbild (2).png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild (3).png": {
-            "id": "d71",
-            "name": "Skärmbild (3).png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild (4).png": {
-            "id": "d72",
-            "name": "Skärmbild (4).png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild (5).png": {
-            "id": "d73",
-            "name": "Skärmbild (5).png"
-        },
-        "Bilder\\Skärmbilder\\Skärmbild 2021-09-26 041955.png": {
-            "id": "d74",
-            "name": "Skärmbild 2021-09-26 041955.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Behövs Inte 2.png": {
-            "id": "d75",
-            "name": "Behövs Inte 2.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Behövs Inte 3.png": {
-            "id": "d76",
-            "name": "Behövs Inte 3.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Behövs Inte.png": {
-            "id": "d77",
-            "name": "Behövs Inte.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 10.png": {
-            "id": "d78",
-            "name": "Fråga 10.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 3(2).png": {
-            "id": "d79",
-            "name": "Fråga 3(2).png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 3.png": {
-            "id": "d80",
-            "name": "Fråga 3.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 7 och 8.png": {
-            "id": "d81",
-            "name": "Fråga 7 och 8.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 9(3).png": {
-            "id": "d82",
-            "name": "Fråga 9(3).png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Fråga 9.png": {
-            "id": "d83",
-            "name": "Fråga 9.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Kanske 2.png": {
-            "id": "d84",
-            "name": "Kanske 2.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Kanske.png": {
-            "id": "d85",
-            "name": "Kanske.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\NCC.pdf": {
-            "id": "d86",
-            "name": "NCC.pdf"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Vet Inte 2.png": {
-            "id": "d87",
-            "name": "Vet Inte 2.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Vet Inte.png": {
-            "id": "d88",
-            "name": "Vet Inte.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Balansräkning Del 1.png": {
-            "id": "d89",
-            "name": "Balansräkning Del 1.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Balansräkning Del 2.png": {
-            "id": "d90",
-            "name": "Balansräkning Del 2.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Resultat.png": {
-            "id": "d91",
-            "name": "Resultat.png"
-        },
-        "Bilder\\Skärmbilder\\NCC\\Ny mapp\\Totalt Resultat.png": {
-            "id": "d92",
-            "name": "Totalt Resultat.png"
-        },
-        "Bilder\\Wafi Fucked Up\\beroende.png": {
-            "id": "d93",
-            "name": "beroende.png"
-        },
-        "Bilder\\Wafi Fucked Up\\beroende2.png": {
-            "id": "d94",
-            "name": "beroende2.png"
-        },
-        "Bilder\\Wafi Fucked Up\\Namnlos_video_Gjord_med_Clipchamp_5.mp4": {
-            "id": "d95",
-            "name": "Namnlos_video_Gjord_med_Clipchamp_5.mp4"
-        },
-        "Bilder\\Wafi Fucked Up\\Replay_2021-09-27_22-04-29_Trim.mp4": {
-            "id": "d96",
-            "name": "Replay_2021-09-27_22-04-29_Trim.mp4"
-        },
-        "Bilder\\Wafi Fucked Up\\Skärmbild 2021-12-16 164933.png": {
-            "id": "d97",
-            "name": "Skärmbild 2021-12-16 164933.png"
-        },
-        "Bilder\\Wafi Fucked Up\\unknown.png": {
-            "id": "d98",
-            "name": "unknown.png"
-        },
-        "Bilder\\Wafi Fucked Up\\wafi paint 2.png": {
-            "id": "d99",
-            "name": "wafi paint 2.png"
-        },
-        "Bilder\\Wafi Fucked Up\\Wafi paint.png": {
-            "id": "d100",
-            "name": "Wafi paint.png"
-        },
-        "Bilder\\Wafi Fucked Up\\Wafi.mp4": {
-            "id": "d101",
-            "name": "Wafi.mp4"
-        },
-        "Bilder\\Wafi Fucked Up\\XERATHEN.png": {
-            "id": "d102",
-            "name": "XERATHEN.png"
-        },
-        "Dokument\\35.docx": {
-            "id": "d103",
-            "name": "35.docx"
-        },
-        "Dokument\\39.docx": {
-            "id": "d104",
-            "name": "39.docx"
-        },
-        "Dokument\\49.docx": {
-            "id": "d105",
-            "name": "49.docx"
-        },
-        "Dokument\\Anteckningar GyA.docx": {
-            "id": "d106",
-            "name": "Anteckningar GyA.docx"
-        },
-        "Dokument\\Argumenterande Tal.docx": {
-            "id": "d107",
-            "name": "Argumenterande Tal.docx"
-        },
-        "Dokument\\Argumenterande Tal.pptx": {
-            "id": "d108",
-            "name": "Argumenterande Tal.pptx"
-        },
-        "Dokument\\Argumenterande text.docx": {
-            "id": "d109",
-            "name": "Argumenterande text.docx"
-        },
-        "Dokument\\Brottsligt Beteende.docx": {
-            "id": "d110",
-            "name": "Brottsligt Beteende.docx"
-        },
-        "Dokument\\Budget Student.xlsx": {
-            "id": "d111",
-            "name": "Budget Student.xlsx"
-        },
-        "Dokument\\Coronakrisen.docx": {
-            "id": "d112",
-            "name": "Coronakrisen.docx"
-        },
-        "Dokument\\Dansak Ord .docx": {
-            "id": "d113",
-            "name": "Dansak Ord .docx"
-        },
-        "Dokument\\Dansk Kap 2.pdf": {
-            "id": "d114",
-            "name": "Dansk Kap 2.pdf"
-        },
-        "Dokument\\Danska Artikel.docx": {
-            "id": "d115",
-            "name": "Danska Artikel.docx"
-        },
-        "Dokument\\Database1.accdb": {
-            "id": "d116",
-            "name": "Database1.accdb"
-        },
-        "Dokument\\GyA färdiga arbetet 2.0.docx": {
-            "id": "d117",
-            "name": "GyA färdiga arbetet 2.0.docx"
-        },
-        "Dokument\\GyA Mall för arbete.docx": {
-            "id": "d118",
-            "name": "GyA Mall för arbete.docx"
-        },
-        "Dokument\\Gymnasiearbete Leonard Werder.docx": {
-            "id": "d119",
-            "name": "Gymnasiearbete Leonard Werder.docx"
-        },
-        "Dokument\\Historiebruk.docx": {
-            "id": "d120",
-            "name": "Historiebruk.docx"
-        },
-        "Dokument\\Install STAR WARS The Old Republic.log": {
-            "id": "d121",
-            "name": "Install STAR WARS The Old Republic.log"
-        },
-        "Dokument\\Instuderingsfrågor 1-13.docx": {
-            "id": "d122",
-            "name": "Instuderingsfrågor 1-13.docx"
-        },
-        "Dokument\\Instuderingsfrågor.docx": {
-            "id": "d123",
-            "name": "Instuderingsfrågor.docx"
-        },
-        "Dokument\\Leonadimproved.docx": {
-            "id": "d124",
-            "name": "Leonadimproved.docx"
-        },
-        "Dokument\\Leonard's Notebook.url": {
-            "id": "d125",
-            "name": "Leonard's Notebook.url"
-        },
-        "Dokument\\Mall___Gymnasiearbete.docx": {
-            "id": "d126",
-            "name": "Mall___Gymnasiearbete.docx"
-        },
-        "Dokument\\Michael Jackson.pptx": {
-            "id": "d127",
-            "name": "Michael Jackson.pptx"
-        },
-        "Dokument\\OneTab.txt": {
-            "id": "d128",
-            "name": "OneTab.txt"
-        },
-        "Dokument\\Pitch uppgift.docx": {
-            "id": "d129",
-            "name": "Pitch uppgift.docx"
-        },
-        "Dokument\\Pitch.docx": {
-            "id": "d130",
-            "name": "Pitch.docx"
-        },
-        "Dokument\\PM Final.docx": {
-            "id": "d131",
-            "name": "PM Final.docx"
-        },
-        "Dokument\\PM Uppgift 2.docx": {
-            "id": "d132",
-            "name": "PM Uppgift 2.docx"
-        },
-        "Dokument\\PM-upggift2.docx": {
-            "id": "d133",
-            "name": "PM-upggift2.docx"
-        },
-        "Dokument\\sammanställning inför provet- ekologi kort.docx": {
-            "id": "d134",
-            "name": "sammanställning inför provet- ekologi kort.docx"
-        },
-        "Dokument\\sammanställning inför provet- ekologi.docx": {
-            "id": "d135",
-            "name": "sammanställning inför provet- ekologi.docx"
-        },
-        "Dokument\\Språkförändring.docx": {
-            "id": "d136",
-            "name": "Språkförändring.docx"
-        },
-        "Dokument\\språkförändring_uppgft3_1.docx": {
-            "id": "d137",
-            "name": "språkförändring_uppgft3_1.docx"
-        },
-        "Dokument\\Statement of Nathan Watts.docx": {
-            "id": "d138",
-            "name": "Statement of Nathan Watts.docx"
-        },
-        "Dokument\\The truth is a cave in the black mountain.docx": {
-            "id": "d139",
-            "name": "The truth is a cave in the black mountain.docx"
-        },
-        "Dokument\\TombRaider.log": {
-            "id": "d140",
-            "name": "TombRaider.log"
-        },
-        "Dokument\\Treasure Island - Leonard Werder BP18a.docx": {
-            "id": "d141",
-            "name": "Treasure Island - Leonard Werder BP18a.docx"
-        },
-        "Dokument\\Treasure Island 2.docx": {
-            "id": "d142",
-            "name": "Treasure Island 2.docx"
-        },
-        "Dokument\\Treasure Island.docx": {
-            "id": "d143",
-            "name": "Treasure Island.docx"
-        },
-        "Dokument\\Träninglära 2.docx": {
-            "id": "d144",
-            "name": "Träninglära 2.docx"
-        },
-        "Dokument\\UF presentation.docx": {
-            "id": "d145",
-            "name": "UF presentation.docx"
-        },
-        "Dokument\\Uninstall STAR WARS The Old Republic.log": {
-            "id": "d146",
-            "name": "Uninstall STAR WARS The Old Republic.log"
-        },
-        "Dokument\\Vetenskaplig analys Leonard 3.docx": {
-            "id": "d147",
-            "name": "Vetenskaplig analys Leonard 3.docx"
-        },
-        "Dokument\\Vinstdisposition UF.docx": {
-            "id": "d148",
-            "name": "Vinstdisposition UF.docx"
-        },
-        "Dokument\\1IK031\\0. Inroduktion organisation.pdf": {
-            "id": "d149",
-            "name": "0. Inroduktion organisation.pdf"
-        },
-        "Dokument\\1IK031\\0. Strategy planning.pdf": {
-            "id": "d150",
-            "name": "0. Strategy planning.pdf"
-        },
-        "Dokument\\1IK031\\1. Business analysis.pdf": {
-            "id": "d151",
-            "name": "1. Business analysis.pdf"
-        },
-        "Dokument\\1IK031\\1. Den praktiska uppgiften.pdf": {
-            "id": "d152",
-            "name": "1. Den praktiska uppgiften.pdf"
-        },
-        "Dokument\\1IK031\\2. Development Process.pdf": {
-            "id": "d153",
-            "name": "2. Development Process.pdf"
-        },
-        "Dokument\\1IK031\\2. GAP-analys (exempel).pdf": {
-            "id": "d154",
-            "name": "2. GAP-analys (exempel).pdf"
-        },
-        "Dokument\\1IK031\\3. Concepts.pdf": {
-            "id": "d155",
-            "name": "3. Concepts.pdf"
-        },
-        "Dokument\\1IK031\\Business Analysis Techniques  99 essential tools for success by Cadle, James Paul, Debra Turner, Paul (z-lib.org).pdf": {
-            "id": "d156",
-            "name": "Business Analysis Techniques  99 essential tools for success by Cadle, James Paul, Debra Turner, Paul (z-lib.org).pdf"
-        },
-        "Dokument\\1IK031\\Rapportmall 2020.odt": {
-            "id": "d157",
-            "name": "Rapportmall 2020.odt"
-        },
-        "Dokument\\1IK031\\Skärmbild 2021-12-15 210706.png": {
-            "id": "d158",
-            "name": "Skärmbild 2021-12-15 210706.png"
-        },
-        "Dokument\\1IK031\\SSAB - Verksamhetsanalys 2.0.pdf": {
-            "id": "d159",
-            "name": "SSAB - Verksamhetsanalys 2.0.pdf"
-        },
-        "Dokument\\1IK031\\SSAB - Verksamhetsanalys.pdf": {
-            "id": "d160",
-            "name": "SSAB - Verksamhetsanalys.pdf"
-        },
-        "Dokument\\1IK031\\Workshop1.pdf": {
-            "id": "d161",
-            "name": "Workshop1.pdf"
-        },
-        "Dokument\\1IK031\\Workshop2.pdf": {
-            "id": "d162",
-            "name": "Workshop2.pdf"
-        },
-        "Dokument\\1IK031\\Workshop3.pdf": {
-            "id": "d163",
-            "name": "Workshop3.pdf"
-        },
-        "Dokument\\1IK031\\Workshop4.pdf": {
-            "id": "d164",
-            "name": "Workshop4.pdf"
-        },
-        "Dokument\\Adobe\\PhotoshopPrefsManager-20181006-013808.log": {
-            "id": "d165",
-            "name": "PhotoshopPrefsManager-20181006-013808.log"
-        },
-        "Hälsodeklaration\\CV-Leonard Werder.docx": {
-            "id": "d166",
-            "name": "CV-Leonard Werder.docx"
-        },
-        "Hälsodeklaration\\Hälsodeklaration.htm": {
-            "id": "d167",
-            "name": "Hälsodeklaration.htm"
-        },
-        "Hälsodeklaration\\IMG_20210519_0001.jpg": {
-            "id": "d168",
-            "name": "IMG_20210519_0001.jpg"
-        },
-        "Hälsodeklaration\\Leonard Werder Hälsodeklaration pdf.pdf": {
-            "id": "d169",
-            "name": "Leonard Werder Hälsodeklaration pdf.pdf"
-        },
-        "TBS\\Engelska 7\\A Modest Proposal(Manslaughter).docx": {
-            "id": "d170",
-            "name": "A Modest Proposal(Manslaughter).docx"
-        },
-        "TBS\\Engelska 7\\A Modest Proposal.docx": {
-            "id": "d171",
-            "name": "A Modest Proposal.docx"
-        },
-        "TBS\\Engelska 7\\Michael Jackson.pptx": {
-            "id": "d172",
-            "name": "Michael Jackson.pptx"
-        },
-        "TBS\\Gymnasiearbete\\Enkät frågor Leonard.docx": {
-            "id": "d173",
-            "name": "Enkät frågor Leonard.docx"
-        },
-        "TBS\\Psykologi 1\\Barns utveckling enligt Freud [sparad automatiskt].pptx": {
-            "id": "d174",
-            "name": "Barns utveckling enligt Freud [sparad automatiskt].pptx"
-        },
-        "TBS\\Psykologi 1\\Det humanistiska perspektivet.pptx": {
+        "test.pdf": {
             "id": "d175",
-            "name": "Det humanistiska perspektivet.pptx"
+            "name": "test.pdf",
+            "modification date": "2026-11-02 11:23"
         },
-        "TBS\\Psykologi 1\\Detbehavioristiskaperspektivet (1).ppt": {
+        "__main__.py": {
             "id": "d176",
-            "name": "Detbehavioristiskaperspektivet (1).ppt"
+            "name": "__main__.py",
+            "modification date": "2026-11-09 11:26"
         },
-        "TBS\\Psykologi 1\\instuderingsfragor psykologi infor prov 2.docx": {
+        "repositories/HUT_test.db": {
             "id": "d177",
-            "name": "instuderingsfragor psykologi infor prov 2.docx"
+            "name": "HUT_test.db",
+            "modification date": "2026-11-09 11:26"
         },
-        "TBS\\Psykologi 1\\Instuderingsfrågor.docx": {
+        "repositories/database_t.py": {
             "id": "d178",
-            "name": "Instuderingsfrågor.docx"
+            "name": "database_t.py",
+            "modification date": "2026-11-09 11:26"
         },
-        "TBS\\Psykologi 1\\Komplettering+the+pe.docx": {
+        "repositories/__pycache__/database_t.cpython-313.pyc": {
             "id": "d179",
-            "name": "Komplettering+the+pe.docx"
+            "name": "database_t.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
         },
-        "TBS\\Psykologi 1\\Psykologi 1.docx": {
+        "models/chunk.py": {
             "id": "d180",
-            "name": "Psykologi 1.docx"
+            "name": "chunk.py",
+            "modification date": "2026-11-08 13:19"
         },
-        "TBS\\Svenska 3\\Ett halvt ark papper 2.docx": {
+        "models/document.py": {
             "id": "d181",
-            "name": "Ett halvt ark papper 2.docx"
+            "name": "document.py",
+            "modification date": "2026-11-09 11:26"
         },
-        "TBS\\Svenska 3\\PM Final.docx": {
+        "models/__pycache__/chunk.cpython-313.pyc": {
             "id": "d182",
-            "name": "PM Final.docx"
+            "name": "chunk.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "models/__pycache__/document.cpython-313.pyc": {
+            "id": "d183",
+            "name": "document.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "models/__pycache__/document_chunker.cpython-313.pyc": {
+            "id": "d184",
+            "name": "document_chunker.cpython-313.pyc",
+            "modification date": "2026-11-02 11:53"
+        },
+        "Experimentkod/semantic-bert.py": {
+            "id": "d185",
+            "name": "semantic-bert.py",
+            "modification date": "2026-10-29 13:23"
+        },
+        "Experimentkod/db.py": {
+            "id": "d186",
+            "name": "db.py",
+            "modification date": "2026-10-29 13:23"
+        },
+        "Experimentkod/ner-bert.py": {
+            "id": "d187",
+            "name": "ner-bert.py",
+            "modification date": "2026-10-22 08:46"
+        },
+        "Experimentkod/chunker.py": {
+            "id": "d188",
+            "name": "chunker.py",
+            "modification date": "2026-10-29 13:23"
+        },
+        "Experimentkod/bert-combo.py": {
+            "id": "d189",
+            "name": "bert-combo.py",
+            "modification date": "2026-10-22 08:46"
+        },
+        "Experimentkod/api.py": {
+            "id": "d190",
+            "name": "api.py",
+            "modification date": "2026-10-22 08:46"
+        },
+        "Experimentkod/database_test.py": {
+            "id": "d191",
+            "name": "database_test.py",
+            "modification date": "2026-11-09 11:26"
+        },
+        "services/document_chunker.py": {
+            "id": "d192",
+            "name": "document_chunker.py",
+            "modification date": "2026-11-08 13:19"
+        },
+        "services/keyword_extractor.py": {
+            "id": "d193",
+            "name": "keyword_extractor.py",
+            "modification date": "2026-11-08 13:19"
+        },
+        "services/document_text_extractor.py": {
+            "id": "d194",
+            "name": "document_text_extractor.py",
+            "modification date": "2026-10-29 13:23"
+        },
+        "services/file_scanner.py": {
+            "id": "d195",
+            "name": "file_scanner.py",
+            "modification date": "2026-11-09 11:26"
+        },
+        "services/file_handler.py": {
+            "id": "d196",
+            "name": "file_handler.py",
+            "modification date": "2026-11-07 14:22"
+        },
+        "services/file_tracker.json": {
+            "id": "d197",
+            "name": "file_tracker.json",
+            "modification date": "2026-11-09 11:26"
+        },
+        "services/search_engine.py": {
+            "id": "d198",
+            "name": "search_engine.py",
+            "modification date": "2026-11-09 11:26"
+        },
+        "services/vector_extractor.py": {
+            "id": "d199",
+            "name": "vector_extractor.py",
+            "modification date": "2026-11-09 11:26"
+        },
+        "services/__pycache__/testing_kblab.cpython-313.pyc": {
+            "id": "d200",
+            "name": "testing_kblab.cpython-313.pyc",
+            "modification date": "2026-11-02 12:08"
+        },
+        "services/__pycache__/file_scanner.cpython-313.pyc": {
+            "id": "d201",
+            "name": "file_scanner.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "services/__pycache__/search_engine.cpython-313.pyc": {
+            "id": "d202",
+            "name": "search_engine.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "services/__pycache__/file_handler.cpython-313.pyc": {
+            "id": "d203",
+            "name": "file_handler.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "services/__pycache__/document_chunker.cpython-313.pyc": {
+            "id": "d204",
+            "name": "document_chunker.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "services/__pycache__/vector_extractor.cpython-313.pyc": {
+            "id": "d205",
+            "name": "vector_extractor.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
+        },
+        "services/__pycache__/keyword_extractor.cpython-313.pyc": {
+            "id": "d206",
+            "name": "keyword_extractor.cpython-313.pyc",
+            "modification date": "2026-11-09 11:27"
         }
     }
 }
