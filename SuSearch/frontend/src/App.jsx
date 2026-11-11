@@ -9,48 +9,35 @@ import ProjectPage from './pages/ProjectPage';
 
 import './App.css';
 
-// Temporary mock data for testing page navigation.
-const mockProjects = [
-  {
-    id: 'doc_1',
-    name: 'Hållbara transporter.pdf',
-    title: 'Hållbara transporter',
-    area: 'Transport',
-    description: 'Ett exempelprojekt om hållbara transportlösningar.',
-    organization: 'Testorganisation',
-    location: 'Skåne',
-    status: 'Avslutat'
-  },
-  {
-    id: 'doc_2',
-    name: 'Återbruk i Malmö.docx',
-    title: 'Återbruk i Malmö',
-    area: 'Återbruk',
-    description: 'Ett exempelprojekt om återbruk och hållbar konsumtion.',
-    organization: 'Testorganisation',
-    location: 'Malmö',
-    status: 'Pågående'
-  }
-];
-
 /**
  * Main application component.
- * Handles page navigation, folder selection and backend testing.
+ * Handles page navigation, search results,
+ * folder selection and backend testing.
  */
 export default function App() {
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [results, setResults] = useState([]);
 
   /**
-   * Opens the selected project's detail page.
+   * Handles search requests.
+   * Search results will be connected to the backend later.
+   */
+  const handleSearch = (searchData) => {
+    console.log('Sökning: ', searchData);
+    setResults([]);
+  };
+
+  /**
+   * Opens the selected project.
    */
   const handleSelectProject = (project) => {
     setSelectedProject(project);
   };
 
   /**
-   * Returns to the search results page.
+   * Returns to the search results.
    */
   const handleBack = () => {
     setSelectedProject(null);
@@ -79,13 +66,11 @@ export default function App() {
   return (
     <div id="wrapper">
 
-      {/* Keep SearchPage mounted to preserve its state. */}
+      {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
         <SearchPage
-          results={mockProjects}
-          onSearch={(searchData) =>
-            console.log('Sökning: ', searchData)
-          }
+          results={results}
+          onSearch={handleSearch}
           onSelectProject={handleSelectProject}
         />
 
@@ -95,7 +80,7 @@ export default function App() {
         />
       </div>
 
-      {/* Display the selected project's detail page. */}
+      {/* Display the selected project. */}
       {selectedProject && (
         <ProjectPage
           project={selectedProject}
