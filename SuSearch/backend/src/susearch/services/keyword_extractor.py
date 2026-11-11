@@ -1,16 +1,18 @@
 from transformers import AutoModelForTokenClassification, AutoTokenizer, pipeline
 import yake
+from services.word_score import wordScorer
 
 class KeywordExtractor:
     """
     Extracts entities such as names, locations and time. Aswell as words and phrases.
     """
-    def __init__(self, lan, n, dedupLim, top, features ):
+    def __init__(self, lan, n, dedupLim, top, features):
         self.tokenizer = AutoTokenizer.from_pretrained("KBLab/bert-base-swedish-cased-ner")
         self.tokenizer.model_max_length = 512
         self.model = AutoModelForTokenClassification.from_pretrained(
             "KBLab/bert-base-swedish-cased-ner"
         )
+
 
         self._ner = pipeline(
             "ner",
@@ -36,8 +38,9 @@ class KeywordExtractor:
             Returns:
                 List: dictionary representing a single entity found, inside a list inside a list
         """
+        word_scorer = wordScorer()
         raw_results = self._ner(chunks, batch_size=8)
-        # print(raw_results)
+        print(raw_results)
         results = []
         ALLOWED_TYPES = {"ORG", "PER", "LOC"}
 
@@ -56,9 +59,10 @@ class KeywordExtractor:
                     cleaned_entities.append({
                         "entity_group": ent["entity_group"],
                         "word": ent["word"].strip(),
-                        "score": round(float(ent["score"]), 4)
+                        "score": round(float(ent["score"]), 4),
+                        "relevance_score": word_scorer.get_score(chunks, word)
                     })
-                
+
             results.append(cleaned_entities)
 
         return results
@@ -73,6 +77,7 @@ class KeywordExtractor:
             Returns:
                 List: dictionary containing keyword and score(lower means better with YAKE), inside a list inside a list
         """
+        word_scorer = wordScorer()
         results = []
 
         for chunk in chunks:
@@ -83,7 +88,7 @@ class KeywordExtractor:
             keywords = self._keyword_yake.extract_keywords(chunk)
 
             results.append([
-                {"keyword": keyword, "score": round(float(score), 4)}
+                {"keyword": keyword, "score": round(float(score), 4), "relevance_score": word_scorer.get_score(chunks, keyword)}
                 for keyword, score in keywords
             ])
 
