@@ -72,15 +72,22 @@ class DocumentScanner:
                 stored_modification_date = file_tracker.get("modification date")
 
                 if stored_modification_date == current_modification_date:
+
+                    state = False
+                    file_tracker["state"] = state
                     add_new_files[file_pathway] = file_tracker
+
                 else:
                     file_tracker["modification date"] = current_modification_date
-                    
+
+                    state = True
+                    file_tracker["state"] = state
                     add_new_files[file_pathway] = file_tracker
+
             else:
                 highest_document_idD += 1
-                
-                add_new_files[file_pathway] = {"id": f"d{highest_document_idD}", "name": file_name, "modification date": current_modification_date}
+                state = False
+                add_new_files[file_pathway] = {"id": f"d{highest_document_idD}", "name": file_name, "modification date": current_modification_date, "state": state}
 
         updated_data = {
             "folders": add_new_folders,

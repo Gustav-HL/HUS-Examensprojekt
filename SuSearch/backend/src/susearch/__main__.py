@@ -48,6 +48,8 @@ class DesktopBridge:
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
 
+# C:\Users\leona\OneDrive
+
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
     file_handler = FileHandler()
     folder_data = file_scanner.fetch_data()
