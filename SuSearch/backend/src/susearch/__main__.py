@@ -1,5 +1,6 @@
 import webview
 import os
+import json
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
@@ -61,6 +62,16 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
         try:
             print(f"\nName: {file_info['name']}")
             file_full_path = folder / file_path
+            
+            with open(BASE_DB/"services/file_tracker.json", "r") as file:
+                data = json.load(file)
+
+                file_record = data.get("files", {}).get(file_path, {})
+
+            if file_record.get("state") is not True:
+                print(f"Skipping {file_info['name']}")
+                continue
+
             raw_text = file_handler.extract_text(file_full_path)
 
             if raw_text:
@@ -88,7 +99,6 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                     print(ultimate_chunk)
 
                 print(doc)
-
                 # Send document object to database
                 database.test_database(doc)
             else:
