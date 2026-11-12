@@ -1,5 +1,11 @@
-import webview
 import os
+
+os.environ["WEBKIT_DISABLE_COMPOSITING_MODE"] = "1"
+os.environ["GDK_BACKEND"] = "x11"
+os.environ["QT_X11_NO_MITSHM"] = "1"
+
+import webview
+import tempfile
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
@@ -46,6 +52,27 @@ class DesktopBridge:
 
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
+
+    def search_by_document(self, file_path_input):
+        # If React passed an object/dict instead of a raw string
+        if isinstance(file_path_input, dict):
+            # Look for common path keys, or fallback to name
+            target_path = (
+                file_path_input.get("path")
+                or file_path_input.get("filePath")
+                or file_path_input.get("name")
+            )
+        else:
+            target_path = file_path_input
+
+        if not target_path:
+            return {"error": "Ingen giltig sökväg mottogs."}
+
+        path = Path(target_path)
+        if not path.is_file():
+            return {"error": f"Filen hittades inte: {path}"}
+
+        return self.search_engine.process_query_document(path)
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
     file_handler = FileHandler()
@@ -152,17 +179,25 @@ def search(search_engine: SearchEngine):
 
     query_data = search_engine.process_query_document(path)
 
-    for index, (chunk_text, vector) in enumerate(query_data, start=1):
-        print(f"Chunk {index}")
-        print(chunk_text)
-        print(vector)
+    if not query_data:
+        print("Could not process document.")
+        return
 
+    print(f"\nDocument: {query_data['name']}")
+    print(f"Keywords: {query_data['keywords']}")
+
+    for index, chunk in enumerate(query_data.get("chunks", []), start=1):
+        print(f"\nChunk {index}:")
+        print(f"Text: {chunk['text'][:100]}...")
+        print(f"Entities: {chunk['keynames']}")
+        print(f"Vector dim: {len(chunk['vector'])}")
 
 if __name__ == "__main__":
     data_extractor = DataExtractor()
     file_scanner = DocumentScanner()
     search_engine = SearchEngine(data_extractor)
     database = LocalDataStorage(DB_PATH)
+
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n")
     if start_view == "1":
         print("Started  terminal")
@@ -198,7 +233,8 @@ if __name__ == "__main__":
             js_api=bridge
         )
 
-        webview.start(debug=True)
+        # webview.start(debug=True)
+        webview.start(gui="gtk", debug=True)
 
     else:
         print("Wrong Choice Buddy")

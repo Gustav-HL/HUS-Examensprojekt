@@ -62,7 +62,6 @@ class KeywordExtractor:
             results.append(cleaned_entities)
 
         return results
-    
 
     def get_yake(self, chunks: list[str]) -> list[list[dict]]:
         """
