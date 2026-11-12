@@ -6,6 +6,7 @@ os.environ["QT_X11_NO_MITSHM"] = "1"
 
 import webview
 import tempfile
+import json
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
@@ -49,6 +50,7 @@ class DesktopBridge:
     """
     def __init__(self, search_engine: SearchEngine):
         self.search_engine = search_engine
+        self._window = None
 
     def search_text(self, query: str):
         return self.search_engine.process_query(query)
@@ -73,6 +75,7 @@ class DesktopBridge:
             return {"error": f"Filen hittades inte: {path}"}
 
         return self.search_engine.process_query_document(path)
+# C:\Users\leona\OneDrive
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
     file_handler = FileHandler()
@@ -85,6 +88,16 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
         try:
             print(f"\nName: {file_info['name']}")
             file_full_path = folder / file_path
+            
+            with open(BASE_DB/"services/file_tracker.json", "r") as file:
+                data = json.load(file)
+
+                file_record = data.get("files", {}).get(file_path, {})
+
+            if file_record.get("state") is not True:
+                print(f"Skipping {file_info['name']}")
+                continue
+
             raw_text = file_handler.extract_text(file_full_path)
 
             if raw_text:
@@ -112,7 +125,6 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                     print(ultimate_chunk)
 
                 print(doc)
-
                 # Send document object to database
                 database.test_database(doc)
             else:
@@ -232,6 +244,7 @@ if __name__ == "__main__":
             url="http://localhost:5173",
             js_api=bridge
         )
+        bridge._window = window
 
         # webview.start(debug=True)
         webview.start(gui="gtk", debug=True)
