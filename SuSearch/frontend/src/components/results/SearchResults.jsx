@@ -1,3 +1,4 @@
+import ProjectCard from './ProjectCard';
 export default function SearchResults({ results = [] }) {
     
     if (results.length===0){
@@ -7,16 +8,16 @@ export default function SearchResults({ results = [] }) {
     return (
         <div>
             {/* map() goes through a list and creates an article element for each project. 
-            key={project.id} is used to identify each result. 
-            project.name displays the filename. */}
+            key={currentProject.id} is used to identify each result. 
+            project={currentProject} sends ddata to projectcard component */}
             <p> Resultat: {results.length}</p>
 
-            {results.map((project) => (
-                <article key={project.id}>
-                    <h3>{project.name}</h3>
-                </article>
-            ))
-            }
+            {results.map((currentProject) => (
+                <ProjectCard 
+                    key={currentProject.id}
+                    project={currentProject}
+                />
+            ))}
         </div>
     );
 }

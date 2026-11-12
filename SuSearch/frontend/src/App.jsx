@@ -3,7 +3,7 @@ import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
 import TextSearch from './components/search/TextSearch';
 import DocumentSearch from './components/search/DocumentSearch';
-import DisplaySelectedDocument from './components/search/DisplaySelectedDocument';
+import DisplaySelectedDocumentTitle from './components/search/DisplaySelectedDocumentTitle';
 import SearchPage from './pages/SearchPage';
 import './App.css'
 
@@ -11,8 +11,14 @@ export default function App() {
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const mockProjects = [
-      { id: 'doc_1', name: 'Hållbara transporter.pdf'},
-      { id: 'doc_2', name: 'Återbruk i Malmö.docx'}
+      { id: 'doc_1', 
+        title: 'Hållbara transporter.pdf',
+        description: 'Ett projekt om hållbara resor'
+      },
+      { id: 'doc_2', 
+        title: 'Återbruk i Malmö.docx',
+        //description: 'Ett projekt om hållbara resor.'
+      }
     ];
 
   async function handleSelectFolder() {
