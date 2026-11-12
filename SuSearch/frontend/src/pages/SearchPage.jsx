@@ -38,7 +38,7 @@ export default function SearchPage({
   const handleSearch = (event) => {
     event?.preventDefault();
 
-    if(!searchTerm.trim() && !selectedDocument){
+    if (!searchTerm.trim() && !selectedDocument) {
       alert('OBS! Ange sökord, mening eller välj ett dokument.');
       return;
     }
@@ -89,13 +89,16 @@ export default function SearchPage({
 
           <form onSubmit={handleSearch}>
             <DocumentSearch
-            onFileChange={setSelectedDocument}
+              onFileChange={setSelectedDocument}
             />
 
             <TextSearch
-            value={searchTerm}
-            onChange={setSearchTerm}
+              value={searchTerm}
+              onChange={setSearchTerm}
             />
+            <button type="submit" disabled={loading}>
+              {loading ? 'Söker...' : 'Sök'}
+            </button>
           </form>
 
           {selectedDocument && (
@@ -130,7 +133,7 @@ export default function SearchPage({
           {!loading && hasSearched && (
             <ResultCount count={results.length} />
           )}
-           */}  
+           */}
 
           {loading ? (
             <p role="status">
