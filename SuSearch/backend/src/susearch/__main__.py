@@ -55,8 +55,10 @@ class DesktopBridge:
         return result[0] if result else None
 
     def search_text(self, query: str):
-        doc = self.search_engine.process_query(query)
-        return doc.serialize_object_data() if doc else {}
+        query_doc = self.search_engine.process_query(query)
+        format_query = query_doc.serialize_object_data() if query_doc else {}
+        print(format_query)
+        return format_query
 
     def search_by_document(self, file_path_input):
         if isinstance(file_path_input, dict):
@@ -76,7 +78,9 @@ class DesktopBridge:
                     if not doc:
                         return {}
                     doc.name = original_name
-                    return doc.serialize_object_data()
+                    format_doc = doc.serialize_object_data()
+                    print(format_doc)
+                    return format_doc
                 finally:
                     if tmp_path.exists():
                         tmp_path.unlink()

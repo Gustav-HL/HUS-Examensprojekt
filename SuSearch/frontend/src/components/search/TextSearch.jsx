@@ -2,7 +2,7 @@ export default function TextSearch({value, onChange}) {
 
     return (
         <div>
-            <label htmlFor="searchText"> Sök efter projekt </label>
+            {/* <label htmlFor="searchText"> Sök efter projekt </label> */}
 
             <input
                 id="searchText"
@@ -12,7 +12,7 @@ export default function TextSearch({value, onChange}) {
                 onChange={(event) => onChange(event.target.value)}
             />
 
-            <button type="submit">Sök</button>
+            {/* <button type="submit">Sök</button> */}
         </div>
     );
 }

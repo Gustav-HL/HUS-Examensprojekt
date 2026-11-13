@@ -4,10 +4,14 @@
     margin: 1px;
 }
 
-
+body{
+    display: flex;
+    justify-content: center;
+}
 #wrapper{
     min-height: 100vh;
     position: relative;
+    width: 100%;
 }
 
 #test-box {

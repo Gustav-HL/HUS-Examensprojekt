@@ -54,7 +54,7 @@ class SearchEngine:
         document = self._file_handler.extract_text(file_path)
         
         processed_doc = self._process_text(document, file_path.name, file_path=file_path)
-        print("Query Processed")
+        print("Document Processed")
         return processed_doc
 
     def process_query(self, query: str) -> Document:
@@ -67,5 +67,5 @@ class SearchEngine:
         search_query = query.strip()
 
         processed_query = self._process_text(search_query, "query_text")
-        print("Document Processed")
+        print("Query Processed")
         return processed_query

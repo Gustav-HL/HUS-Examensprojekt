@@ -40,7 +40,7 @@ class KeywordExtractor:
         """
         word_scorer = wordScorer()
         raw_results = self._ner(chunks, batch_size=8)
-        print(raw_results)
+        # print(raw_results)
         results = []
         ALLOWED_TYPES = {"ORG", "PER", "LOC"}
 

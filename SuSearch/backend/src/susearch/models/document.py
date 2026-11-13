@@ -85,7 +85,7 @@ class Document:
     
     def __str__(self):
         """
-        Format and print data contained in Document
+        Format data contained in Document as readable string
         """
 
         keyword_items = getattr(self, "keywords", []) 
