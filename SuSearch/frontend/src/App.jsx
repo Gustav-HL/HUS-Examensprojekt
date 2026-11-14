@@ -10,6 +10,7 @@ import './App.css'
 export default function App() {
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
+  const [isLoading] = useState(false);
   const mockProjects = [
       { id: 'doc_1', name: 'Hållbara transporter.pdf'},
       { id: 'doc_2', name: 'Återbruk i Malmö.docx'}
@@ -32,6 +33,32 @@ export default function App() {
     }
   }
 
+  async function handleSearch(searchData) {
+    console.log('Sökning: ', searchData);
+      let results = null;
+
+      if (searchData.document) {
+        const base64Data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(searchData.document);
+        });
+
+        results = await window.pywebview.api.search_by_document({
+          name: searchData.document.name,
+          data: base64Data,
+        });
+      } 
+      
+      else if (searchData.query) {
+        results = await window.pywebview.api.search_text(searchData.query);
+      }
+
+      setSearchResults(results);
+    
+  }
+
   return (
     <div id='wrapper'>
       <main>
@@ -40,7 +67,8 @@ export default function App() {
         The data is then logged to the console. */}
       <SearchPage
         results={mockProjects}
-        onSearch={(searchData) => console.log('Sökning: ', searchData)}
+        loading={isLoading}
+        onSearch={handleSearch}
         />  
         <FolderSelector
           selectedFolder={selectedFolder}
