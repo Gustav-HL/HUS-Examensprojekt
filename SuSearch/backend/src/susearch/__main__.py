@@ -14,13 +14,15 @@ from services.vector_extractor import Vectorizer
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 
-from SuSearch.backend.src.susearch.repositories.database import LocalDataStorage
+from repositories.database import LocalDataStorage
+
+import time
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
 
 # Create a path to the database file from repositories folder.
-DB_PATH = BASE_DB / "repositories" / "HUT_test.db"
+DB_PATH = BASE_DB / "repositories" / "HUT_DATA.db"
 
 class DataExtractor:
     """
@@ -106,6 +108,7 @@ class DesktopBridge:
 # C:\Users\leona\OneDrive
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
+    total_start = time.perf_counter()
     file_handler = FileHandler()
     folder_data = file_scanner.fetch_data()
 
@@ -125,9 +128,9 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
             if file_record.get("state") is not True:
                 print(f"Skipping {file_info['name']}")
                 continue
-
+            t0 = time.perf_counter()
             raw_text = file_handler.extract_text(file_full_path)
-
+            t_extract = time.perf_counter() - t0
             if raw_text:
                 path = file_full_path
                 document = file_handler.extract_text(path)
@@ -153,13 +156,14 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                     print(ultimate_chunk)
 
                 print(doc)
+                database.save_document(doc)
                 # Send document object to database
-                database.test_database(doc)
+                # database.test_database(doc)
             else:
                 print("Skipped (No text found or unsupported format).")
         except Exception as e:
             print(f"Error processing file: {e}")
-
+    
 
 def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, name: str, database: LocalDataStorage):
     file_handler = FileHandler()
@@ -200,11 +204,11 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
             print(ultimate_chunk)
 
         saved_file = doc.save_to_json()
-        print(f"Saved JSON export to: {saved_file}")
+        database.save_document(doc)
         # print(doc)
 
         # Send document object to database
-        database.test_database(doc)
+        # database.test_database(doc)
     else:
         print(f"File {name} not found in {folder}\n :(")
 
