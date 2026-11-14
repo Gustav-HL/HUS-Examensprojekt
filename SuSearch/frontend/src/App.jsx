@@ -3,7 +3,11 @@ import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
 import TextSearch from './components/search/TextSearch';
 import DocumentSearch from './components/search/DocumentSearch';
+<<<<<<< Updated upstream
 import DisplaySelectedDocument from './components/search/DisplaySelectedDocumentTitle';
+=======
+import DisplaySelectedDocumentTitle from './components/search/DisplaySelectedDocumentTitle';
+>>>>>>> Stashed changes
 import SearchPage from './pages/SearchPage';
 import './App.css'
 

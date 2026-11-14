@@ -26,7 +26,7 @@ class Chunk:
             f"source: {self.source}, \n"
             f"keywords: {formatted_keywords}, \n"
             f"ner: {formatted_ner}, \n"
-            # f"vector: {self.vector}" # Enable if you want to print ALOT of numbers
+            f"vector: {self.vector}" # Enable if you want to print ALOT of numbers
         )
 
     
