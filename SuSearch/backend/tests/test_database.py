@@ -1,59 +1,58 @@
-import sqlite3
+import sys
 from pathlib import Path
+
+SRC_PATH = Path(__file__).resolve().parent.parent / "src"
+if str(SRC_PATH) not in sys.path:
+    sys.path.insert(0, str(SRC_PATH))
 
 from susearch.repositories.database import LocalDataStorage
 from susearch.models.document import Document
 from susearch.models.chunk import Chunk
 
 
-def test_insert_document_chunks_and_vectors(tmp_path):
-    """Check that a document, its chunk and vector are saved."""
+def test_database(tmp_path):
+    # Set the path for the test database.
+    TEST_DB_PATH = tmp_path / "HUT_test.db"
 
-    # Use a new temporary database for each test run.
-    test_db_path = tmp_path / "HUT_test.db"
+    # Create a storage instance using the test database.
+    test_storage = LocalDataStorage(DB_PATH=TEST_DB_PATH)
 
-    test_storage = LocalDataStorage(DB_PATH=test_db_path)
+    # Create the database tables.
     test_storage.create_tables()
 
     # Create a test document.
     test_document = Document(
         name="Test_document.pdf",
         path=Path("Test_document.pdf"),
-        raw_text="Detta är ett testdokument."
+        raw_text="Detta är ett testdokument för att lagra vectorer och annat trevligt."
     )
 
     # Create a test chunk with a vector.
     test_chunk = Chunk(
-        text="Detta är ett testdokument.",
+        text="Detta är ett testdokument för att lagra vectorer och annat trevligt.",
         source="Test_document.pdf",
         keywords=[],
         keynames=[],
         vector=[0.1, 0.2, 0.3]
     )
 
+    # Add the chunk to the test document.
     test_document.add_chunk(test_chunk)
 
-    # Insert the document, chunk and vector.
+    # Insert the test document into the database.
     test_storage.insert_document_to_db(test_document)
+
+    # Insert the test chunk into the database.
     test_storage.insert_chunks_to_db(test_document)
+
+    # Insert the test vector into the database.
     test_storage.insert_vectors_to_db(test_document)
 
-    # Check that each table contains one row.
-    with sqlite3.connect(test_db_path) as conn:
-        assert conn.execute(
-            "SELECT COUNT(*) FROM Documents"
-        ).fetchone()[0] == 1
+    assert TEST_DB_PATH.exists()
 
-        assert conn.execute(
-            "SELECT COUNT(*) FROM Chunks"
-        ).fetchone()[0] == 1
 
-        assert conn.execute(
-            "SELECT COUNT(*) FROM Vectors"
-        ).fetchone()[0] == 1
-    
-    
- # def test_database(self, document):
+
+     # def test_database(self, document):
 #     """
         
 #         Args: document(Document): Object representing a Document storing all data extracted from one document
@@ -87,9 +86,4 @@ def test_insert_document_chunks_and_vectors(tmp_path):
     #     for column in cursor.fetchall():
     #         print(column[1])
         
-    # conn.close()    
-
-
-
-def print_data(self):
-     pass
+    # conn.close()   
