@@ -3,8 +3,8 @@ import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
-
 import './App.css';
+
 
 /**
  * Main application component.
@@ -32,7 +32,6 @@ export default function App() {
   const handleBack = () => {
     setSelectedProject(null);
   };
-  
 
   /**
    * Opens the folder selector through pywebview.
@@ -53,7 +52,7 @@ export default function App() {
       console.error('Failed to select folder', error);
     }
   }
-
+  
    /**
    * Sends a document or text query to the backend. 
    * Stores the returned search results in state.
