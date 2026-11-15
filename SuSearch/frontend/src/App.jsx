@@ -15,9 +15,10 @@ export default function App() {
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [results, setResults] = useState([]);
+  const [results, setSearchResults] = useState([]);
   const [isLoading] = useState(false);
 
+ 
   /**
    * Opens the selected project.
    */
@@ -57,7 +58,7 @@ export default function App() {
    * Stores the returned search results in state.
    */
   async function handleSearch(searchData) {
-    console.log('Sökning: ', searchData);
+      console.log('Sökning: ', searchData);
       let results = null;
 
       if (searchData.document) {
@@ -87,12 +88,11 @@ export default function App() {
 
       {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
-        
-        
-        {/* SearchPage receives the search results and loading status.
-             When the user searches or selects a project,
-             it calls the corresponding function in App. */}
-        <SearchPage
+       
+      {/* SearchPage receives the search results and loading status.
+          When the user searches or selects a project,
+          it calls the corresponding function in App. */}
+       <SearchPage
           results={results}
           loading={isLoading}
           onSearch={handleSearch}
