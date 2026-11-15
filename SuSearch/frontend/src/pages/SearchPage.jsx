@@ -3,12 +3,14 @@ import { useState } from 'react';
 
 import TextSearch from '../components/search/TextSearch';
 import DocumentSearch from '../components/search/DocumentSearch';
-import DisplaySelectedDocument from '../components/search/DisplaySelectedDocument';
+import DisplaySelectedDocumentTitle from '../components/search/DisplaySelectedDocumentTitle';
 
 import FilterPanel from '../components/filters/FilterPanel';
 
-import ResultCount from '../components/results/ResultCount';
+//import ResultCount from '../components/results/ResultCount';
 import SearchResults from '../components/results/SearchResults';
+
+import './SearchPage.css'
 
 /**
  * Main search page for SuSearch.
@@ -37,6 +39,11 @@ export default function SearchPage({
    */
   const handleSearch = (event) => {
     event?.preventDefault();
+
+    if (!searchTerm.trim() && !selectedDocument) {
+      alert('OBS! Ange sökord, mening eller välj ett dokument.');
+      return;
+    }
 
     setHasSearched(true);
 
@@ -69,38 +76,49 @@ export default function SearchPage({
     <main className="search-page">
       <div className="wrap">
 
-        <section
-          className="search-section"
-          aria-labelledby="search-heading"
-        >
-          <h1 id="search-heading">
-            Sök efter projekt
-          </h1>
+        <div className="wrap">
+          <section
+            className="search-section"
+            aria-labelledby="search-heading"
+          >
+            <header className="search-header">
+              <h1 id="search-heading" className="search-title">
+                Sök efter projekt
+              </h1>
+              <p className="search-subtitle">
+                Hitta information, metoder och erfarenheter från tidigare projekt.
+              </p>
+            </header>
 
-          <p>
-            Hitta information, metoder och erfarenheter
-            från tidigare projekt.
-          </p>
+            <form className="search-bar" onSubmit={handleSearch}>
+              <div className="folder-choice-wrapper">
+                <DocumentSearch onFileChange={setSelectedDocument} />
+              </div>
 
-          <TextSearch
-            value={searchTerm}
-            onChange={setSearchTerm}
-            onSearch={handleSearch}
-          />
+              <div className=""  />
 
-          <DocumentSearch
-            file={selectedDocument}
-            onFileChange={setSelectedDocument}
-            onSearch={handleSearch}
-          />
+              <div className="text-search-wrapper">
+                <TextSearch
+                  value={searchTerm}
+                  onChange={setSearchTerm}
+                />
+              </div>
 
-          {selectedDocument && (
-            <DisplaySelectedDocument
-              file={selectedDocument}
-              onRemove={handleRemoveDocument}
-            />
-          )}
-        </section>
+              <button type="submit" className="search-submit-btn" disabled={loading}>
+                {loading ? 'Söker...' : 'Sök'}
+              </button>
+            </form>
+
+            {selectedDocument && (
+              <div className="selected-doc-container">
+                <DisplaySelectedDocumentTitle
+                  file={selectedDocument}
+                  onRemove={handleRemoveDocument}
+                />
+              </div>
+            )}
+          </section>
+        </div>
 
         <section
           className="filter-section"
@@ -122,10 +140,11 @@ export default function SearchPage({
           <h2 id="results-heading">
             Sökresultat
           </h2>
-
+          {/*
           {!loading && hasSearched && (
             <ResultCount count={results.length} />
           )}
+           */}
 
           {loading ? (
             <p role="status">

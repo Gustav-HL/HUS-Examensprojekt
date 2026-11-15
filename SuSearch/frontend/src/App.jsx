@@ -1,30 +1,23 @@
-<<<<<<< Updated upstream
-import React, { useState } from 'react';
-import Test from './BackendTest';
-import './app.css'
-=======
-
 import { useState } from 'react';
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
->>>>>>> Stashed changes
+import './App.css';
 
+
+/**
+ * Main application component.
+ * Handles page navigation, search results,
+ * folder selection and backend testing.
+ */
 export default function App() {
   const [showTest, setShowTest] = useState(false);
-<<<<<<< Updated upstream
-
-  return (
-    <div id='wrapepr'>
-      <main>
-=======
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [results, setSearchResults] = useState([]);
+  const [results, setResults] = useState([]);
   const [isLoading] = useState(false);
 
- 
   /**
    * Opens the selected project.
    */
@@ -38,7 +31,6 @@ export default function App() {
   const handleBack = () => {
     setSelectedProject(null);
   };
-  
 
   /**
    * Opens the folder selector through pywebview.
@@ -59,13 +51,13 @@ export default function App() {
       console.error('Failed to select folder', error);
     }
   }
-
+  
    /**
    * Sends a document or text query to the backend. 
    * Stores the returned search results in state.
    */
   async function handleSearch(searchData) {
-      console.log('Sökning: ', searchData);
+    console.log('Sökning: ', searchData);
       let results = null;
 
       if (searchData.document) {
@@ -95,11 +87,12 @@ export default function App() {
 
       {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
-       
-         {/* SearchPage receives the search results and loading status.
+        
+        
+        {/* SearchPage receives the search results and loading status.
              When the user searches or selects a project,
              it calls the corresponding function in App. */}
-       <SearchPage
+        <SearchPage
           results={results}
           loading={isLoading}
           onSearch={handleSearch}
@@ -110,9 +103,14 @@ export default function App() {
           onSelectFolder={handleSelectFolder}
         />
       </div>
->>>>>>> Stashed changes
 
-      </main>
+      {/* Display the selected project. */}
+      {selectedProject && (
+        <ProjectPage
+          project={selectedProject}
+          onBack={handleBack}
+        />
+      )}
 
       {/* Testing the backend connection please dont change this or the child component //GHL */}
       <button id='test-btn'
@@ -124,6 +122,7 @@ export default function App() {
           <Test />
         </div>
       )}
+
     </div>
   );
 }
