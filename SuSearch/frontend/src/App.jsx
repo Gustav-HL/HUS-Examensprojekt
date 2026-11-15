@@ -1,11 +1,6 @@
-
 import { useState } from 'react';
-
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
-import TextSearch from './components/search/TextSearch';
-import DocumentSearch from './components/search/DocumentSearch';
-import DisplaySelectedDocumentTitle from './components/search/DisplaySelectedDocumentTitle';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
 
@@ -20,17 +15,10 @@ export default function App() {
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [results, setResults] = useState([]);
+  const [results, setSearchResults] = useState([]);
+  const [isLoading] = useState(false);
 
-  /**
-   * Handles search requests.
-   * Search results will be connected to the backend later.
-   */
-  const handleSearch = (searchData) => {
-    console.log('Sökning: ', searchData);
-    setResults([]);
-  };
-
+ 
   /**
    * Opens the selected project.
    */
@@ -44,11 +32,7 @@ export default function App() {
   const handleBack = () => {
     setSelectedProject(null);
   };
-  const [isLoading] = useState(false);
-  const mockProjects = [
-      { id: 'doc_1', name: 'Hållbara transporter.pdf'},
-      { id: 'doc_2', name: 'Återbruk i Malmö.docx'}
-    ];
+  
 
   /**
    * Opens the folder selector through pywebview.
@@ -70,8 +54,12 @@ export default function App() {
     }
   }
 
+   /**
+   * Sends a document or text query to the backend. 
+   * Stores the returned search results in state.
+   */
   async function handleSearch(searchData) {
-    console.log('Sökning: ', searchData);
+      console.log('Sökning: ', searchData);
       let results = null;
 
       if (searchData.document) {
@@ -92,7 +80,7 @@ export default function App() {
         results = await window.pywebview.api.search_text(searchData.query);
       }
 
-      setSearchResults(results);
+      setSearchResults(results ?? []);
     
   }
 
@@ -101,22 +89,16 @@ export default function App() {
 
       {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
-        <SearchPage
+       
+      {/* SearchPage receives the search results and loading status.
+          When the user searches or selects a project,
+          it calls the corresponding function in App. */}
+       <SearchPage
           results={results}
+          loading={isLoading}
           onSearch={handleSearch}
           onSelectProject={handleSelectProject}
         />
-
-    <div id='wrapper'>
-      <main>
-         {/* When the user submits a search, 
-        searchData receives the search text, filters and selected document. 
-        The data is then logged to the console. */}
-      <SearchPage
-        results={mockProjects}
-        loading={isLoading}
-        onSearch={handleSearch}
-        />  
         <FolderSelector
           selectedFolder={selectedFolder}
           onSelectFolder={handleSelectFolder}
