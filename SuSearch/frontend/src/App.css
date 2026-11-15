@@ -1,14 +1,20 @@
-*{
+
+* {
     box-sizing: border-box;
-    padding: 1px;
-    margin: 1px;
 }
 
-body{
-    display: flex;
-    justify-content: center;
+body {
+    margin: 0;
+    width: 100%;
+    min-width: 320px;
 }
-#wrapper{
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+#wrapper {
     min-height: 100vh;
     position: relative;
     width: 100%;
@@ -27,12 +33,12 @@ body{
 }
 
 #test-btn {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 9999;
-  padding: 8px 14px;
-  background-color: #000000;
-  color: #ffffff;
-  cursor: pointer;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+    padding: 8px 14px;
+    background-color: #000000;
+    color: #ffffff;
+    cursor: pointer;
 }
