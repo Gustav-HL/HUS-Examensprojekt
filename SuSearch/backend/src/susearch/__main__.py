@@ -245,7 +245,10 @@ if __name__ == "__main__":
         )
         bridge._window = window
 
-        webview.start(debug=True)
+        webview.start(
+            debug=True,
+            private_mode=False
+        )
 
     else:
         print("Wrong Choice Buddy")
