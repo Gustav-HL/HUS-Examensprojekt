@@ -36,7 +36,11 @@ export default function App() {
   };
 
   const [showTest, setShowTest] = useState(false);
-  const [selectedFolder, setSelectedFolder] = useState('');
+
+  const [selectedFolder, setSelectedFolder] = useState(() => {
+    return window.localStorage.getItem('selectedFolder') || '';
+  });
+
   const [selectedProject, setSelectedProject] = useState(null);
   const [results, setSearchResults] = useState([]);
   const [isLoading] = useState(false);
@@ -70,6 +74,7 @@ export default function App() {
 
       if (folder) {
         setSelectedFolder(folder);
+        localStorage.setItem('selectedFolder', folder);
       }
     } catch (error) {
       console.error('Failed to select folder', error);
