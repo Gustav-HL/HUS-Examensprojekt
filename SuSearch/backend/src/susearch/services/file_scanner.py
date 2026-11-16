@@ -86,7 +86,7 @@ class DocumentScanner:
 
             else:
                 highest_document_idD += 1
-                state = False
+                state = True
                 add_new_files[file_pathway] = {"id": f"d{highest_document_idD}", "name": file_name, "modification date": current_modification_date, "state": state}
 
         updated_data = {

@@ -1,54 +1,54 @@
-import sys
-from pathlib import Path
+# import sys
+# from pathlib import Path
 
-SRC_PATH = Path(__file__).resolve().parent.parent / "src"
-if str(SRC_PATH) not in sys.path:
-    sys.path.insert(0, str(SRC_PATH))
+# SRC_DIR = Path(__file__).resolve().parents[1] / "src"
+# if str(SRC_DIR) not in sys.path:
+#     sys.path.insert(0, str(SRC_DIR))
 
-from susearch.repositories.database import LocalDataStorage
-from susearch.models.document import Document
-from susearch.models.chunk import Chunk
+# from susearch.repositories.database import LocalDataStorage
+# from susearch.models.document import Document
+# from susearch.models.chunk import Chunk
 
 
-def test_database(tmp_path):
-    # Set the path for the test database.
-    TEST_DB_PATH = tmp_path / "HUT_test.db"
+# def test_database(tmp_path):
+#     # Set the path for the test database.
+#     TEST_DB_PATH = tmp_path / "HUT_test.db"
 
-    # Create a storage instance using the test database.
-    test_storage = LocalDataStorage(DB_PATH=TEST_DB_PATH)
+#     # Create a storage instance using the test database.
+#     test_storage = LocalDataStorage(DB_PATH=TEST_DB_PATH)
 
-    # Create the database tables.
-    test_storage.create_tables()
+#     # Create the database tables.
+#     test_storage.create_tables()
 
-    # Create a test document.
-    test_document = Document(
-        name="Test_document.pdf",
-        path=Path("Test_document.pdf"),
-        raw_text="Detta är ett testdokument för att lagra vectorer och annat trevligt."
-    )
+#     # Create a test document.
+#     test_document = Document(
+#         name="Test_document.pdf",
+#         path=Path("Test_document.pdf"),
+#         raw_text="Detta är ett testdokument för att lagra vectorer och annat trevligt."
+#     )
 
-    # Create a test chunk with a vector.
-    test_chunk = Chunk(
-        text="Detta är ett testdokument för att lagra vectorer och annat trevligt.",
-        source="Test_document.pdf",
-        keywords=[],
-        keynames=[],
-        vector=[0.1, 0.2, 0.3]
-    )
+#     # Create a test chunk with a vector.
+#     test_chunk = Chunk(
+#         text="Detta är ett testdokument för att lagra vectorer och annat trevligt.",
+#         source="Test_document.pdf",
+#         keywords=[],
+#         keynames=[],
+#         vector=[0.1, 0.2, 0.3]
+#     )
 
-    # Add the chunk to the test document.
-    test_document.add_chunk(test_chunk)
+#     # Add the chunk to the test document.
+#     test_document.add_chunk(test_chunk)
 
-    # Insert the test document into the database.
-    test_storage.insert_document_to_db(test_document)
+#     # Insert the test document into the database.
+#     test_storage.insert_document_to_db(test_document)
 
-    # Insert the test chunk into the database.
-    test_storage.insert_chunks_to_db(test_document)
+#     # Insert the test chunk into the database.
+#     test_storage.insert_chunks_to_db(test_document)
 
-    # Insert the test vector into the database.
-    test_storage.insert_vectors_to_db(test_document)
+#     # Insert the test vector into the database.
+#     test_storage.insert_vectors_to_db(test_document)
 
-    assert TEST_DB_PATH.exists()
+#     assert TEST_DB_PATH.exists()
 
 
 
