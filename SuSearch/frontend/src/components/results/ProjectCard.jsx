@@ -1,12 +1,13 @@
+
 /**
  * Displays a project card with its title, description,
- * optional details, tags section, and navigation link.
- * 
+ * optional details, tags section, and navigation button.
+ *
  * @param {Object} props - Component properties.
  * @param {Object} props.project - Project data to display.
+ * @param {Function} props.onSelectProject - Opens the selected project.
  */
-
-function ProjectCard({ project }) {
+function ProjectCard({ project, onSelectProject }) {
     return (
         <article>
             {project.area && <p>{project.area}</p>}
@@ -25,12 +26,13 @@ function ProjectCard({ project }) {
                 )}
 
                 {project.id != null && (
-                    <a
-                        href={`/projects/${project.id}`}
+                    <button
+                        type="button"
                         className="project-card-link"
+                        onClick={() => onSelectProject?.(project)}
                     >
-                        Visa exempel
-                    </a>
+                        Visa projekt
+                    </button>
                 )}
             </footer>
         </article>

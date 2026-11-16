@@ -1,0 +1,23 @@
+
+:root {
+  color-scheme: light;
+  --ink: #1d2421;
+  --paper: #ffffff;
+  --page: #f7f8f7;
+  --line-strong: #7d8782;
+  --hover: #f1f4f2;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #edf4ef;
+  --paper: #1c2b23;
+  --page: #111b16;
+  --line-strong: #789182;
+  --hover: #304639;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+}
