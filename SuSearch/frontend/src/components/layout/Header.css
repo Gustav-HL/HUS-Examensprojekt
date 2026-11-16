@@ -1,0 +1,114 @@
+
+/* Shared header for SearchPage and ProjectPage */
+.app-header {
+  width: 100%;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+
+/* Header layout */
+.app-header__inner {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 8px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Organization branding */
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+/* HUT logo */
+.app-header__mark {
+  width: 34px;
+  height: 28px;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.app-header__name {
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.app-header__nav button {
+  border: none;
+  background: transparent;
+  color: var(--green-dark);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-header__nav button:hover {
+  text-decoration: underline;
+}
+
+.app-header__nav span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Theme toggle container */
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* transitions */
+.app-header {
+  transition: background-color 0.18s ease,
+              color 0.18s ease,
+              border-color 0.18s ease;
+}
+
+@media (max-width: 720px) {
+  .app-header__inner {
+    width: calc(100% - 28px);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .app-header__nav {
+    order: 3;
+    width: 100%;
+  }
+
+  .app-header__name {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header {
+    transition: none;
+  }
+}

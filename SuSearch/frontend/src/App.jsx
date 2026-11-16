@@ -1,8 +1,11 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
+import Header from './components/layout/Header';
+import ThemeToggle from './components/layout/ThemeToggle';
 import './App.css';
 
 
@@ -12,6 +15,23 @@ import './App.css';
  * folder selection and backend testing.
  */
 export default function App() {
+
+  // Store and restore the selected theme.
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+  });
+
+  // Apply the theme and save the selection.
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Switch between light and dark themes.
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   const [showTest, setShowTest] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
@@ -79,12 +99,25 @@ export default function App() {
         results = await window.pywebview.api.search_text(searchData.query);
       }
 
-      setSearchResults(results ?? []);
+      setResults(results ?? []);
     
   }
 
   return (
     <div id="wrapper">
+
+      {/* Shared header for SearchPage and ProjectPage. */}
+      <Header
+        variant={selectedProject ? 'project' : 'search'}
+        projectTitle={selectedProject?.title}
+        onNavigate={handleBack}
+        themeToggle={
+          <ThemeToggle
+            theme={theme}
+            onToggleTheme={handleToggleTheme}
+          />
+        }
+      />
 
       {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
