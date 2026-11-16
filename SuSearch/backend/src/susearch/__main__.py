@@ -1,5 +1,8 @@
 import webview
 import os
+import json
+import tempfile
+import base64
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
@@ -11,13 +14,15 @@ from services.vector_extractor import Vectorizer
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 
-from repositories.database_t import LocalDataStorage
+from repositories.database import LocalDataStorage
+
+import time
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
 
 # Create a path to the database file from repositories folder.
-DB_PATH = BASE_DB / "repositories" / "HUT_test.db"
+DB_PATH = BASE_DB / "repositories" / "HUT_DATA.db"
 
 class DataExtractor:
     """
@@ -45,10 +50,65 @@ class DesktopBridge:
         self.search_engine = search_engine
         self._window = None
 
+    def select_folder(self):
+        if not self._window:
+            return None
+        result = self._window.create_file_dialog(webview.FOLDER_DIALOG)
+        return result[0] if result else None
+
     def search_text(self, query: str):
-        return self.search_engine.process_query(query)
+        query_doc = self.search_engine.process_query(query)
+        format_query = query_doc.serialize_object_data() if query_doc else {}
+        print(format_query)
+        return format_query
+
+    def search_by_document(self, file_path_input):
+        if isinstance(file_path_input, dict):
+            if "data" in file_path_input:
+                raw_data = file_path_input["data"]
+                if "," in raw_data:
+                    raw_data = raw_data.split(",", 1)[1]
+
+                original_name = file_path_input.get("name", "upload.txt")
+                suffix = Path(original_name).suffix
+                with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                    tmp.write(base64.b64decode(raw_data))
+                    tmp_path = Path(tmp.name)
+
+                try:
+                    doc = self.search_engine.process_query_document(tmp_path)
+                    if not doc:
+                        return {}
+                    doc.name = original_name
+                    format_doc = doc.serialize_object_data()
+                    print(format_doc)
+                    return format_doc
+                finally:
+                    if tmp_path.exists():
+                        tmp_path.unlink()
+
+            target_path = (
+                file_path_input.get("path")
+                or file_path_input.get("filePath")
+                or file_path_input.get("name")
+            )
+        else:
+            target_path = file_path_input
+
+        if not target_path:
+            return {"error": "Ingen giltig sökväg mottogs."}
+
+        path = Path(target_path)
+        if not path.is_file():
+            return {"error": f"Filen hittades inte: {path}"}
+
+        doc = self.search_engine.process_query_document(path)
+        return doc.serialize_object_data() if doc else {}
+
+# C:\Users\leona\OneDrive
 
 def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, database: LocalDataStorage):
+    total_start = time.perf_counter()
     file_handler = FileHandler()
     folder_data = file_scanner.fetch_data()
 
@@ -59,8 +119,18 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
         try:
             print(f"\nName: {file_info['name']}")
             file_full_path = folder / file_path
-            raw_text = file_handler.extract_text(file_full_path)
+            
+            with open(BASE_DB/"services/file_tracker.json", "r") as file:
+                data = json.load(file)
 
+                file_record = data.get("files", {}).get(file_path, {})
+
+            if file_record.get("state") is not True:
+                print(f"Skipping {file_info['name']}")
+                continue
+            t0 = time.perf_counter()
+            raw_text = file_handler.extract_text(file_full_path)
+            t_extract = time.perf_counter() - t0
             if raw_text:
                 path = file_full_path
                 document = file_handler.extract_text(path)
@@ -86,14 +156,14 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                     print(ultimate_chunk)
 
                 print(doc)
-
+                database.save_document(doc)
                 # Send document object to database
-                database.test_database(doc)
+                # database.test_database(doc)
             else:
                 print("Skipped (No text found or unsupported format).")
         except Exception as e:
             print(f"Error processing file: {e}")
-
+    
 
 def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanner, folder: Path, name: str, database: LocalDataStorage):
     file_handler = FileHandler()
@@ -134,62 +204,37 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
             print(ultimate_chunk)
 
         saved_file = doc.save_to_json()
-        print(f"Saved JSON export to: {saved_file}")
+        database.save_document(doc)
         # print(doc)
 
         # Send document object to database
-        database.test_database(doc)
+        # database.test_database(doc)
     else:
         print(f"File {name} not found in {folder}\n :(")
-
-def search(search_engine: SearchEngine):
-    current_dir = Path(__file__).resolve().parent
-
-    folder_input = input("Choose folder: ")
-    folder = Path(folder_input) if folder_input else current_dir
-
-    name = input("Enter file name and file suffix: ")
-    path = folder / name
-
-    query_data = search_engine.process_query_document(path)
-
-    for index, (chunk_text, vector) in enumerate(query_data, start=1):
-        print(f"Chunk {index}")
-        print(chunk_text)
-        print(vector)
-
 
 if __name__ == "__main__":
     data_extractor = DataExtractor()
     file_scanner = DocumentScanner()
     search_engine = SearchEngine(data_extractor)
     database = LocalDataStorage(DB_PATH)
+
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n")
     if start_view == "1":
         print("Started  terminal")
-        choice = input("   1.Search \n   2.Scan \n")
+        folder_input = input("Choose folder: ") # C:\Users\leona\OneDrive
+        current_dir = Path(__file__).resolve().parent
+        folder_res = (
+            file_scanner.scan_and_track(folder_input)
+            if folder_input
+            else file_scanner.scan_and_track(str(current_dir))
+        )
+        folder = Path(folder_res)
+        name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
 
-        if choice == "1":
-            search(search_engine)
-
-        elif choice == "2":
-            folder_input = input("Choose folder: ") # C:\Users\leona\OneDrive
-            current_dir = Path(__file__).resolve().parent
-            folder_res = (
-                file_scanner.scan_and_track(folder_input)
-                if folder_input
-                else file_scanner.scan_and_track(str(current_dir))
-            )
-            folder = Path(folder_res)
-            name = input("Enter file name and file suffix(Kan köra All Files för att chunka allt(OBS vet inte om det fungerar 100% gör det på egen risk)): ")
-
-            if name.lower() == "all files":
-                process_all_documents(data_extractor, file_scanner, folder,  database)
-            else:
-                process_document(data_extractor, file_scanner, folder, name, database)
-
+        if name.lower() == "all files":
+            process_all_documents(data_extractor, file_scanner, folder,  database)
         else:
-            print("Wrong Choice Buddy")
+            process_document(data_extractor, file_scanner, folder, name, database)
 
     elif start_view == "2":
         bridge = DesktopBridge(search_engine)
