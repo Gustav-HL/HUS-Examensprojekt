@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react';
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
+import TextSearch from './components/search/TextSearch';
+import DocumentSearch from './components/search/DocumentSearch';
+import DisplaySelectedDocumentTitle from './components/search/DisplaySelectedDocumentTitle';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
 import Header from './components/layout/Header';
