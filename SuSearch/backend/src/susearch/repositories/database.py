@@ -19,6 +19,7 @@ class LocalDataStorage:
         self.DB_PATH = DB_PATH or DEFAULT_DB_PATH
         self.create_tables()
 
+
     def create_tables(self):
         """Create database tables using the SQL schema file."""
         #Read SQL schema file using UTF-8 to support special characters.
@@ -47,8 +48,10 @@ class LocalDataStorage:
                 self.insert_document_to_db(document, conn=conn, document_data=document_data)
                 self.insert_chunks_to_db(document, conn=conn, document_data=document_data)
                 self.insert_vectors_to_db(document, conn=conn, document_data=document_data)
-        finally:
+        
             print("Data Saved :P")
+        
+        finally:    
             conn.close()
 
     def insert_document_to_db(self, document, conn=None, document_data=None):
@@ -191,5 +194,76 @@ class LocalDataStorage:
         finally:
             if should_close:
                 conn.close()
+                
+    def get_document_data(self, conn=None):
+        
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+        
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            
+            query=(
+                """
+                SELECT * FROM Documents; 
+                
+                """
+                
+            )
+            cursor.execute(query)
+            documents = cursor.fetchall()
+            
+            for document in documents:
+                print(document)
 
+            return documents
+            
+        
+        finally:
+                if should_close:
+                    conn.close()
+                    
+                    
+                   
+        
+        #  def serialize_object_data(self) -> dict:
+        #          """
+        #          Goes through each chunk, checks if there is a valid Vector array appends each chunk to a list.
+         
+        #              Returns: Dict: containing all data stored in Document
+        #          """
+        #          gathered_chunks = []
+        #          for chunk in self.chunks:
+        #              stored_vector = getattr(chunk, "vector", None)
+         
+        #              if stored_vector is not None and hasattr(stored_vector, "tolist"):
+        #                  valid_vector = stored_vector.tolist()
+        #              else:
+        #                  valid_vector = stored_vector
+         
+        #              gathered_chunks.append({
+        #                  "id": getattr(chunk, "id", None),
+        #                  "chunk_index": getattr(chunk, "chunk_index", None),
+        #                  "document_id": getattr(chunk, "document_id", self.id),
+        #                  "text": getattr(chunk, "text", ""),
+        #                  "keywords": getattr(chunk, "keywords", []),
+        #                  "keynames": getattr(chunk, "keynames", []),
+        #                  "vector": valid_vector,
+        #              })
+         
+        #          return {
+        #              "id": self.id,
+        #              "name": self.name,
+        #              "path": str(self.path),
+        #              "raw_text": self.raw_text,
+        #              "keywords": self.keywords,
+        #              "metadata": self.metadata,
+        #              "chunks": gathered_chunks,
+        #          } 
+                
+
+
+    
+    
     
