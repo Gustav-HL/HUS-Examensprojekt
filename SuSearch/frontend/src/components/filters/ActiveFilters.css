@@ -1,0 +1,17 @@
+
+/* Displays the number of active filters */
+.active-filters {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .active-filters {
+    font-size: 0.8rem;
+    white-space: normal;
+  }
+}
