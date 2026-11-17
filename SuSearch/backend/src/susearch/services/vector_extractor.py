@@ -62,5 +62,5 @@ class Vectorizer:
 
         return torch.stack(embeddings)
 
-    def vectorize_chunks(self, chunks: list[str]) -> torch.Tensor:
+    def vectorize_chunks(self, chunks: list[str]) -> list[torch.Tensor]:
         return self.vectorize([c for c in chunks])
