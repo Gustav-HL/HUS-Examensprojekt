@@ -1,3 +1,6 @@
+
+import './AreaFilter.css';
+
 /**
  * Displays a dropdown for filtering projects by area.
  * Allows users to select an area or show all areas.
@@ -6,10 +9,9 @@
  * @param {string} props.value - Currently selected area.
  * @param {Function} props.onChange - Updates the selected area.
  */
-
 export default function AreaFilter({ value, onChange }) {
   return (
-    <div className="filter-field">
+    <div className="filter-field area-filter">
       <label htmlFor="themeFilter">Område</label>
 
       <select
