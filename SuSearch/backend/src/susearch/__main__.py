@@ -205,9 +205,8 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
 
         saved_file = doc.save_to_json()
         database.save_document(doc)
-        # print(doc)
-        print("DETTA ÄR DATABASEN!!")
-        print(database.get_document_data())
+        documents = database.get_document_data()
+        print(json.dumps(documents, ensure_ascii=False, indent=2))
 
         # Send document object to database
         # database.test_database(doc)

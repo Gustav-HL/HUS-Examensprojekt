@@ -6,16 +6,19 @@ from models.document import Document
 from models.chunk import Chunk
 
 
-# Get the directory where database_test file is located
+# Get the directory containing this database file.
 BASE_DB = Path(__file__).resolve().parent
-# Create a path to the database file from repositories folder.
+# Path to the default database file in the repositories folder.
 DEFAULT_DB_PATH = BASE_DB / "HUT.db"
 # Path to the SQL schema file
 DB_SCHEMA_PATH = BASE_DB / "HUT_db.sql"
 
 
 class LocalDataStorage:
+    """Manages local SQLite storage for documents, chunks and vectors."""
+   
     def __init__(self, DB_PATH=None):
+        """Set database path and create database tables."""
         self.DB_PATH = DB_PATH or DEFAULT_DB_PATH
         self.create_tables()
 
@@ -38,7 +41,7 @@ class LocalDataStorage:
             conn.close()
 
     def save_document(self, document):
-        """Serialize the document data and runs all data insert at once"""
+        """Save the document, chunks and vectors in one transaction."""
         document_data = document.serialize_object_data()
 
         conn = sqlite3.connect(self.DB_PATH, timeout=30.0)
@@ -55,7 +58,18 @@ class LocalDataStorage:
             conn.close()
 
     def insert_document_to_db(self, document, conn=None, document_data=None):
-        """Insert document information into the Documents table."""
+        """Insert document information into the Documents table.
+        
+        Args:
+            document: 
+                he Document object that is being saved.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection.
+            document_data: 
+                A dictionary that contains serialized document data. 
+                If not provided it is created from document.
+        """
         #Get document data as a dictionary. 
         document_data = document_data or document.serialize_object_data()
 
@@ -74,7 +88,7 @@ class LocalDataStorage:
             conn.execute("PRAGMA foreign_keys = ON")
 
             #Insert document inforamation into the Documents table.
-            # The (?, ?, ?, ?, ?) are placeholders for the value.
+            # The (?, ?, ?, ?, ?) are placeholders for the column value.
             conn.execute(
                 """
                 INSERT OR REPLACE INTO Documents (
@@ -109,7 +123,19 @@ class LocalDataStorage:
                 conn.close()
 
     def insert_chunks_to_db(self, document, conn=None, document_data=None):
-        """Insert document chunk data into the Chunks table."""
+        """Insert document chunk data into the Chunks table.
+        
+        Args:
+            document: 
+                The Document object containing the chunks to save.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection.
+            document_data: 
+                A dictionary containing serialized document
+                data. If not provided, it is created from document.
+        
+        """
         document_data = document_data or document.serialize_object_data()
 
         # Get the list of chunks from the document.
@@ -150,7 +176,18 @@ class LocalDataStorage:
                 conn.close()
 
     def insert_vectors_to_db(self, document, conn=None, document_data=None):
-        """Insert document chunk vectors into the Vectors table."""
+        """Insert document chunk vectors into the Vectors table and skipping empty vector.
+        
+        Args:
+            document: 
+                The Document object containing the vectors to save.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection. 
+            document_data: 
+                A dictionary containing serialized document
+                data. If not provided, it is created from document.       
+        """
         # Get document data as a dictionary.
         document_data = document_data or document.serialize_object_data()
 
@@ -196,13 +233,25 @@ class LocalDataStorage:
                 conn.close()
                 
     def get_document_data(self, conn=None):
+        """Fetch all data from Doucments and structure their metadata as dictionaries. 
         
+        Args:
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+        
+        Returns:
+            A list of document dictionaires containing ID, name, path, leywords and metadata.
+            Returns an empty list if no documents exsist.
+        """    
+       
         should_close = conn is None
         conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
         
         try:
             conn.execute("PRAGMA foreign_keys = ON")
             cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
             
             query=(
                 """
@@ -212,58 +261,37 @@ class LocalDataStorage:
                 
             )
             cursor.execute(query)
-            documents = cursor.fetchall()
+            rows = cursor.fetchall()
             
-            for document in documents:
-                print(document)
-
+            documents = []
+            
+            for document_data in rows:
+                document = {
+                    "id": document_data["doc_id"],
+                    "name": Path(document_data["file_path"]).name,
+                    "path": document_data["file_path"],
+                    "keywords": json.loads(document_data["keywords"]),
+                    "metadata": {
+                        "doc_title": document_data["title"],
+                        "file_type": document_data["file_type"],
+                        "author": document_data["author"],
+                        "creator": document_data["creator"],
+                        "creation_date": document_data["creation_date"],
+                        "modification_date": document_data["modification_date"]
+                    }
+                }
+                
+                documents.append(document)
+                
             return documents
-            
         
         finally:
                 if should_close:
                     conn.close()
                     
-                    
                    
-        
-        #  def serialize_object_data(self) -> dict:
-        #          """
-        #          Goes through each chunk, checks if there is a valid Vector array appends each chunk to a list.
-         
-        #              Returns: Dict: containing all data stored in Document
-        #          """
-        #          gathered_chunks = []
-        #          for chunk in self.chunks:
-        #              stored_vector = getattr(chunk, "vector", None)
-         
-        #              if stored_vector is not None and hasattr(stored_vector, "tolist"):
-        #                  valid_vector = stored_vector.tolist()
-        #              else:
-        #                  valid_vector = stored_vector
-         
-        #              gathered_chunks.append({
-        #                  "id": getattr(chunk, "id", None),
-        #                  "chunk_index": getattr(chunk, "chunk_index", None),
-        #                  "document_id": getattr(chunk, "document_id", self.id),
-        #                  "text": getattr(chunk, "text", ""),
-        #                  "keywords": getattr(chunk, "keywords", []),
-        #                  "keynames": getattr(chunk, "keynames", []),
-        #                  "vector": valid_vector,
-        #              })
-         
-        #          return {
-        #              "id": self.id,
-        #              "name": self.name,
-        #              "path": str(self.path),
-        #              "raw_text": self.raw_text,
-        #              "keywords": self.keywords,
-        #              "metadata": self.metadata,
-        #              "chunks": gathered_chunks,
-        #          } 
-                
-
-
+                   
     
+        
     
     
