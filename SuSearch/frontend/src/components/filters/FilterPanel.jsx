@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AreaFilter from './AreaFilter';
 import MethodFilter from './MethodFilter';
 import ActiveFilters from './ActiveFilters';
+import "./FilterPanel.css";
 /**
  * Displays the filter panel and allows users to filter projects.
  * Handles opening and closing the panel and shows active filter count.
