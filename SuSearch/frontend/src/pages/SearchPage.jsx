@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
 
+import LoadingSpinner from '../components/common/LoadingSpinner';
+
 import TextSearch from '../components/search/TextSearch';
 import DocumentSearch from '../components/search/DocumentSearch';
 import DisplaySelectedDocumentTitle from '../components/search/DisplaySelectedDocumentTitle';
@@ -147,9 +149,7 @@ export default function SearchPage({
            */}
 
           {loading ? (
-            <p role="status">
-              Söker efter projekt...
-            </p>
+            <LoadingSpinner message='Söker efter projekt...'/>
           ) : results.length > 0 ? (
             <SearchResults
               results={results}

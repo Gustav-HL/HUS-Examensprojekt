@@ -43,7 +43,7 @@ export default function App() {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [results, setSearchResults] = useState([]);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
  
   /**
@@ -87,28 +87,38 @@ export default function App() {
    */
   async function handleSearch(searchData) {
       console.log('Sökning: ', searchData);
-      let results = null;
+      setIsLoading(true);
 
-      if (searchData.document) {
-        const base64Data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(searchData.document);
-        });
+      try {
+        let results = null;
 
-        results = await window.pywebview.api.search_by_document({
-          name: searchData.document.name,
-          data: base64Data,
-        });
-      } 
-      
-      else if (searchData.query) {
-        results = await window.pywebview.api.search_text(searchData.query);
+        if (searchData.document) {
+          const base64data = await new Promise((resolve, reject) => {
+            const reader = new Filereader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(searchData.document);
+          });
+
+          results = await window.pywebview.api.search_by_document({
+            name: searchData.document.name,
+            data: base64data,
+          });
+        }
+
+        else if (searchData.query) {
+          results = await window.pywebview.api.search_text(searchData.query);
+        }
+
+        setSearchResults(results ?? []);
+
+      } catch (error) {
+        console.error('Search failed', error);
+        setSearchResults([]);
+
+      } finally {
+        setIsLoading(false);
       }
-
-      setSearchResults(results ?? []);
-    
   }
 
   return (
