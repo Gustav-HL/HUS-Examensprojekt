@@ -10,7 +10,7 @@ from pathlib import Path
 from models.document import Document
 from models.chunk import Chunk
 from services.vector_extractor import Vectorizer
-
+from services.cosine_similarity import cosineSimilarityCalculator
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 
@@ -196,12 +196,23 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
         _vectorizer = data_extractor._vectorizer
         vector_result = _vectorizer.vectorize_chunks(chunks)
 
+        #Testar calculate i cosine similarity calculator
+        query = ["Region Skånes Miljövårdsfond stödjer idéer som kan bidra till ett miljömässigt hållbart Skåne i synergi med övriga hållbarhetsaspekter (ekonomiska och sociala). Beviljade projekt är av utvecklingskaraktär och ska stödja den regionala utvecklingsstrategin ”Det Öppna Skåne 2030”, ”Regionalt åtgärdsprogram för miljömålen”, samt ”Klimat- och energistrategin för Skåne”."]
+        query_vector = _vectorizer.vectorize(query)
+        calculator = cosineSimilarityCalculator()
+        cosine_results = calculator.calculateStrings(query_vector, vector_result)
+        
+
         for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
             print(f"Chunk {index}")
             ultimate_chunk = Chunk(text=chunk, source=name, keywords=keywords, keynames=ner, vector=vector )
 
             doc.add_chunk(ultimate_chunk)
             print(ultimate_chunk)
+
+        print("COSINE RESULTS:")
+        for index, score in cosine_results.items():
+            print(f"{index}: {score:.4f}")
 
         saved_file = doc.save_to_json()
         database.save_document(doc)

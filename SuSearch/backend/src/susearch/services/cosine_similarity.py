@@ -1,9 +1,10 @@
 import torch
+import torch.nn.functional as F
 from models.chunk import Chunk
 
 class cosineSimilarityCalculator:
 
-    def calculate(self, query_vector, chunks: list[Chunk]) -> dict[str, float]:
+    def calculateChunks(self, query_vector, chunks: list[Chunk]) -> dict[str, float]:
         """Calculates the cosine similarity between the query vector and the 
         vectors of a list of chunks. The value is then rescaled to a range between
         0 and 1.
@@ -33,4 +34,26 @@ class cosineSimilarityCalculator:
             reverse=True,
         )
 
+        return dict(ranked)
+
+    def calculateStrings(self, query_vector, chunk_vectors) -> dict[int, float]:
+        valid = [
+            (i, vec)
+            for i, vec in enumerate(chunk_vectors)
+            if vec is not None and len(vec) > 0
+        ]
+        if not valid:
+            return {}
+
+        ids, vectors = zip(*valid)
+
+        matrix = torch.stack([torch.as_tensor(v, dtype=torch.float32).reshape(-1) for v in vectors])
+        query = torch.as_tensor(query_vector, dtype=torch.float32).reshape(-1)  
+
+        matrix = F.normalize(matrix, p=2, dim=1)
+        query = F.normalize(query, p=2, dim=0)
+
+        scores = torch.mv(matrix, query).tolist()
+
+        ranked = sorted(zip(ids, scores), key=lambda pair: pair[1], reverse=True)
         return dict(ranked)
