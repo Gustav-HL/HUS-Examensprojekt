@@ -1,3 +1,4 @@
+import './ActiveFilters.css';
 /**
  * Displays the number of currently active filters.
  * Counts selected area and method filters.
