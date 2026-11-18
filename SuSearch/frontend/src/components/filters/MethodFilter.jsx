@@ -1,3 +1,6 @@
+
+import './MethodFilter.css';
+
 /**
  * Displays a dropdown for filtering projects by working method.
  * Allows users to select a method or show all methods.
@@ -8,7 +11,7 @@
  */
 export default function MethodFilter({ value, onChange }) {
   return (
-    <div className="filter-field">
+    <div className="filter-field method-filter">
       <label htmlFor="methodFilter">Arbetssätt</label>
 
       <select
