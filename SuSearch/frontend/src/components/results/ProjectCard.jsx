@@ -1,4 +1,6 @@
 
+import './ProjectCard.css';
+
 /**
  * Displays a project card with its title, description,
  * optional details, tags section, and navigation button.
@@ -9,16 +11,20 @@
  */
 function ProjectCard({ project, onSelectProject }) {
     return (
-        <article>
-            {project.area && <p>{project.area}</p>}
+        <article className="project-card">
+            {project.area && (
+                <p className="project-card-area">
+                    {project.area}
+                </p>
+            )}
 
             <h3>{project.title}</h3>
 
-            <p>
+            <p className="project-card-description">
                 {project.description || "Ingen beskrivning tillgänglig."}
             </p>
 
-            <footer>
+            <footer className="project-card-footer">
                 {project.tags?.length > 0 && (
                     <div className="project-card-tags">
                         {/* TODO: Integrate ProjectTags component */}
