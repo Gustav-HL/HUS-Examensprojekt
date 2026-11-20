@@ -245,9 +245,25 @@ class LocalDataStorage:
 
         return documents    
 
-    def get_all_document_ner(self, conn=None) -> dict[str, list]:
+    def get_chunk_ner_data(self, conn=None):
         """
         Fetches all NER entities for documents
+        """
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.execute("SELECT doc_id, entities FROM Chunks;")
+            return cursor.fetchall()
+        finally:
+            if should_close:
+                conn.close()
+
+    def get_all_document_ner(self, conn=None) -> dict[str, list]:
+        """
+        Formats NER entities to json format
         
         """
         rows = self.get_chunk_ner_data(conn=conn)
