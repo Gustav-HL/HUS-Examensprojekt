@@ -250,29 +250,14 @@ class LocalDataStorage:
         Fetches all NER entities for documents
         
         """
-        should_close = conn is None
-        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+        rows = self.get_chunk_ner_data(conn=conn)
 
-        try:
-            conn.execute("PRAGMA foreign_keys = ON")
-            cursor = conn.cursor()
-            cursor.execute("SELECT doc_id, entities FROM Chunks")
+        ner_form_document = {}
+        for doc_id, raw_ner in rows:
+            parsed = json.loads(raw_ner) if raw_ner else []
+            ner_form_document.setdefault(doc_id, []).append(parsed)
 
-            ner_form_document = {}
-            for doc_id, raw_ner in cursor.fetchall():
-                parsed = (
-                    json.loads(raw_ner)
-                    if isinstance(raw_ner, str) and raw_ner.strip().startswith("[")
-                    else []
-
-                )
-                ner_form_document.setdefault(doc_id, []).append(parsed)
-
-            return ner_form_document
-        
-        finally:
-            if should_close:
-                conn.close()
+        return ner_form_document
     
         #  def serialize_object_data(self) -> dict:
         #          """
