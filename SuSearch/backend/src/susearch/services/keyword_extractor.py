@@ -12,7 +12,9 @@ STOPWORDS = {
     "vår", "vårt", "våra", "denna", "detta", "dessa", "här", "där",
     "när", "hur", "vad", "vilken", "vilket", "vilka", "alla", "andra",
     "olika", "även", "också", "dock", "bara", "mer", "mest", "mycket",
-    "oss", "vem", "stad", "skåne", "region",
+    "oss", "vem", "stad", "skåne", "region", "gäller", "dokument",
+    "orginal", "dokumentid", "gällande", "projekt", "ange",
+    "medel", "version"
 
     "and", "the", "for", "with", "that", "this", "from", "are", "was",
     "were", "been", "have", "has", "had", "will", "would", "could",

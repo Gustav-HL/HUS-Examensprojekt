@@ -30,9 +30,9 @@ class DataExtractor:
     def __init__(self):
         self._keyword_extractor = KeywordExtractor(     
             lan = "sv",
-            n = 3, # Amount of words per phrase
+            n = 2, # Amount of words per phrase
             dedupLim = 0.4, # Let duplicates
-            top = 20,  # Amount of results
+            top = 25,  # Amount of results
             features = None
         )
         self._vectorizer = Vectorizer()
@@ -173,14 +173,14 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
             print(f"\nName: {file_info['name']}")
             file_full_path = folder / file_path
             
-            with open(BASE_DB/"services/file_tracker.json", "r") as file:
-                data = json.load(file)
+            # with open(BASE_DB/"services/file_tracker.json", "r") as file:
+            #     data = json.load(file)
 
-                file_record = data.get("files", {}).get(file_path, {})
+            #     file_record = data.get("files", {}).get(file_path, {})
 
-            if file_record.get("state") is not True:
-                print(f"Skipping {file_info['name']}")
-                continue
+            # if file_record.get("state") is not True:
+            #     print(f"Skipping {file_info['name']}")
+            #     continue
 
             t0 = time.perf_counter()
             raw_text = file_handler.extract_text(file_full_path)
