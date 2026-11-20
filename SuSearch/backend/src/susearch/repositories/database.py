@@ -227,8 +227,8 @@ class LocalDataStorage:
                     
                     
     def get_documents_with_keywords(self, conn=None):
-        """F
-        unction to get the table data and format the keywords for keyword matching
+        """
+        Function to get the table data and format the keywords for keyword matching
         
         """
         rows = self.get_document_data(conn=conn)
@@ -264,7 +264,7 @@ class LocalDataStorage:
                     json.loads(raw_ner)
                     if isinstance(raw_ner, str) and raw_ner.strip().startswith("[")
                     else []
-                    
+
                 )
                 ner_form_document.setdefault(doc_id, []).append(parsed)
 
