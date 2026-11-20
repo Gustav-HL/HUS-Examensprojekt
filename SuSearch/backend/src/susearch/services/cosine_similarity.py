@@ -36,10 +36,10 @@ class cosineSimilarityCalculator:
 
         return dict(ranked)
 
-    def calculateStrings(self, query_vector, chunk_vectors) -> dict[int, float]:
+    def calculateStrings(self, query_vector, chunk_vectors) -> dict[str, float]:
         valid = [
             (i, vec)
-            for i, vec in enumerate(chunk_vectors)
+            for i, vec in chunk_vectors.items()
             if vec is not None and len(vec) > 0
         ]
         if not valid:

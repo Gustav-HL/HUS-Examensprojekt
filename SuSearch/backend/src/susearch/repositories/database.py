@@ -288,10 +288,123 @@ class LocalDataStorage:
         finally:
                 if should_close:
                     conn.close()
-                    
-                   
-                   
-    
+
+    def get_document_data_with_chunk_id(self, chunk_ids: list[str], conn=None) -> list[dict]:
+        """Fetch document data that the list of chunks belong to.
         
-    
-    
+        Args:
+            chunk_ids:
+                A list of chunk_ids.
+
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+
+        Returns:
+            A list of dictionaries holding the document data.
+        """
+        
+        if not chunk_ids:
+            return []
+        
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
+
+            placeholders = ",".join("?" * len(chunk_ids))
+            
+            query = f"""
+                SELECT DISTINCT d.*
+                FROM Documents d
+                JOIN Chunks c ON c.doc_id = d.doc_id
+                WHERE c.chunk_id IN ({placeholders})
+            """
+            cursor.execute(query, chunk_ids)
+            rows = cursor.fetchall()
+            
+            documents = []
+            for document_data in rows:
+                documents.append({
+                    "id": document_data["doc_id"],
+                    "name": Path(document_data["file_path"]).name,
+                    "path": document_data["file_path"],
+                    "keywords": json.loads(document_data["keywords"]),
+                    "metadata": {
+                        "doc_title": document_data["title"],
+                        "file_type": document_data["file_type"],
+                        "author": document_data["author"],
+                        "creator": document_data["creator"],
+                        "creation_date": document_data["creation_date"],
+                        "modification_date": document_data["modification_date"],
+                    },
+                })
+                
+            return documents
+        
+        finally:
+                if should_close:
+                    conn.close()
+
+
+    def get_all_chunk_vectors(self, conn=None) -> dict[str, list[float]]:
+        """Fetch the vectors of all chunks.
+
+        Args:
+            conn:
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+
+        Returns:
+            A dictionary that maps chunk_id to its vector (a list of floats).
+            Returns an empty dictionary if no vectors exist.
+        """
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
+
+            cursor.execute("SELECT chunk_id, vector FROM Vectors")
+            rows = cursor.fetchall()
+
+            vectors = {}
+            for row in rows:
+                # Convert the binary data back into a float 32-bit array.
+                vector_float_array = array("f")
+                vector_float_array.frombytes(row["vector"])
+
+                vectors[row["chunk_id"]] = vector_float_array.tolist()
+
+            return vectors
+
+        finally:
+            if should_close:
+                conn.close()
+
+    def get_document_names_for_chunks(self, chunk_ids: list[str], conn=None) -> dict[str, str]:
+        if not chunk_ids:
+            return {}
+
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+        try:
+            placeholders = ",".join("?" * len(chunk_ids))
+            rows = conn.execute(
+                f"""
+                SELECT c.chunk_id, d.file_path
+                FROM Chunks c
+                JOIN Documents d ON d.doc_id = c.doc_id
+                WHERE c.chunk_id IN ({placeholders})
+                """,
+                chunk_ids,
+            ).fetchall()
+            return {chunk_id: Path(file_path).name for chunk_id, file_path in rows}
+        finally:
+            if should_close:
+                conn.close()
