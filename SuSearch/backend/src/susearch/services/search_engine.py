@@ -13,6 +13,17 @@ class SearchEngine:
         self._database = database
 
     def process_text(self, text: str, source_name: str, file_path: Path | None = None) -> Document:
+        """
+        Extract data from a text using the diffrent data extraction functions: DocumentChunker, KeywordExtractir, Vectorizer. 
+        Creates Chunk and Document objects 
+            Args:
+                text (str): The text from a document
+                source_name (str): 
+                file_path: Either a file path or None depenting on if the search source is a File or Search with search bar
+
+            Results:
+                Document: Document
+        """
         yake_result = self._data_extractor._keyword_extractor.get_yake([text])
         keywords = yake_result[0] if yake_result else []
         metadata = self._file_handler.extract_metadata(file_path) if file_path else {}
@@ -66,8 +77,10 @@ class SearchEngine:
         """
         Process a text query into vectors, keywords and NER
 
-            Args: query(str): The text query entered by user
-            Returns: Document: A Document object containing extracted data
+            Args: 
+                query(str): The text query entered by user
+            Returns: 
+                Document: A Document object containing extracted data
         """
         search_query = query.strip()
 
@@ -80,6 +93,9 @@ class SearchEngine:
         """
         Match a processed query against stored documents in the database
 
+            Args:
+                search_query_or_document: Document
+                return_amount (int): Max amount of documents to return
             Returns:
                 Dict: A dictionary with the resulting matchning words or entities with scores based on matches
         """

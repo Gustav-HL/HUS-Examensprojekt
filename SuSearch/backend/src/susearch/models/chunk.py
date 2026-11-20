@@ -1,4 +1,7 @@
 class Chunk:
+    """
+    Holds data related to Chunks
+    """
     def __init__(self, text: str, source: str, keywords: list[str], keynames: list[dict], vector: list[float], id: str = None):
         self.text = text
         self.source = source
