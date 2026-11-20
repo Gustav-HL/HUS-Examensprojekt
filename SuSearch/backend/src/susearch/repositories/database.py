@@ -61,6 +61,7 @@ class LocalDataStorage:
 
         keywords = document_data["keywords"]
         metadata = document_data.get("metadata") or {}
+        file_path = Path(document_data["path"])
 
         # Convert the data to JSON text. 
         # ensure_ascii=False keeps Swedish characters (å, ä, ö) readable.
@@ -92,7 +93,7 @@ class LocalDataStorage:
                 """,
                 (
                     document_data["id"],
-                    metadata.get("title") or document_data["name"],
+                    file_path.name,
                     document_data["path"],
                     Path(document_data["path"]).suffix,
                     metadata.get("author"),
@@ -214,8 +215,8 @@ class LocalDataStorage:
             cursor.execute(query)
             documents = cursor.fetchall()
             
-            for document in documents:
-                print(document)
+            # for document in documents:
+            #     print(document)
 
             return documents
             
@@ -225,8 +226,54 @@ class LocalDataStorage:
                     conn.close()
                     
                     
-                   
+    def get_documents_with_keywords(self, conn=None):
+        """F
+        unction to get the table data and format the keywords for keyword matching
         
+        """
+        rows = self.get_document_data(conn=conn)
+
+        documents = []
+        for row in rows:
+            keywords = row[-1] #Final column in talbe
+            documents.append({
+                "doc_id": row[0],
+                "title": row[1],
+                "file_path": row[2],
+                "keywords": json.loads(keywords) if keywords else [],
+            })
+
+        return documents    
+
+    def get_all_document_ner(self, conn=None) -> dict[str, list]:
+        """
+        Fetches all NER entities for documents
+        
+        """
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.execute("SELECT doc_id, entities FROM Chunks")
+
+            ner_form_document = {}
+            for doc_id, raw_ner in cursor.fetchall():
+                parsed = (
+                    json.loads(raw_ner)
+                    if isinstance(raw_ner, str) and raw_ner.strip().startswith("[")
+                    else []
+                    
+                )
+                ner_form_document.setdefault(doc_id, []).append(parsed)
+
+            return ner_form_document
+        
+        finally:
+            if should_close:
+                conn.close()
+    
         #  def serialize_object_data(self) -> dict:
         #          """
         #          Goes through each chunk, checks if there is a valid Vector array appends each chunk to a list.
