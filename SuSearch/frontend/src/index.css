@@ -1,23 +1,50 @@
 
-:root {
-  color-scheme: light;
-  --ink: #1d2421;
-  --paper: #ffffff;
-  --page: #f7f8f7;
-  --line-strong: #7d8782;
-  --hover: #f1f4f2;
+@import "tailwindcss";
+
+/*gemensamma designvärden*/
+@theme {
+/* Brand colors from Table 1/design dok*/
+  --color-primary: #00528C;
+  --color-secondary: #008D96;
+  --color-accent: #37AEAD;
+  --color-background: #F9F9F3;
+
+/* Additional colors from Table 2/design dok */
+  --color-navy:         #142C46;
+  --color-lime:         #A2C748;
+  --color-green:        #50A242;
+  --color-orange:       #EF7926;
+  --color-plum:         #441C44;
+  --color-darkgreen:    #2C9245;
+  --color-yellow:       #FCD230;
+  --color-lightgray:    #DDDDDD;
+
+/* Font families from Table 3/design dok */
+  --font-heading: "Source Serif 4",     serif;
+  --font-body: "Albert Sans",           sans-serif;
+  --font-ui: "Roboto",                  sans-serif;
 }
 
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --ink: #edf4ef;
-  --paper: #1c2b23;
-  --page: #111b16;
-  --line-strong: #789182;
-  --hover: #304639;
+
+/* Apply shared base styles to HTML elements */
+@layer base {
+  body {
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+
+  /* font for all heading levels */
+  h1,  h2,  h3,  h4,  h5,  h6 {
+    font-family: var(--font-heading);
+  }
+
+  /* font for form controls */
+  button, input, select, textarea {
+    font-family: var(--font-ui);
+  }
 }
 
-body {
-  background: var(--page);
-  color: var(--ink);
+  /* for any more complicated classes
+  that needs to be able to override with utility classes */
+@layer components{
 }
