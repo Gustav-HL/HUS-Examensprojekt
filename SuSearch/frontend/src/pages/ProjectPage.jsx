@@ -1,3 +1,6 @@
+
+import ProjectFactCards from '../components/displayProject/ProjectFactCards';
+
 export default function ProjectPage({ project, onBack }) {
     if (!project) {
         return (
@@ -33,7 +36,7 @@ export default function ProjectPage({ project, onBack }) {
                         <h2>Om projektet</h2>
                         <p>
                             {project.description ||
-                            'Ingen beskrivning tillgänlig.'}
+                            'Ingen beskrivning tillgänglig.'}
                         </p>
                     </section>
 
@@ -41,22 +44,27 @@ export default function ProjectPage({ project, onBack }) {
                         <h2>Projektfakta</h2>
 
                         <p>
-                            <strong>Organisation:</strong>{''}
+                            <strong>Organisation:</strong>{' '}
                             {project.organization || '-'}
                         </p>
 
                         <p>
-                            <strong>Plats:</strong>{''}
+                            <strong>Plats:</strong>{' '}
                             {project.location || '-'}
                         </p>
 
-                        <p>Status:</p>{''}
-                        {project.status || '-'}
+                        <p>
+                            <strong>Status:</strong>{' '}
+                            {project.status || '-'}
+                        </p>
+
+                        {/* Display additional project facts */}
+                        <ProjectFactCards project={project} />
+
                     </aside>
 
                 </div>
             </div>
         </main>
     );
-    
 }
