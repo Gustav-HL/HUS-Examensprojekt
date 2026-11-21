@@ -41,7 +41,31 @@ export default function App() {
     return window.localStorage.getItem('selectedFolder') || '';
   });
 
-  const [selectedProject, setSelectedProject] = useState(null);
+
+const [selectedProject, setSelectedProject] = useState({
+  id: 1,
+  title: 'Hållbara transporter',
+  area: 'Transporter',
+  description: 'Ett projekt om hållbar mobilitet i Skåne.',
+  organization: 'HUT Skåne',
+  status: 'Avslutat',
+
+  related_projects: [
+    {
+      id: 2,
+      title: 'Cykelvänliga städer',
+      area: 'Transporter',
+      description: 'Ett projekt om hållbara cykelvägar.'
+    },
+    {
+      id: 3,
+      title: 'Grön mobilitet',
+      area: 'Klimatanpassning',
+      description: 'Ett projekt om klimatsmarta transporter.'
+    }
+  ]
+});
+
   const [results, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -160,6 +184,7 @@ export default function App() {
         <ProjectPage
           project={selectedProject}
           onBack={handleBack}
+          onSelectProject={handleSelectProject}
         />
       )}
 
