@@ -1,0 +1,32 @@
+
+/* container */
+.search-results {
+  width: 100%;
+  margin-top: 24px;
+  padding-bottom: 40px;
+  color: var(--ink);
+}
+
+/* results grid */
+.search-results .project-list {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 280px), 1fr)
+  );
+  gap: 14px;
+  width: 100%;
+  align-items: stretch;
+}
+
+@media (max-width: 720px) {
+  .search-results {
+    margin-top: 20px;
+    padding-bottom: 28px;
+  }
+
+  .search-results .project-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

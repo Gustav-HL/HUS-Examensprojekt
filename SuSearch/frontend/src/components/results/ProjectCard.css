@@ -1,0 +1,112 @@
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  width: 100%;
+  min-width: 0;
+  padding: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink);
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Arial, sans-serif;
+}
+
+.project-card-area {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* title */
+.project-card h3 {
+  margin: 16px 0 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* description */
+.project-card-description {
+  margin: 9px 0 16px;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Card footer */
+.project-card .project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: auto;
+  padding: 15px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+/* tags container */
+.project-card-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* navigation button */
+.project-card-link {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.project-card-link:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.project-card-link:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* theme transitions */
+.project-card,
+.project-card-link {
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+@media (max-width: 720px) {
+  .project-card {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .project-card .project-card-footer {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card-link {
+    transition: none;
+  }
+}

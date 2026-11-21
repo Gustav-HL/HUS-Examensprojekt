@@ -54,7 +54,7 @@ export default function ProjectPage({
 
                         <p>
                             {project.description ||
-                                'Ingen beskrivning tillgänglig.'}
+                            'Ingen beskrivning tillgänglig.'}
                         </p>
                     </section>
 
@@ -75,6 +75,10 @@ export default function ProjectPage({
                             <strong>Status:</strong>{' '}
                             {project.status || '-'}
                         </p>
+
+                        {/* Display additional project facts */}
+                        <ProjectFactCards project={project} />
+
                     </aside>
 
                 </div>
