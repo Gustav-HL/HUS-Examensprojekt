@@ -14,7 +14,7 @@ STOPWORDS = {
     "olika", "även", "också", "dock", "bara", "mer", "mest", "mycket",
     "oss", "vem", "stad", "skåne", "region", "gäller", "dokument",
     "orginal", "dokumentid", "gällande", "projekt", "ange",
-    "medel", "version"
+    "medel", "version", "projektet", 
 
     "and", "the", "for", "with", "that", "this", "from", "are", "was",
     "were", "been", "have", "has", "had", "will", "would", "could",
@@ -112,9 +112,10 @@ class KeywordExtractor:
             results.append([
                 {
                     "keyword": keyword.strip().lower(),
+                    "score": round(float(score), 4),
                     "relevance_score": word_scorer.get_score(chunks, keyword),
                 }
-                for keyword, _ in keywords
+                for keyword, score in keywords
             ])
-
+        # print(results)
         return results
