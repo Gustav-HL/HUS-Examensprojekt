@@ -1,12 +1,11 @@
-
-import './ProjectCard.css';
-
+import ProjectTags from "./ProjectTags";
 /**
  * Displays a project card with its title, description,
  * optional details, tags section, and navigation button.
  *
  * @param {Object} props - Component properties.
  * @param {Object} props.project - Project data to display.
+ * @param {string[]} [props.project.tags] - Tags to display when the list isn't empty. 
  * @param {Function} props.onSelectProject - Opens the selected project.
  */
 function ProjectCard({ project, onSelectProject }) {
@@ -27,8 +26,8 @@ function ProjectCard({ project, onSelectProject }) {
             <footer className="project-card-footer">
                 {project.tags?.length > 0 && (
                     <div className="project-card-tags">
-                        {/* TODO: Integrate ProjectTags component */}
-                    </div>
+                        <ProjectTags tags={project.tags} />
+              </div>
                 )}
 
                 {project.id != null && (
