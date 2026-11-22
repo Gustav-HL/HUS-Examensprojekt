@@ -160,6 +160,7 @@ export default function App() {
         <ProjectPage
           project={selectedProject}
           onBack={handleBack}
+          onSelectProject={handleSelectProject}
         />
       )}
 
