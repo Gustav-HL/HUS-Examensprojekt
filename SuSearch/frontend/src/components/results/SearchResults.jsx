@@ -1,5 +1,6 @@
 
 import ProjectCard from './ProjectCard';
+import './SearchResults.css';
 
 /**
  * Displays a list of projects returned by a search.
