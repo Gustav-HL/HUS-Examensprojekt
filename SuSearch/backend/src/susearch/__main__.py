@@ -3,6 +3,8 @@ import os
 import json
 import tempfile
 import base64
+import time
+
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
 from services.file_handler import FileHandler
@@ -13,10 +15,7 @@ from services.vector_extractor import Vectorizer
 from services.cosine_similarity import cosineSimilarityCalculator
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
-
 from repositories.database import LocalDataStorage
-
-import time
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
@@ -31,9 +30,9 @@ class DataExtractor:
     def __init__(self):
         self._keyword_extractor = KeywordExtractor(     
             lan = "sv",
-            n = 3, # Amount of words per phrase
+            n = 2, # Amount of words per phrase
             dedupLim = 0.4, # Let duplicates
-            top = 20,  # Amount of results
+            top = 25,  # Amount of results
             features = None
         )
         self._vectorizer = Vectorizer()
@@ -58,18 +57,47 @@ class DesktopBridge:
 
     def search_text(self, query: str):
         query_doc = self.search_engine.process_query(query)
-        format_query = query_doc.serialize_object_data() if query_doc else {}
-        print(format_query)
-        return format_query
+        if not query_doc:
+            return []
 
-    def search_by_document(self, file_path_input):
-        if isinstance(file_path_input, dict):
-            if "data" in file_path_input:
-                raw_data = file_path_input["data"]
+        search_match = self.search_engine.search(query_doc)
+
+        for i, item in enumerate(search_match):
+            title = item.get("title") or "No Name"
+            keyword_score = item.get("keyword_score", 0.0)
+
+            matched = [
+                f"{match['query_keyword']} MATCHED {match['document_keyword']} ({match['score']})"
+                for match in item.get("matched_keywords", [])
+            ]
+            matched_ner = [
+                f"{match['query_keyword']} MATCHED {match['document_keyword']} ({match['score']})"
+                for match in item.get("matched_ner", [])
+            ]
+
+            print(f"{i}. {title}")
+            print(f"   Total score: {item.get('score', 0.0):.4f}")
+            print(f"   Keyword points: {keyword_score:.4f}")
+            print(f"   Matched Keywords: {', '.join(matched) if matched else 'None'}")
+            print(f"   NER points: {item.get('ner_score', 0.0):.4f}")
+            print(f"   Matched NER: {', '.join(matched_ner) if matched_ner else 'None'}")
+
+        return search_match
+
+    def search_by_document(self, document_input):
+        """
+        Get the document from frontend. 
+        Create a temporary file if needed.
+        Process the document in same way as a search query with SearchEngine
+        Remove the file
+        """
+        if isinstance(document_input, dict):
+            if "data" in document_input:
+                raw_data = document_input["data"]
                 if "," in raw_data:
                     raw_data = raw_data.split(",", 1)[1]
 
-                original_name = file_path_input.get("name", "upload.txt")
+                original_name = document_input.get("name", "upload.txt")
                 suffix = Path(original_name).suffix
                 with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                     tmp.write(base64.b64decode(raw_data))
@@ -78,22 +106,43 @@ class DesktopBridge:
                 try:
                     doc = self.search_engine.process_query_document(tmp_path)
                     if not doc:
-                        return {}
+                        return []
                     doc.name = original_name
-                    format_doc = doc.serialize_object_data()
-                    print(format_doc)
-                    return format_doc
+                    doc_search = self.search_engine.search(doc)
+                    
+                    for i, item in enumerate(doc_search):
+                        title = item.get("title") or "No Name"
+                        keyword_score = item.get("keyword_score", 0.0)
+            
+                        matched = [
+                            f"{match['query_keyword']} MATCHED {match['document_keyword']} ({match['score']})"
+                            for match in item.get("matched_keywords", [])
+                        ]
+                        matched_ner = [
+                            f"{match['query_keyword']} MATCHED {match['document_keyword']} ({match['score']})"
+                            for match in item.get("matched_ner", [])
+                        ]
+
+                        print(f"{i}. {title}")
+                        print(f"   Total score: {item.get('score', 0.0):.4f}")
+                        print(f"   Keyword points: {keyword_score:.4f}")
+                        print(f"   Matched Keywords: {', '.join(matched) if matched else 'None'}")
+                        print(f"   NER points: {item.get('ner_score', 0.0):.4f}")
+                        print(f"   Matched NER: {', '.join(matched_ner) if matched_ner else 'None'}")
+
+                    return doc_search
+                
                 finally:
                     if tmp_path.exists():
                         tmp_path.unlink()
 
             target_path = (
-                file_path_input.get("path")
-                or file_path_input.get("filePath")
-                or file_path_input.get("name")
+                document_input.get("path")
+                or document_input.get("filePath")
+                or document_input.get("name")
             )
         else:
-            target_path = file_path_input
+            target_path = document_input
 
         if not target_path:
             return {"error": "Ingen giltig sökväg mottogs."}
@@ -103,7 +152,11 @@ class DesktopBridge:
             return {"error": f"Filen hittades inte: {path}"}
 
         doc = self.search_engine.process_query_document(path)
-        return doc.serialize_object_data() if doc else {}
+        if not doc:
+            return []
+        
+        doc.name = path.name
+        return self.search_engine.search(doc)
 
 # C:\Users\leona\OneDrive
 
@@ -121,17 +174,19 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
             name = file_info["name"]
             file_full_path = folder / file_path
             
-            with open(BASE_DB/"services/file_tracker.json", "r") as file:
-                data = json.load(file)
+            # with open(BASE_DB/"services/file_tracker.json", "r") as file:
+            #     data = json.load(file)
 
-                file_record = data.get("files", {}).get(file_path, {})
+            #     file_record = data.get("files", {}).get(file_path, {})
 
-            if file_record.get("state") is not True:
-                print(f"Skipping {file_info['name']}")
-                continue
+            # if file_record.get("state") is not True:
+            #     print(f"Skipping {file_info['name']}")
+            #     continue
+
             t0 = time.perf_counter()
             raw_text = file_handler.extract_text(file_full_path)
             t_extract = time.perf_counter() - t0
+
             if raw_text:
                 path = file_full_path
                 document = file_handler.extract_text(path)
@@ -198,18 +253,17 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
         vector_result = _vectorizer.vectorize_chunks(chunks)
 
         #Testar calculate i cosine similarity calculator
-        query = ["Region Skånes Miljövårdsfond stödjer idéer som kan bidra till ett miljömässigt hållbart Skåne i synergi med övriga hållbarhetsaspekter (ekonomiska och sociala). Beviljade projekt är av utvecklingskaraktär och ska stödja den regionala utvecklingsstrategin ”Det Öppna Skåne 2030”, ”Regionalt åtgärdsprogram för miljömålen”, samt ”Klimat- och energistrategin för Skåne”."]
+        query = ["Region Skånes Miljövårdsfond stödjer idéer som kan bidra till ett miljömässigt hållbart Skåne i synergi med övriga hållbarhetsaspekter (ekonomiska och sociala). Beviljade projekt är av utvecklingskaraktär och ska stödja den regionala utvecklingsstrategin ”Det Öppna Skåne 2030”, ”Regionalt åtgärdsprogram för miljömålen”, samt ”Klimat- och energistrategin för Skåne Design and Creation fallstudie”."]
         query_vector = _vectorizer.vectorize(query)
         calculator = cosineSimilarityCalculator()
         cosine_results = calculator.calculateStrings(query_vector, vector_result)
-        
 
         for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
-            print(f"Chunk {index}")
+            # print(f"Chunk {index}")
             ultimate_chunk = Chunk(text=chunk, source=name, keywords=keywords, keynames=ner, vector=vector )
 
             doc.add_chunk(ultimate_chunk)
-            print(ultimate_chunk)
+            # print(ultimate_chunk)
 
         print("COSINE RESULTS:")
         for index, score in cosine_results.items():
@@ -228,8 +282,8 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
 if __name__ == "__main__":
     data_extractor = DataExtractor()
     file_scanner = DocumentScanner()
-    search_engine = SearchEngine(data_extractor)
     database = LocalDataStorage(DB_PATH)
+    search_engine = SearchEngine(data_extractor, database)
 
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n 3. Amelies test thing \n")
     if start_view == "1":

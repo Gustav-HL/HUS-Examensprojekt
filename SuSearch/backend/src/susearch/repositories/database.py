@@ -75,6 +75,7 @@ class LocalDataStorage:
 
         keywords = document_data["keywords"]
         metadata = document_data.get("metadata") or {}
+        file_path = Path(document_data["path"])
 
         # Convert the data to JSON text. 
         # ensure_ascii=False keeps Swedish characters (å, ä, ö) readable.
@@ -106,7 +107,7 @@ class LocalDataStorage:
                 """,
                 (
                     document_data["id"],
-                    metadata.get("title") or document_data["name"],
+                    file_path.name,
                     document_data["path"],
                     Path(document_data["path"]).suffix,
                     metadata.get("author"),

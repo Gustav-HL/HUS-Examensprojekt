@@ -2,6 +2,29 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer, pipelin
 import yake
 from services.word_score import wordScorer
 
+# Words that will be excluded by YAKE in keyword generation
+STOPWORDS = {
+    "och", "att", "det", "som", "för", "med", "till", "den", "samt",
+    "ska", "skall", "kan", "har", "hade", "var", "är", "ett", "en",
+    "på", "av", "om", "men", "inte", "eller", "från", "vid", "inom",
+    "över", "under", "genom", "mellan", "mot", "hos", "ut", "upp",
+    "sig", "sin", "sitt", "sina", "vi", "ni", "de", "dem", "deras",
+    "vår", "vårt", "våra", "denna", "detta", "dessa", "här", "där",
+    "när", "hur", "vad", "vilken", "vilket", "vilka", "alla", "andra",
+    "olika", "även", "också", "dock", "bara", "mer", "mest", "mycket",
+    "oss", "vem", "stad", "skåne", "region", "gäller", "dokument",
+    "orginal", "dokumentid", "gällande", "projekt", "ange",
+    "medel", "version", "projektet", 
+
+    "and", "the", "for", "with", "that", "this", "from", "are", "was",
+    "were", "been", "have", "has", "had", "will", "would", "could",
+    "should", "can", "may", "might", "not", "but", "what", "all",
+    "when", "where", "which", "who", "how", "why", "into", "than",
+    "then", "there", "their", "they", "them", "these", "those", "its",
+    "our", "your", "more", "most", "other", "some", "such", "only",
+    "also", "very", "just", "about", "over", "after", "before", "between",
+}
+
 class KeywordExtractor:
     """
     Extracts entities such as names, locations and time. Aswell as words and phrases.
@@ -13,20 +36,19 @@ class KeywordExtractor:
             "KBLab/bert-base-swedish-cased-ner"
         )
 
-
         self._ner = pipeline(
             "ner",
             model = self.model,
             tokenizer = self.tokenizer,
             aggregation_strategy = "simple",  # Combines part words to whole words
         )
-
         self._keyword_yake = yake.KeywordExtractor(
             lan = lan,
             n = n, 
             dedupLim = dedupLim, 
             top = top,  
-            features = features
+            features = features,
+            stopwords = STOPWORDS
         )
 
     def get_ner(self, chunks: list[str]) -> list[list[dict]]:
@@ -88,8 +110,12 @@ class KeywordExtractor:
             keywords = self._keyword_yake.extract_keywords(chunk)
 
             results.append([
-                {"keyword": keyword, "score": round(float(score), 4), "relevance_score": word_scorer.get_score(chunks, keyword)}
+                {
+                    "keyword": keyword.strip().lower(),
+                    "score": round(float(score), 4),
+                    "relevance_score": word_scorer.get_score(chunks, keyword),
+                }
                 for keyword, score in keywords
             ])
-
+        # print(results)
         return results

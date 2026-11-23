@@ -94,7 +94,7 @@ export default function App() {
 
         if (searchData.document) {
           const base64data = await new Promise((resolve, reject) => {
-            const reader = new Filereader();
+            const reader = new FileReader();
             reader.onload = () => resolve(reader.result);
             reader.onerror = reject;
             reader.readAsDataURL(searchData.document);
