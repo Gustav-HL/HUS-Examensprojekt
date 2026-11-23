@@ -1,0 +1,23 @@
+@reference "../../index.css";
+
+.text-search {
+    @apply flex items-center flex-1 min-w-0;
+}
+
+.text-search-input {
+    @apply w-full min-w-0 px-3 py-2 text-sm;
+    @apply border-0 rounded-none;
+    @apply bg-transparent text-navy;
+    @apply placeholder:text-gray-400;
+    @apply transition-colors duration-200;
+    appearance: none;
+    box-shadow: none;
+}
+
+.text-search-input:hover {
+    @apply placeholder:text-secondary;
+}
+
+.text-search-input:focus {
+    @apply outline-none;
+}
