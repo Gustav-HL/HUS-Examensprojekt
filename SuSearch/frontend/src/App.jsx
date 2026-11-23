@@ -109,7 +109,7 @@ export default function App() {
         else if (searchData.query) {
           results = await window.pywebview.api.search_text(searchData.query);
         }
-
+        console.log(results)
         setSearchResults(results ?? []);
 
       } catch (error) {

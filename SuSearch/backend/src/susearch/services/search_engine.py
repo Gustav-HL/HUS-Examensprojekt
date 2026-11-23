@@ -109,7 +109,7 @@ class SearchEngine:
             return []
 
         db_keywords_list = [
-            json.loads(row[-1]) if isinstance(row[-1], str) and row[-1].strip() else []
+            row.get("keywords") or []
             for row in documents_from_db
         ]
 
@@ -133,7 +133,7 @@ class SearchEngine:
 
             keyword_score = keyword_result["score"]
 
-            doc_ner_chunks = ner_from_document_db.get(doc_row[0], [])
+            doc_ner_chunks = ner_from_document_db.get(doc_row["id"], [])
 
             has_doc_ner = any(bool(chunk) for chunk in doc_ner_chunks)
 
@@ -147,9 +147,9 @@ class SearchEngine:
                 total_score = keyword_score
 
             ranked_results.append({
-                "doc_id": doc_row[0],
-                "title": doc_row[1],
-                "file_path": doc_row[2],
+                "doc_id": doc_row["id"],
+                "title": doc_row["name"],
+                "file_path": doc_row["path"],
                 "score": total_score,
                 "keyword_score": keyword_score,
                 "ner_score": ner_score,

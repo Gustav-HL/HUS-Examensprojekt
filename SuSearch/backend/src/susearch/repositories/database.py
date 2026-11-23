@@ -409,3 +409,51 @@ class LocalDataStorage:
         finally:
             if should_close:
                 conn.close()
+
+
+    def get_documents_with_keywords(self, conn=None):
+        """
+        Function to get the table data and format the keywords for keyword matching
+        
+        """
+        rows = self.get_document_data(conn=conn)
+
+        documents = []
+        for row in rows:
+            keywords = row[-1]  # Final column in table
+            documents.append({
+                "doc_id": row[0],
+                "title": row[1],
+                "file_path": row[2],
+                "keywords": json.loads(keywords) if keywords else [],
+            })
+
+        return documents
+
+    def get_all_document_ner(self, conn=None) -> dict[str, list]:
+        """
+        Fetches all NER entities for documents
+        
+        """
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.execute("SELECT doc_id, entities FROM Chunks;")
+
+            ner_by_doc = {}
+            for doc_id, raw_ner in cursor.fetchall():
+                parsed = (
+                    json.loads(raw_ner)
+                    if isinstance(raw_ner, str) and raw_ner.strip().startswith("[")
+                    else []
+                )
+                ner_by_doc.setdefault(doc_id, []).append(parsed)
+
+            return ner_by_doc
+
+        finally:
+            if should_close:
+                conn.close()
