@@ -171,6 +171,7 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
 
         try:
             print(f"\nName: {file_info['name']}")
+            name = file_info["name"]
             file_full_path = folder / file_path
             
             # with open(BASE_DB/"services/file_tracker.json", "r") as file:
@@ -205,12 +206,12 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
                 vector_result = _vectorizer.vectorize_chunks(chunks)
 
                 for index, (chunk, keywords, ner, vector) in enumerate(zip(chunks, yake_results, ner_results, vector_result), start=1):
-                    print(f"Chunk {index}")
+                    #print(f"Chunk {index}")
                     ultimate_chunk = Chunk(text=chunk, source=name, keywords=keywords, keynames=ner, vector=vector )
                     doc.add_chunk(ultimate_chunk)
-                    print(ultimate_chunk)
+                    #print(ultimate_chunk)
 
-                print(doc)
+                #print(doc)
                 database.save_document(doc)
                 # Send document object to database
                 # database.test_database(doc)
@@ -270,9 +271,8 @@ def process_document(data_extractor: DataExtractor, file_scanner: DocumentScanne
 
         saved_file = doc.save_to_json()
         database.save_document(doc)
-        # print(doc)
-        # print("DETTA ÄR DATABASEN!!")
-        # print(database.get_document_data())
+        documents = database.get_document_data()
+        print(json.dumps(documents, ensure_ascii=False, indent=2))
 
         # Send document object to database
         # database.test_database(doc)
@@ -285,7 +285,7 @@ if __name__ == "__main__":
     database = LocalDataStorage(DB_PATH)
     search_engine = SearchEngine(data_extractor, database)
 
-    start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n")
+    start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n 3. Amelies test thing \n")
     if start_view == "1":
         print("Started  terminal")
         folder_input = input("Choose folder: ") # C:\Users\leona\OneDrive
@@ -316,6 +316,49 @@ if __name__ == "__main__":
             debug=True,
             private_mode=False
         )
+
+    elif start_view == "3":
+        print("Started terminal")
+        #Find folder to extract documents from
+        folder_input = input("Choose folder to insert documents from: ")
+        current_dir = Path(__file__).resolve().parent
+        folder_res = (
+            file_scanner.scan_and_track(folder_input)
+            if folder_input
+            else file_scanner.scan_and_track(str(current_dir))
+        )
+        folder = Path(folder_res)
+
+        #Inserts documents into database
+        process_all_documents(data_extractor, file_scanner, folder,  database)
+
+        calculator = cosineSimilarityCalculator()
+
+        #Test query is vectorized
+        query = ["Region Skånes Miljövårdsfond stödjer idéer som kan bidra till ett miljömässigt hållbart Skåne i synergi med övriga hållbarhetsaspekter (ekonomiska och sociala). Beviljade projekt är av utvecklingskaraktär och ska stödja den regionala utvecklingsstrategin ”Det Öppna Skåne 2030”, ”Regionalt åtgärdsprogram för miljömålen”, samt ”Klimat- och energistrategin för Skåne”."]
+        query_vector = data_extractor._vectorizer.vectorize(query)
+
+        #Fetch vectors of all chunks in the database
+        chunk_vectors = database.get_all_chunk_vectors()
+
+        #Calculate cosine similarity with the vector of the query and the vectors of all chunks
+        cosine_results = calculator.calculateStrings(query_vector, chunk_vectors)
+
+        #Map each chunk to the name of its document
+        chunk_to_name = database.get_document_names_for_chunks(list(cosine_results.keys()))
+
+        #cosine_results is sorted best first, so each document gets its best score
+        printed = set()
+        match_number = 1
+        for chunk_id, score in cosine_results.items():
+            name = chunk_to_name.get(chunk_id)
+            if name is None or name in printed:
+                continue
+            printed.add(name)
+            print(f"{match_number}. {name}")
+            match_number += 1
+            print()
+
 
     else:
         print("Wrong Choice Buddy")

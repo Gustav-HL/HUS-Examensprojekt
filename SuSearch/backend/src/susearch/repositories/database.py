@@ -6,16 +6,19 @@ from models.document import Document
 from models.chunk import Chunk
 
 
-# Get the directory where database_test file is located
+# Get the directory containing this database file.
 BASE_DB = Path(__file__).resolve().parent
-# Create a path to the database file from repositories folder.
+# Path to the default database file in the repositories folder.
 DEFAULT_DB_PATH = BASE_DB / "HUT.db"
 # Path to the SQL schema file
 DB_SCHEMA_PATH = BASE_DB / "HUT_db.sql"
 
 
 class LocalDataStorage:
+    """Manages local SQLite storage for documents, chunks and vectors."""
+   
     def __init__(self, DB_PATH=None):
+        """Set database path and create database tables."""
         self.DB_PATH = DB_PATH or DEFAULT_DB_PATH
         self.create_tables()
 
@@ -38,7 +41,7 @@ class LocalDataStorage:
             conn.close()
 
     def save_document(self, document):
-        """Serialize the document data and runs all data insert at once"""
+        """Save the document, chunks and vectors in one transaction."""
         document_data = document.serialize_object_data()
 
         conn = sqlite3.connect(self.DB_PATH, timeout=30.0)
@@ -55,7 +58,18 @@ class LocalDataStorage:
             conn.close()
 
     def insert_document_to_db(self, document, conn=None, document_data=None):
-        """Insert document information into the Documents table."""
+        """Insert document information into the Documents table.
+        
+        Args:
+            document: 
+                he Document object that is being saved.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection.
+            document_data: 
+                A dictionary that contains serialized document data. 
+                If not provided it is created from document.
+        """
         #Get document data as a dictionary. 
         document_data = document_data or document.serialize_object_data()
 
@@ -75,7 +89,7 @@ class LocalDataStorage:
             conn.execute("PRAGMA foreign_keys = ON")
 
             #Insert document inforamation into the Documents table.
-            # The (?, ?, ?, ?, ?) are placeholders for the value.
+            # The (?, ?, ?, ?, ?) are placeholders for the column value.
             conn.execute(
                 """
                 INSERT OR REPLACE INTO Documents (
@@ -110,7 +124,19 @@ class LocalDataStorage:
                 conn.close()
 
     def insert_chunks_to_db(self, document, conn=None, document_data=None):
-        """Insert document chunk data into the Chunks table."""
+        """Insert document chunk data into the Chunks table.
+        
+        Args:
+            document: 
+                The Document object containing the chunks to save.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection.
+            document_data: 
+                A dictionary containing serialized document
+                data. If not provided, it is created from document.
+        
+        """
         document_data = document_data or document.serialize_object_data()
 
         # Get the list of chunks from the document.
@@ -151,7 +177,18 @@ class LocalDataStorage:
                 conn.close()
 
     def insert_vectors_to_db(self, document, conn=None, document_data=None):
-        """Insert document chunk vectors into the Vectors table."""
+        """Insert document chunk vectors into the Vectors table and skipping empty vector.
+        
+        Args:
+            document: 
+                The Document object containing the vectors to save.
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens, commits and closes its own connection. 
+            document_data: 
+                A dictionary containing serialized document
+                data. If not provided, it is created from document.       
+        """
         # Get document data as a dictionary.
         document_data = document_data or document.serialize_object_data()
 
@@ -197,13 +234,25 @@ class LocalDataStorage:
                 conn.close()
                 
     def get_document_data(self, conn=None):
+        """Fetch all data from Doucments and structure their metadata as dictionaries. 
         
+        Args:
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+        
+        Returns:
+            A list of document dictionaires containing ID, name, path, leywords and metadata.
+            Returns an empty list if no documents exsist.
+        """    
+       
         should_close = conn is None
         conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
         
         try:
             conn.execute("PRAGMA foreign_keys = ON")
             cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
             
             query=(
                 """
@@ -213,41 +262,106 @@ class LocalDataStorage:
                 
             )
             cursor.execute(query)
-            documents = cursor.fetchall()
+            rows = cursor.fetchall()
             
-            # for document in documents:
-            #     print(document)
-
+            documents = []
+            
+            for document_data in rows:
+                document = {
+                    "id": document_data["doc_id"],
+                    "name": Path(document_data["file_path"]).name,
+                    "path": document_data["file_path"],
+                    "keywords": json.loads(document_data["keywords"]),
+                    "metadata": {
+                        "doc_title": document_data["title"],
+                        "file_type": document_data["file_type"],
+                        "author": document_data["author"],
+                        "creator": document_data["creator"],
+                        "creation_date": document_data["creation_date"],
+                        "modification_date": document_data["modification_date"]
+                    }
+                }
+                
+                documents.append(document)
+                
             return documents
-            
         
         finally:
                 if should_close:
                     conn.close()
-                    
-                    
-    def get_documents_with_keywords(self, conn=None):
-        """
-        Function to get the table data and format the keywords for keyword matching
+
+    def get_document_data_with_chunk_id(self, chunk_ids: list[str], conn=None) -> list[dict]:
+        """Fetch document data that the list of chunks belong to.
         
+        Args:
+            chunk_ids:
+                A list of chunk_ids.
+
+            conn: 
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+
+        Returns:
+            A list of dictionaries holding the document data.
         """
-        rows = self.get_document_data(conn=conn)
+        
+        if not chunk_ids:
+            return []
+        
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
 
-        documents = []
-        for row in rows:
-            keywords = row[-1] #Final column in talbe
-            documents.append({
-                "doc_id": row[0],
-                "title": row[1],
-                "file_path": row[2],
-                "keywords": json.loads(keywords) if keywords else [],
-            })
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
 
-        return documents    
+            placeholders = ",".join("?" * len(chunk_ids))
+            
+            query = f"""
+                SELECT DISTINCT d.*
+                FROM Documents d
+                JOIN Chunks c ON c.doc_id = d.doc_id
+                WHERE c.chunk_id IN ({placeholders})
+            """
+            cursor.execute(query, chunk_ids)
+            rows = cursor.fetchall()
+            
+            documents = []
+            for document_data in rows:
+                documents.append({
+                    "id": document_data["doc_id"],
+                    "name": Path(document_data["file_path"]).name,
+                    "path": document_data["file_path"],
+                    "keywords": json.loads(document_data["keywords"]),
+                    "metadata": {
+                        "doc_title": document_data["title"],
+                        "file_type": document_data["file_type"],
+                        "author": document_data["author"],
+                        "creator": document_data["creator"],
+                        "creation_date": document_data["creation_date"],
+                        "modification_date": document_data["modification_date"],
+                    },
+                })
+                
+            return documents
+        
+        finally:
+                if should_close:
+                    conn.close()
 
-    def get_chunk_ner_data(self, conn=None):
-        """
-        Fetches all NER entities for documents
+
+    def get_all_chunk_vectors(self, conn=None) -> dict[str, list[float]]:
+        """Fetch the vectors of all chunks.
+
+        Args:
+            conn:
+                Existing SQLite connection. If not provided,
+                this method opens and closes its own connection.
+
+        Returns:
+            A dictionary that maps chunk_id to its vector (a list of floats).
+            Returns an empty dictionary if no vectors exist.
         """
         should_close = conn is None
         conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
@@ -255,63 +369,43 @@ class LocalDataStorage:
         try:
             conn.execute("PRAGMA foreign_keys = ON")
             cursor = conn.cursor()
-            cursor.execute("SELECT doc_id, entities FROM Chunks;")
-            return cursor.fetchall()
+            cursor.row_factory = sqlite3.Row
+
+            cursor.execute("SELECT chunk_id, vector FROM Vectors")
+            rows = cursor.fetchall()
+
+            vectors = {}
+            for row in rows:
+                # Convert the binary data back into a float 32-bit array.
+                vector_float_array = array("f")
+                vector_float_array.frombytes(row["vector"])
+
+                vectors[row["chunk_id"]] = vector_float_array.tolist()
+
+            return vectors
+
         finally:
             if should_close:
                 conn.close()
 
-    def get_all_document_ner(self, conn=None) -> dict[str, list]:
-        """
-        Formats NER entities to json format
-        
-        """
-        rows = self.get_chunk_ner_data(conn=conn)
+    def get_document_names_for_chunks(self, chunk_ids: list[str], conn=None) -> dict[str, str]:
+        if not chunk_ids:
+            return {}
 
-        ner_form_document = {}
-        for doc_id, raw_ner in rows:
-            parsed = json.loads(raw_ner) if raw_ner else []
-            ner_form_document.setdefault(doc_id, []).append(parsed)
-
-        return ner_form_document
-    
-        #  def serialize_object_data(self) -> dict:
-        #          """
-        #          Goes through each chunk, checks if there is a valid Vector array appends each chunk to a list.
-         
-        #              Returns: Dict: containing all data stored in Document
-        #          """
-        #          gathered_chunks = []
-        #          for chunk in self.chunks:
-        #              stored_vector = getattr(chunk, "vector", None)
-         
-        #              if stored_vector is not None and hasattr(stored_vector, "tolist"):
-        #                  valid_vector = stored_vector.tolist()
-        #              else:
-        #                  valid_vector = stored_vector
-         
-        #              gathered_chunks.append({
-        #                  "id": getattr(chunk, "id", None),
-        #                  "chunk_index": getattr(chunk, "chunk_index", None),
-        #                  "document_id": getattr(chunk, "document_id", self.id),
-        #                  "text": getattr(chunk, "text", ""),
-        #                  "keywords": getattr(chunk, "keywords", []),
-        #                  "keynames": getattr(chunk, "keynames", []),
-        #                  "vector": valid_vector,
-        #              })
-         
-        #          return {
-        #              "id": self.id,
-        #              "name": self.name,
-        #              "path": str(self.path),
-        #              "raw_text": self.raw_text,
-        #              "keywords": self.keywords,
-        #              "metadata": self.metadata,
-        #              "chunks": gathered_chunks,
-        #          } 
-                
-
-
-    
-    
-    
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+        try:
+            placeholders = ",".join("?" * len(chunk_ids))
+            rows = conn.execute(
+                f"""
+                SELECT c.chunk_id, d.file_path
+                FROM Chunks c
+                JOIN Documents d ON d.doc_id = c.doc_id
+                WHERE c.chunk_id IN ({placeholders})
+                """,
+                chunk_ids,
+            ).fetchall()
+            return {chunk_id: Path(file_path).name for chunk_id, file_path in rows}
+        finally:
+            if should_close:
+                conn.close()
