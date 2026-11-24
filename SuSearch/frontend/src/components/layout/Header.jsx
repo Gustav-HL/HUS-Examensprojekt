@@ -1,9 +1,9 @@
 import './Header.css';
 
 /**
- * Shared header for SuSearch.
- * Displays HUT branding, project breadcrumb navigation,
- * and the existing theme toggle.
+ * Header for SuSearch.
+ * Displays HUT logo, project breadcrumb navigation,
+ * and the theme toggle.
  *
  * @param {Object} props - Component properties.
  * @param {'search'|'project'} [props.variant='search'] - Active page.
@@ -19,8 +19,6 @@ export default function Header({
 }) {
   const isProjectPage = variant === 'project';
 
-  // Both images use the same silhouette and sizing, with colors
-  // tailored for light and dark backgrounds.
   const brand = (
     <>
       <img
