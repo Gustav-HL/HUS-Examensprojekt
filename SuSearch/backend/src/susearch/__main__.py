@@ -53,8 +53,18 @@ class DesktopBridge:
     def select_folder(self):
         if not self._window:
             return None
-        result = self._window.create_file_dialog(webview.FOLDER_DIALOG)
-        return result[0] if result else None
+        result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+        print(result)
+        results = str(result)
+        print(results)
+        return results[0] if results else None
+
+    
+    def handle_documents(self):
+        folderP = self.select_folder()
+        print("Success")
+        print(folderP)
+        process_all_documents(data_extractor, file_scanner, folderP,  database)
 
     def search_text(self, query: str):
         query_doc = self.search_engine.process_query(query)
@@ -230,6 +240,7 @@ if __name__ == "__main__":
     file_scanner = DocumentScanner()
     search_engine = SearchEngine(data_extractor)
     database = LocalDataStorage(DB_PATH)
+    
 
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n 3. Amelies test thing \n")
     if start_view == "1":

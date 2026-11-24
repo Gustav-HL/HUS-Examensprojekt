@@ -75,6 +75,7 @@ export default function App() {
       if (folder) {
         setSelectedFolder(folder);
         localStorage.setItem('selectedFolder', folder);
+        await window.pywebview.api.handle_documents();
       }
     } catch (error) {
       console.error('Failed to select folder', error);
