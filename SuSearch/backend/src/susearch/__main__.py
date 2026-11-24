@@ -4,6 +4,7 @@ import json
 import tempfile
 import base64
 import time
+import logging
 
 from services.document_chunker import DocumentChunker
 from services.keyword_extractor import KeywordExtractor
@@ -16,6 +17,8 @@ from services.cosine_similarity import cosineSimilarityCalculator
 from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 from repositories.database import LocalDataStorage
+
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
