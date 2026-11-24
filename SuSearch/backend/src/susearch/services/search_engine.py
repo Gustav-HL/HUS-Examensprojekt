@@ -4,7 +4,8 @@ from .file_handler import FileHandler
 from .keyword_matcher import KeywordMatcher
 from models.document import Document
 from models.chunk import Chunk
-
+from cosine_similarity import cosineSimilarityCalculator
+from vector_extractor import Vectorizer
 
 class SearchEngine:
     def __init__(self, data_extractor, database):
@@ -104,6 +105,7 @@ class SearchEngine:
 
         documents_from_db = self._database.get_document_data()
         ner_from_document_db = self._database.get_all_document_ner()
+        chunk_vectors = self._database.get_all_chunk_vectors()
         
         if not documents_from_db:
             return []
@@ -127,6 +129,12 @@ class SearchEngine:
 
         matcher = KeywordMatcher(db_keywords_list)
         keyword_results = matcher.match(search_query_or_document.keywords)
+
+        vectorizer = Vectorizer()
+        query_vector = vectorizer.vectorize(search_query_or_document)
+
+        cos_calc = cosineSimilarityCalculator()
+        cosine_results = cos_calc.calculateStrings(query_vector, chunk_vectors)
 
         ranked_results = []
         for doc_row, keyword_result in zip(documents_from_db, keyword_results):
