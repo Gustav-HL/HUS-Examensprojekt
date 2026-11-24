@@ -1,6 +1,7 @@
 
 import RelatedProjects from '../components/displayProject/RelatedProjects';
 import ProjectFactCards from '../components/displayProject/ProjectFactCards';
+import './ProjectPage.css';
 
 /**
  * Displays information about the selected project

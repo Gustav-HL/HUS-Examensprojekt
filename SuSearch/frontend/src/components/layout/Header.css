@@ -94,3 +94,12 @@ button.app-header__brand:focus-visible,
 :root[data-theme="dark"] .app-header__nav-link:hover {
   @apply text-white;
 }
+
+/* project breadcrumb visible in dark mode */
+:root[data-theme="dark"] .app-header__project-title {
+  @apply text-white/85;
+}
+
+:root[data-theme="dark"] .app-header__separator {
+  @apply text-white/50;
+}
