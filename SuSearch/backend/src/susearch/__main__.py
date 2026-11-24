@@ -17,6 +17,9 @@ from services.search_engine import SearchEngine
 from repositories.database import LocalDataStorage
 
 import time
+import logging
+
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 # Get the directory where database_test file is located
 BASE_DB = Path(__file__).resolve().parent
@@ -131,7 +134,7 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
             name = file_info["name"]
             file_full_path = folder / file_path
             
-            with open(BASE_DB/"services/file_tracker.json", "r") as file:
+            with open(BASE_DB/"services/file_tracker.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
 
                 file_record = data.get("files", {}).get(file_path, {})
