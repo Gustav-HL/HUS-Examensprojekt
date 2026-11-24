@@ -1,4 +1,5 @@
 import ProjectTags from "./ProjectTags";
+import './ProjectCard.css';
 /**
  * Displays a project card with its title, description,
  * optional details, tags section, and navigation button.

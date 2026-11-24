@@ -1,32 +1,36 @@
 
-/* container */
+/* Shared Tailwind theme */
+@reference "../../index.css";
+
+/* Search results container */
 .search-results {
-  width: 100%;
-  margin-top: 24px;
-  padding-bottom: 40px;
-  color: var(--ink);
+  @apply w-full mt-6 pb-10 text-navy;
 }
 
-/* results grid */
+/* Results grid */
 .search-results .project-list {
-  display: grid;
+  @apply grid w-full items-stretch gap-[14px];
+
   grid-template-columns: repeat(
     auto-fit,
     minmax(min(100%, 280px), 1fr)
   );
-  gap: 14px;
-  width: 100%;
-  align-items: stretch;
 }
 
+/* Dark mode */
+:root[data-theme="dark"] .search-results {
+  @apply text-white;
+}
+
+/* Responsive layout */
 @media (max-width: 720px) {
   .search-results {
-    margin-top: 20px;
-    padding-bottom: 28px;
+    @apply mt-5 pb-7;
   }
 
   .search-results .project-list {
+    @apply grid-cols-1 gap-3;
+
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 }
