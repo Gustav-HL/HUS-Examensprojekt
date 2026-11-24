@@ -41,6 +41,7 @@ class KeywordExtractor:
             model = self.model,
             tokenizer = self.tokenizer,
             aggregation_strategy = "simple",  # Combines part words to whole words
+            device= "cpu",
         )
         self._keyword_yake = yake.KeywordExtractor(
             lan = lan,

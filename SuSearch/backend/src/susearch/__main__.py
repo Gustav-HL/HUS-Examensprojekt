@@ -289,7 +289,7 @@ if __name__ == "__main__":
     if start_view == "1":
         print("Started  terminal")
         folder_input = input("Choose folder: ") # C:\Users\leona\OneDrive
-        current_dir = Path(__file__).resolve().parent
+        current_dir = Path(__file__).resolve().parent / "testdocs"
         folder_res = (
             file_scanner.scan_and_track(folder_input)
             if folder_input
