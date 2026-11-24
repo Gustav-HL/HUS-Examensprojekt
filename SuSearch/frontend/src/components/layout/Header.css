@@ -1,4 +1,4 @@
-/* HUT colors and Tailwind v4 utilities */
+/* HUT colors and Tailwind utilities */
 @reference "../../index.css";
 
 /* Shared header */
@@ -12,7 +12,7 @@
          items-center gap-6 px-6 py-3;
 }
 
-/* Brand: no colored box behind the transparent logo */
+/* logo */
 .app-header__identity {
   @apply flex shrink-0 items-center;
 }
@@ -70,7 +70,7 @@ button.app-header__brand:focus-visible,
   @apply ml-auto flex shrink-0 items-center justify-end;
 }
 
-/* Dark theme: transparent cyan + white wordmark on navy */
+/* Dark theme */
 :root[data-theme="dark"] .app-header {
   @apply border-accent/25 bg-navy text-white;
 }
