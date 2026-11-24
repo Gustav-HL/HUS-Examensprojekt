@@ -1,114 +1,96 @@
+/* HUT colors and Tailwind v4 utilities */
+@reference "../../index.css";
 
-/* Shared header for SearchPage and ProjectPage */
+/* Shared header */
 .app-header {
-  width: 100%;
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
-  color: var(--ink);
+  @apply relative z-40 w-full border-b border-lightgray
+         bg-white text-navy transition-colors duration-200;
 }
 
-/* Header layout */
 .app-header__inner {
-  width: min(1180px, calc(100% - 48px));
-  min-height: 64px;
-  margin: 0 auto;
-  padding: 8px 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  @apply mx-auto flex min-h-[76px] w-full max-w-[1200px]
+         items-center gap-6 px-6 py-3;
 }
 
-/* Organization branding */
+/* Brand: no colored box behind the transparent logo */
+.app-header__identity {
+  @apply flex shrink-0 items-center;
+}
+
 .app-header__brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
+  @apply inline-flex shrink-0 items-center rounded-md border-0
+         bg-transparent p-0 text-left no-underline;
 }
 
-/* HUT logo */
-.app-header__mark {
-  width: 34px;
-  height: 28px;
-  border: 1.5px solid var(--ink);
-  border-radius: 2px;
-
-  display: grid;
-  place-items: center;
-
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
+button.app-header__brand {
+  @apply cursor-pointer;
 }
 
-.app-header__name {
-  font-size: 0.95rem;
-  color: var(--ink);
+button.app-header__brand:hover {
+  @apply opacity-85;
 }
 
+button.app-header__brand:focus-visible,
+.app-header__nav-link:focus-visible {
+  @apply outline-2 outline-offset-4 outline-accent;
+}
+
+.app-header__logo {
+  @apply block h-auto w-[248px] max-w-full object-contain;
+}
+
+.app-header__logo--dark {
+  @apply hidden;
+}
+
+/* Breadcrumb: appears on project pages only */
 .app-header__nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  color: var(--muted);
-  font-size: 0.85rem;
+  @apply flex min-w-0 items-center gap-3 border-l
+         border-lightgray pl-5 font-ui text-sm;
 }
 
-.app-header__nav button {
-  border: none;
-  background: transparent;
-  color: var(--green-dark);
-  font-weight: 600;
-  cursor: pointer;
+.app-header__nav-link {
+  @apply shrink-0 cursor-pointer rounded-sm border-0 bg-transparent
+         p-0 font-semibold text-primary;
 }
 
-.app-header__nav button:hover {
-  text-decoration: underline;
+.app-header__nav-link:hover {
+  @apply text-secondary underline underline-offset-4;
 }
 
-.app-header__nav span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.app-header__separator {
+  @apply shrink-0 text-navy/35;
 }
 
-/* Theme toggle container */
+.app-header__project-title {
+  @apply min-w-0 truncate font-medium text-navy/75;
+}
+
 .app-header__actions {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
+  @apply ml-auto flex shrink-0 items-center justify-end;
 }
 
-/* transitions */
-.app-header {
-  transition: background-color 0.18s ease,
-              color 0.18s ease,
-              border-color 0.18s ease;
+/* Dark theme: transparent cyan + white wordmark on navy */
+:root[data-theme="dark"] .app-header {
+  @apply border-accent/25 bg-navy text-white;
 }
 
-@media (max-width: 720px) {
-  .app-header__inner {
-    width: calc(100% - 28px);
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .app-header__nav {
-    order: 3;
-    width: 100%;
-  }
-
-  .app-header__name {
-    font-size: 0.85rem;
-  }
+:root[data-theme="dark"] .app-header__logo--light {
+  @apply hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .app-header {
-    transition: none;
-  }
+:root[data-theme="dark"] .app-header__logo--dark {
+  @apply block;
+}
+
+:root[data-theme="dark"] .app-header__nav {
+  @apply border-accent/30;
+}
+
+:root[data-theme="dark"] .app-header__nav-link {
+  @apply text-accent;
+}
+
+:root[data-theme="dark"] .app-header__nav-link:hover {
+  @apply text-white;
 }

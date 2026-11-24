@@ -1,42 +1,33 @@
+/* Tailwind design values */
+@reference "../../index.css";
 
+/* Theme button */
 .theme-toggle {
-  display: inline-flex;
-  flex: 0 0 auto;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  min-height: 38px;
-  padding: 7px 11px;
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: .84rem;
-  font-weight: 600;
+  @apply inline-flex h-11 w-11 shrink-0 cursor-pointer
+         items-center justify-center rounded-full
+         border border-lightgray bg-background
+         transition-colors duration-200;
 }
 
 .theme-toggle:hover {
-  background: var(--hover);
+  @apply border-secondary bg-secondary/10;
 }
 
-.theme-toggle span {
-  font-size: 1.2rem;
-  line-height: 1;
+.theme-toggle:focus-visible {
+  @apply outline-2 outline-offset-2 outline-accent;
 }
 
-/* Smooth theme transition */
-.theme-toggle {
-  transition: background-color .18s ease,
-              color .18s ease,
-              border-color .18s ease;
+.theme-toggle__icon {
+  @apply block h-[22px] w-[22px];
 }
 
-@media (max-width: 520px) {
-  .theme-toggle {
-    width: 40px;
-    height: 38px;
-    padding: 0;
-  }
+/* Dark mode */
+:root[data-theme="dark"] .theme-toggle {
+  @apply border-accent/40 bg-white/10;
+}
+
+:root[data-theme="dark"] .theme-toggle:hover {
+  @apply border-accent bg-white/20;
 }
 
 @media (prefers-reduced-motion: reduce) {
