@@ -457,3 +457,33 @@ class LocalDataStorage:
         finally:
             if should_close:
                 conn.close()
+
+    def get_first_chunk_texts(self, doc_ids: list[str], conn=None) -> dict[str, str]:
+        """
+        Fetch text of the first chunk to present the first text part as preview in frontend
+        
+        """
+        if not doc_ids:
+            return {}
+
+        should_close = conn is None
+        
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+        try:
+
+            placeholders = ",".join("?" * len(doc_ids))
+            rows = conn.execute(
+                f"""
+                SELECT doc_id, text_content
+                FROM Chunks
+                WHERE doc_id IN ({placeholders})
+                  AND chunk_index = 1
+                """,
+                doc_ids,
+            ).fetchall()
+
+            return {doc_id: text_content for doc_id, text_content in rows}
+        
+        finally:
+            if should_close:
+                conn.close()
