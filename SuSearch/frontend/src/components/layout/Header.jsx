@@ -1,60 +1,87 @@
-
 import './Header.css';
 
 /**
- * Header component for the SuSearch desktop application.
- * Displays the organization name, project navigation,
- * and theme toggle on both pages.
+ * Header for SuSearch.
+ * Displays HUT logo, project breadcrumb navigation,
+ * and the theme toggle.
  *
  * @param {Object} props - Component properties.
- * @param {string} [props.variant] - Current page variant.
+ * @param {'search'|'project'} [props.variant='search'] - Active page.
  * @param {string} [props.projectTitle] - Selected project title.
- * @param {Function} [props.onNavigate] - Handles page navigation.
- * @param {React.ReactNode} [props.themeToggle] - Theme toggle component.
+ * @param {Function} [props.onNavigate] - Navigates back to search.
+ * @param {React.ReactNode} [props.themeToggle] - Existing theme toggle.
  */
 export default function Header({
   variant = 'search',
-  projectTitle,
+  projectTitle = '',
   onNavigate,
   themeToggle
 }) {
   const isProjectPage = variant === 'project';
 
+  const brand = (
+    <>
+      <img
+        className="app-header__logo app-header__logo--light"
+        src="/images/hut-logo-light.png"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="app-header__logo app-header__logo--dark"
+        src="/images/hut-logo-dark.png"
+        alt=""
+        aria-hidden="true"
+      />
+      <span className="sr-only">Hållbar Utveckling Skåne</span>
+    </>
+  );
+
   return (
     <header className="app-header">
       <div className="app-header__inner">
-
-        {/* Organization branding */}
-        <div className="app-header__brand">
-          <span className="app-header__mark">HUT</span>
-          <span className="app-header__name">
-            Hållbar Utveckling Skåne
-          </span>
-        </div>
-
-        {/* Project navigation */}
-        {isProjectPage && (
-          <nav
-            className="app-header__nav"
-            aria-label="Brödsmulnavigering"
-          >
+        <div className="app-header__identity">
+          {isProjectPage ? (
             <button
               type="button"
+              className="app-header__brand"
+              onClick={() => onNavigate?.('search')}
+              disabled={!onNavigate}
+              title="Tillbaka till sökresultaten"
+            >
+              {brand}
+            </button>
+          ) : (
+            <div className="app-header__brand">
+              {brand}
+            </div>
+          )}
+        </div>
+
+        {isProjectPage && (
+          <nav className="app-header__nav" aria-label="Brödsmulnavigering">
+            <button
+              type="button"
+              className="app-header__nav-link"
               onClick={() => onNavigate?.('search')}
               disabled={!onNavigate}
             >
               Arkiv
             </button>
-
-            <span> / {projectTitle || 'Projekt'}</span>
+            <span className="app-header__separator" aria-hidden="true">/</span>
+            <span
+              className="app-header__project-title"
+              aria-current="page"
+              title={projectTitle || 'Projekt'}
+            >
+              {projectTitle || 'Projekt'}
+            </span>
           </nav>
         )}
 
-        {/* Shared theme toggle */}
         <div className="app-header__actions">
           {themeToggle}
         </div>
-
       </div>
     </header>
   );
