@@ -1,104 +1,111 @@
 
+/* Shared Tailwind theme */
+@reference "../../index.css";
+
 /* Filter section */
 .filter-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 12px;
-  padding-top: 14px;
-  margin: 14px 0 0;
-  border-top: 1px solid var(--line);
+  @apply flex w-full items-center justify-between
+         gap-3 border-t border-lightgray
+         pt-[14px] mt-[14px];
 }
 
 /* Filter button */
 .filter-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 38px;
-  padding: 0 6px;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--green-dark);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
+  @apply inline-flex items-center justify-center
+         gap-[9px] min-h-[38px]
+         px-[10px] py-0
+         border border-transparent rounded-[2px]
+         bg-primary text-white
+         text-[0.9rem] font-semibold
+         cursor-pointer transition-colors;
 }
 
+/* Hover */
 .filter-button:hover {
-  background: var(--hover);
+  @apply bg-secondary text-white;
 }
 
+/* Open filter state */
 .filter-button[aria-expanded="true"] {
-  background: var(--tint);
+  @apply bg-secondary text-white;
+}
+
+/* Keyboard accessibility */
+.filter-button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-accent;
 }
 
 /* Filter icon */
 .filter-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-/* Adjust icon colors in dark mode */
-:root[data-theme="dark"] .filter-icon {
-  filter: brightness(0) invert(1);
+  @apply w-5 h-5 shrink-0 brightness-0 invert;
 }
 
 /* Filter panel */
 .filter-panel {
-  display: none;
-  width: 100%;
-  padding-top: 16px;
+  @apply hidden w-full pt-4;
 }
 
+/* Open panel */
 .filter-panel.open {
-  display: block;
+  @apply block;
 }
 
 /* Filter layout */
 .filter-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  @apply grid grid-cols-2 gap-[14px];
 }
 
 /* Reset filters section */
 .filter-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 14px;
+  @apply flex justify-end mt-[14px];
 }
 
 /* Reset button */
 .clear-button {
-  border: none;
-  background: transparent;
-  color: var(--green-dark);
-  padding: 8px 0;
-  font-weight: 700;
-  cursor: pointer;
+  @apply border-0 bg-transparent
+         text-primary px-0 py-2
+         font-bold cursor-pointer
+         transition-colors;
 }
 
+/* Reset button hover */
 .clear-button:hover {
-  text-decoration: underline;
+  @apply text-secondary underline;
 }
 
+/* Reset button keyboard focus */
+.clear-button:focus-visible {
+  @apply outline-2 outline-offset-2 outline-accent;
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .filter-line {
+  @apply border-accent/20;
+}
+
+:root[data-theme="dark"] .clear-button {
+  @apply text-accent;
+}
+
+:root[data-theme="dark"] .clear-button:hover {
+  @apply text-white underline;
+}
+
+/* Responsive layout */
 @media (max-width: 720px) {
   .filter-grid {
-    grid-template-columns: 1fr;
+    @apply grid-cols-1;
   }
 
   .filter-line {
-    flex-wrap: wrap;
+    @apply flex-wrap;
   }
 }
 
+/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .filter-button {
+  .filter-button,
+  .clear-button {
     transition: none;
   }
 }

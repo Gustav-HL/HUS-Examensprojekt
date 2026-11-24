@@ -1,54 +1,54 @@
+/* Shared Tailwind v4 theme */
+@reference "../../index.css";
 
+/* Area filter */
 .area-filter {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-width: 0;
+  @apply flex w-full min-w-0 flex-col;
 }
 
 .area-filter label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--secondary-text);
-  font-size: 0.83rem;
-  font-weight: 600;
+  @apply mb-[6px] block text-[0.83rem] font-semibold text-navy;
 }
 
-/* Area filter dropdown */
+/* Dropdown with local SVG arrow instead of browser-native styling */
 .area-filter select {
-  width: 100%;
-  height: 42px;
-  padding: 0 32px 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 0.9rem;
-  cursor: pointer;
+  @apply block h-[42px] w-full appearance-none cursor-pointer rounded-md
+         border border-lightgray bg-white pl-3 pr-10 text-[0.9rem] text-navy
+         transition-colors duration-150;
+  background-image: url("/images/chevron-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
 }
 
-/* Hover effect */
 .area-filter select:hover {
-  border-color: var(--line-strong);
+  @apply border-secondary;
 }
 
 .area-filter select:focus-visible {
-  outline: 3px solid var(--focus-ring);
+  @apply border-secondary;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  border-color: var(--green);
 }
 
-/* Disabled state */
 .area-filter select:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  @apply cursor-not-allowed opacity-60;
 }
 
-/* transitions */
-.area-filter select {
-  transition: background-color 0.18s ease,
-              color 0.18s ease,
-              border-color 0.18s ease;
+/* Dark mode */
+:root[data-theme="dark"] .area-filter label {
+  @apply text-white;
+}
+
+:root[data-theme="dark"] .area-filter select {
+  @apply border-accent/40 bg-primary/20 text-white;
+  background-image: url("/images/chevron-down-light.svg");
+  color-scheme: dark;
+}
+
+:root[data-theme="dark"] .area-filter select:hover,
+:root[data-theme="dark"] .area-filter select:focus-visible {
+  @apply border-accent;
 }
 
 @media (prefers-reduced-motion: reduce) {
