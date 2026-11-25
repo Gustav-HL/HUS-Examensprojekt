@@ -503,6 +503,10 @@ class LocalDataStorage:
                 )
 
             return chunks
+        finally:
+            if should_close:
+                conn.close()
+                
     def get_first_chunk_texts(self, doc_ids: list[str], conn=None) -> dict[str, str]:
         """
         Fetch text of the first chunk to present the first text part as preview in frontend

@@ -155,7 +155,7 @@ class SearchEngine:
             # check if there is NER entities in the query and the db document
             if effective_query_ner and has_doc_ner:
                 ner_score, matched_ner = matcher.score_ner_chunks(effective_query_ner, doc_ner_chunks)
-                total_score = round((keyword_score + ner_score) / 2, 4)
+                total_score = round((cos_score + keyword_score + ner_score) / 3, 4)
 
             else:
                 ner_score, matched_ner = 0.0, []
@@ -168,6 +168,7 @@ class SearchEngine:
                 "score": total_score,
                 "keyword_score": keyword_score,
                 "ner_score": ner_score,
+                "cos_score": cos_score,
                 "matched_keywords": keyword_result["matched_keywords"],
                 "matched_ner": matched_ner,
             })
