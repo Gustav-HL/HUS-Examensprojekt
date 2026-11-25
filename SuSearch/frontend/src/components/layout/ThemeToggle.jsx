@@ -1,27 +1,30 @@
 import './ThemeToggle.css';
-/**
- * Toggles between light and dark themes.
- *
- * @param {string} theme - Current theme.
- * @param {Function} onToggleTheme - Function to change the theme.
- */
 
-function ThemeToggle({ theme, onToggleTheme }) {
-  const isDark = theme === "dark";
+/**
+ * Switches between light and dark themes.
+ * The icons are local files in public/images.
+ *
+ * @param {Object} props - Component properties.
+ * @param {'light'|'dark'} props.theme - Current theme.
+ * @param {Function} props.onToggleTheme - Toggles the theme.
+ */
+export default function ThemeToggle({ theme, onToggleTheme }) {
+  const isDark = theme === 'dark';
 
   return (
     <button
       type="button"
       className="theme-toggle"
       onClick={onToggleTheme}
-      aria-label={isDark ? "Byt till ljust tema" : "Byt till mörkt tema"}
-      title={isDark ? "Ljust tema" : "Mörkt tema"}
+      aria-label={isDark ? 'Byt till ljust tema' : 'Byt till mörkt tema'}
+      title={isDark ? 'Ljust tema' : 'Mörkt tema'}
     >
-      <span aria-hidden="true">
-        {isDark ? "☀️" : "🌙"}
-      </span>
+      <img
+        className="theme-toggle__icon"
+        src={isDark ? '/images/sun-accent.svg' : '/images/moon-navy.svg'}
+        alt=""
+        aria-hidden="true"
+      />
     </button>
   );
 }
-
-export default ThemeToggle;

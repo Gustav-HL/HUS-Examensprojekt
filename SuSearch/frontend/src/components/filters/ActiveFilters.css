@@ -1,17 +1,20 @@
 
+@reference "../../index.css";
+
 /* Displays the number of active filters */
 .active-filters {
-  display: inline-flex;
-  align-items: center;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 400;
-  white-space: nowrap;
+  @apply inline-flex items-center whitespace-nowrap text-[0.82rem]
+         font-normal text-navy/70;
 }
 
+/* Dark mode */
+:root[data-theme="dark"] .active-filters {
+  @apply text-white/75;
+}
+
+/* Responsive */
 @media (max-width: 520px) {
   .active-filters {
-    font-size: 0.8rem;
-    white-space: normal;
+    @apply whitespace-normal text-[0.8rem];
   }
 }

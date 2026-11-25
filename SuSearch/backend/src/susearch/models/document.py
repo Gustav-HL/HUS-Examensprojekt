@@ -90,8 +90,10 @@ class Document:
 
         keyword_items = getattr(self, "keywords", []) 
         formatted_keywords = [
-           ", ".join(f"{k['keyword']} ({k['score']:.4f})" 
-            for k in keyword_items) or "None"
+           ", ".join(
+            f"{k['keyword']} ({k.get('relevance_score', k.get('score', 0.0)):.4f})"
+            for k in self.keywords
+        )
         ]
 
         return(

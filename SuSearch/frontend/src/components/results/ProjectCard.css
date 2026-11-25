@@ -1,109 +1,118 @@
 
+/* Shared Tailwind theme */
+@reference "../../index.css";
+
+/* Project card */
 .project-card {
-  display: flex;
-  flex-direction: column;
-  min-height: 240px;
-  width: 100%;
-  min-width: 0;
-  padding: 18px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  color: var(--ink);
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont,
-               'Segoe UI', Arial, sans-serif;
+  @apply flex w-full min-w-0 min-h-[240px]
+         flex-col rounded-md border border-lightgray
+         bg-white p-[18px] text-navy font-ui
+         transition-colors duration-[180ms];
 }
 
+/* Project area */
 .project-card-area {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 600;
+  @apply m-0 text-[0.78rem] font-semibold
+         text-navy/65;
 }
 
-/* title */
+/* Project title */
 .project-card h3 {
-  margin: 16px 0 0;
-  color: var(--ink);
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.25;
+  @apply mt-4 mb-0 text-[1.05rem] font-bold
+         leading-[1.25] text-navy;
 }
 
-/* description */
+/* Project description */
 .project-card-description {
-  margin: 9px 0 16px;
-  color: var(--secondary-text);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  @apply mt-[9px] mb-4 text-[0.9rem]
+         leading-[1.5] text-navy/75;
+
   overflow-wrap: anywhere;
 }
 
 /* Card footer */
 .project-card .project-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  margin-top: auto;
-  padding: 15px 0 0;
-  border-top: 1px solid var(--line);
+  @apply mt-auto flex items-center
+         justify-between gap-[14px]
+         border-t border-lightgray
+         pt-[15px];
 }
 
-/* tags container */
+/* Tags container */
 .project-card-tags {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  min-width: 0;
+  @apply flex min-w-0 flex-wrap
+         items-center gap-[10px];
 }
 
-/* navigation button */
+/* Navigation button */
 .project-card-link {
-  flex-shrink: 0;
-  margin-left: auto;
-  padding: 7px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
+  @apply ml-auto shrink-0 cursor-pointer
+         rounded-md border border-primary/30
+         bg-background px-[10px] py-[7px]
+         text-[0.8rem] font-bold text-primary
+         transition-colors duration-[180ms];
 }
 
-/* Hover effect */
+/* Navigation button hover */
 .project-card-link:hover {
-  background: var(--ink);
-  color: var(--paper);
+  @apply border-primary bg-primary text-white;
 }
 
+/* Keyboard focus */
 .project-card-link:focus-visible {
-  outline: 3px solid var(--focus-ring);
+  outline: 3px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-/* theme transitions */
-.project-card,
-.project-card-link {
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease,
-    border-color 0.18s ease;
+/* Dark mode card */
+:root[data-theme="dark"] .project-card {
+  @apply border-accent/30
+         bg-primary/15 text-white;
 }
 
+/* Dark mode area */
+:root[data-theme="dark"] .project-card-area {
+  @apply text-accent;
+}
+
+/* Dark mode title */
+:root[data-theme="dark"] .project-card h3 {
+  @apply text-white;
+}
+
+/* Dark mode description */
+:root[data-theme="dark"] .project-card-description {
+  @apply text-white/75;
+}
+
+/* Dark mode footer */
+:root[data-theme="dark"] .project-card .project-card-footer {
+  @apply border-accent/25;
+}
+
+/* Dark mode navigation button */
+:root[data-theme="dark"] .project-card-link {
+  @apply border-accent/50
+         bg-primary/35 text-white;
+}
+
+/* Dark mode navigation hover */
+:root[data-theme="dark"] .project-card-link:hover {
+  @apply border-accent bg-accent text-navy;
+}
+
+/* Responsive layout */
 @media (max-width: 720px) {
   .project-card {
-    min-height: 0;
-    padding: 16px;
+    @apply min-h-0 p-4;
   }
 
   .project-card .project-card-footer {
-    flex-wrap: wrap;
+    @apply flex-wrap;
   }
 }
 
+/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .project-card,
   .project-card-link {

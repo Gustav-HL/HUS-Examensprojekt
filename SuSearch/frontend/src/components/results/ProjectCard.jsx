@@ -1,4 +1,5 @@
 import ProjectTags from "./ProjectTags";
+import './ProjectCard.css';
 /**
  * Displays a project card with its title, description,
  * optional details, tags section, and navigation button.
@@ -8,7 +9,29 @@ import ProjectTags from "./ProjectTags";
  * @param {string[]} [props.project.tags] - Tags to display when the list isn't empty. 
  * @param {Function} props.onSelectProject - Opens the selected project.
  */
+
+function LimitTextLength(text, maxLength = 500){
+    if (!text || text.length <= maxLength) 
+        return text;
+
+    const shortText = text.split(". ").slice(3).join(". ").slice(0, maxLength);
+    return shortText;
+}
+function LimitProjectTagLength(tags, maxLength = 100){
+    if (!tags || tags.length <= maxLength) 
+        return tags;
+
+    const shortTagsLenght = tags.split(". ").slice(3).join(". ").slice(0, maxLength);
+    return shortTagsLenght;
+}
+
 function ProjectCard({ project, onSelectProject }) {
+    
+    const tags = [
+    ...(project.matched_keywords ?? []),
+    ...(project.matched_ner ?? []), 
+].map((match) => match.query_keyword);
+
     return (
         <article className="project-card">
             {project.area && (
@@ -20,13 +43,13 @@ function ProjectCard({ project, onSelectProject }) {
             <h3>{project.title}</h3>
 
             <p className="project-card-description">
-                {project.description || "Ingen beskrivning tillgänglig."}
+                {LimitTextLength(project.preview_text, 500) || "Ingen beskrivning tillgänglig."}
             </p>
 
             <footer className="project-card-footer">
-                {project.tags?.length > 0 && (
+                {project.matched_ner?.length > 0 && (
                     <div className="project-card-tags">
-                        <ProjectTags tags={project.tags} />
+                        <ProjectTags tags={tags.slice(0,4)} />
               </div>
                 )}
 
