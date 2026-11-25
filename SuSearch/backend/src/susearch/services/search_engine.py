@@ -1,19 +1,18 @@
 import json
+import torch
 from pathlib import Path
 from .file_handler import FileHandler
 from .keyword_matcher import KeywordMatcher
 from models.document import Document
 from models.chunk import Chunk
-from cosine_similarity import cosineSimilarityCalculator
-from vector_extractor import Vectorizer
+from services.cosine_similarity import cosineSimilarityCalculator
+from services.vector_extractor import Vectorizer
 
 class SearchEngine:
-    def __init__(self, data_extractor, database, vectorizer, cos_similarity_calculator):
+    def __init__(self, data_extractor, database):
         self._data_extractor = data_extractor
         self._file_handler = FileHandler()
         self._database = database
-        self._vectorizer = vectorizer
-        self._cos_similarity_calculator = cosineSimilarityCalculator
 
     def process_text(self, text: str, source_name: str, file_path: Path | None = None) -> Document:
         """
@@ -107,7 +106,6 @@ class SearchEngine:
 
         documents_from_db = self._database.get_document_data()
         ner_from_document_db = self._database.get_all_document_ner()
-        chunk_vectors = self._database.get_all_chunk_vectors()
         
         if not documents_from_db:
             return []
@@ -129,23 +127,25 @@ class SearchEngine:
             {"word": kw["keyword"]} for kw in search_query_or_document.keywords
         ]
 
-        chunks = [
-            chunk
-            for chunk in getattr(search_query_or_document, "chunks", [])
-        ]
-
         matcher = KeywordMatcher(db_keywords_list)
         keyword_results = matcher.match(search_query_or_document.keywords)
 
-        query_vector = self._vectorizer.vectorize(search_query_or_document)
+        chunks = self._database.get_all_chunks()
+        vectorizer = self._data_extractor._vectorizer
+        query_text = [chunk.text for chunk in search_query_or_document.chunks]
+        query_vector = vectorizer.vectorize(query_text)
 
-        cos_results = self._cos_similarity_calculator.calculateChunks(query_vector, chunks)
+        cos_similarity_calculator = cosineSimilarityCalculator()
+        cos_results = cos_similarity_calculator.calculateChunks(query_vector, chunks)
 
+        document_cos_scores = {}
+        for data in cos_results.values():
+            doc_id = data["doc_id"]
+            document_cos_scores[doc_id] = max(document_cos_scores.get(doc_id, 0.0), data["score"])
+        
         ranked_results = []
-        for doc_row, keyword_result, cos_score in zip(documents_from_db, keyword_results, cos_results):
-
-            cos_score = cos_results.values
-            
+        for doc_row, keyword_result in zip(documents_from_db, keyword_results):
+            cos_score = document_cos_scores.get(doc_row["id"], 0.0)
             keyword_score = keyword_result["score"]
 
             doc_ner_chunks = ner_from_document_db.get(doc_row["id"], [])
@@ -159,7 +159,7 @@ class SearchEngine:
 
             else:
                 ner_score, matched_ner = 0.0, []
-                total_score = keyword_score
+                total_score = round((cos_score + keyword_score) / 2, 4)
 
             ranked_results.append({
                 "doc_id": doc_row["id"],
