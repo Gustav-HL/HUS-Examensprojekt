@@ -458,6 +458,55 @@ class LocalDataStorage:
             if should_close:
                 conn.close()
 
+    def get_all_chunks(self, conn=None) -> list[Chunk]:
+        should_close = conn is None
+        conn = conn or sqlite3.connect(self.DB_PATH, timeout=30.0)
+
+        try: 
+            conn.execute("PRAGMA foreign_keys = ON")
+            cursor = conn.cursor()
+            cursor.row_factory = sqlite3.Row
+
+            cursor.execute(
+                """
+                SELECT c.chunk_id, c.doc_id, c.entities, c.text_content,
+                    d.file_path, v.vector
+                FROM Chunks c
+                JOIN Documents d ON d.doc_id = c.doc_id
+                LEFT JOIN Vectors v ON v.chunk_id = c.chunk_id
+                ORDER BY c.doc_id, c.chunk_index
+                """
+            )
+
+            rows = cursor.fetchall()
+
+            chunks = []
+            for row in rows:
+                raw_entities = row["entities"]
+                keynames = json.loads(raw_entities) if raw_entities else []
+                vector = []
+                if row["vector"] is not None:
+                    vector_float_array = array("f")
+                    vector_float_array.frombytes(row["vector"])
+                    vector = vector_float_array.tolist()
+
+                chunks.append(
+                    Chunk(
+                        text=row["text_content"],
+                        source=row["file_path"],
+                        keywords=[],
+                        keynames=keynames,
+                        vector=vector,
+                        id=row["chunk_id"],
+                        doc_id=row["doc_id"]
+                    )
+                )
+
+            return chunks
+        finally:
+            if should_close:
+                conn.close()
+                
     def get_first_chunk_texts(self, doc_ids: list[str], conn=None) -> dict[str, str]:
         """
         Fetch text of the first chunk to present the first text part as preview in frontend

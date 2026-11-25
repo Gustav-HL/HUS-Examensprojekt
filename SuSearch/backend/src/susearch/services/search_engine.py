@@ -1,10 +1,12 @@
 import json
+import torch
 from pathlib import Path
 from .file_handler import FileHandler
 from .keyword_matcher import KeywordMatcher
 from models.document import Document
 from models.chunk import Chunk
-
+from services.cosine_similarity import cosineSimilarityCalculator
+from services.vector_extractor import Vectorizer
 
 class SearchEngine:
     def __init__(self, data_extractor, database):
@@ -128,9 +130,22 @@ class SearchEngine:
         matcher = KeywordMatcher(db_keywords_list)
         keyword_results = matcher.match(search_query_or_document.keywords)
 
+        chunks = self._database.get_all_chunks()
+        vectorizer = self._data_extractor._vectorizer
+        query_text = [chunk.text for chunk in search_query_or_document.chunks]
+        query_vector = vectorizer.vectorize(query_text)
+
+        cos_similarity_calculator = cosineSimilarityCalculator()
+        cos_results = cos_similarity_calculator.calculateChunks(query_vector, chunks)
+
+        document_cos_scores = {}
+        for data in cos_results.values():
+            doc_id = data["doc_id"]
+            document_cos_scores[doc_id] = max(document_cos_scores.get(doc_id, 0.0), data["score"])
+        
         ranked_results = []
         for doc_row, keyword_result in zip(documents_from_db, keyword_results):
-
+            cos_score = document_cos_scores.get(doc_row["id"], 0.0)
             keyword_score = keyword_result["score"]
 
             doc_ner_chunks = ner_from_document_db.get(doc_row["id"], [])
@@ -140,11 +155,11 @@ class SearchEngine:
             # check if there is NER entities in the query and the db document
             if effective_query_ner and has_doc_ner:
                 ner_score, matched_ner = matcher.score_ner_chunks(effective_query_ner, doc_ner_chunks)
-                total_score = round((keyword_score + ner_score) / 2, 4)
+                total_score = round((cos_score + keyword_score + ner_score) / 3, 4)
 
             else:
                 ner_score, matched_ner = 0.0, []
-                total_score = keyword_score
+                total_score = round((cos_score + keyword_score) / 2, 4)
 
             ranked_results.append({
                 "doc_id": doc_row["id"],
@@ -153,6 +168,7 @@ class SearchEngine:
                 "score": total_score,
                 "keyword_score": keyword_score,
                 "ner_score": ner_score,
+                "cos_score": cos_score,
                 "matched_keywords": keyword_result["matched_keywords"],
                 "matched_ner": matched_ner,
             })

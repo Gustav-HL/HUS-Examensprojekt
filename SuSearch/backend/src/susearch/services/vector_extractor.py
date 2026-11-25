@@ -34,7 +34,7 @@ class Vectorizer:
                   f"{self.max_tokens} tokens och klipps av.")
 
     @torch.no_grad()
-    def vectorize(self, texts: list[Chunk]) -> torch.Tensor:
+    def vectorize(self, texts: list[str]) -> torch.Tensor:
         if not texts:
             return torch.empty(0, self.model.config.hidden_size)
 
@@ -62,5 +62,6 @@ class Vectorizer:
 
         return torch.stack(embeddings)
 
-    def vectorize_chunks(self, chunks: list[str]) -> list[torch.Tensor]:
-        return self.vectorize([c for c in chunks])
+    def vectorize_chunks(self, chunks: list) -> torch.Tensor:
+        texts = [c if isinstance(c, str) else c.text for c in chunks]
+        return self.vectorize(texts)

@@ -2,13 +2,14 @@ class Chunk:
     """
     Holds data related to Chunks
     """
-    def __init__(self, text: str, source: str, keywords: list[str], keynames: list[dict], vector: list[float], id: str = None):
+    def __init__(self, text: str, source: str, keywords: list[str], keynames: list[dict], vector: list[float], id: str = None, doc_id: str = None):
         self.text = text
         self.source = source
         self.keywords = keywords
         self.keynames = keynames
         self.vector = vector
         self.id = id
+        self.doc_id = doc_id
 
     def __str__(self):
         ner_items = getattr(self, "keynames", []) 

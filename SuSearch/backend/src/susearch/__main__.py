@@ -83,6 +83,7 @@ class DesktopBridge:
             print(f"   Keyword points: {keyword_score:.4f}")
             print(f"   Matched Keywords: {', '.join(matched) if matched else 'None'}")
             print(f"   NER points: {item.get('ner_score', 0.0):.4f}")
+            print(f"   Cos score: {item.get('cos_score', 0.0):.4f}")
             print(f"   Matched NER: {', '.join(matched_ner) if matched_ner else 'None'}")
 
         return search_match
@@ -131,6 +132,7 @@ class DesktopBridge:
                         print(f"   Keyword points: {keyword_score:.4f}")
                         print(f"   Matched Keywords: {', '.join(matched) if matched else 'None'}")
                         print(f"   NER points: {item.get('ner_score', 0.0):.4f}")
+                        print(f"   Cos score: {item.get('cos_score', 0.0):.4f}")
                         print(f"   Matched NER: {', '.join(matched_ner) if matched_ner else 'None'}")
 
                     return doc_search
