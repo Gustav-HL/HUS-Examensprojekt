@@ -49,25 +49,37 @@ class DesktopBridge:
     """ 
     Acts as a bridge between frontend and backend.
     """
-    def __init__(self, search_engine: SearchEngine):
+    def __init__(self, search_engine: SearchEngine, data_extractor: DataExtractor, file_scanner: DocumentScanner, database: LocalDataStorage):
         self.search_engine = search_engine
         self._window = None
+        self.data_extractor = data_extractor
+        self.file_scanner = file_scanner
+        self.database = database
 
     def select_folder(self):
         if not self._window:
             return None
         result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
-        print(result)
-        results = str(result)
-        print(results)
-        return results[0] if results else None
-
+        if not result:
+            return None
+        if result:
+            results = result[0] 
+        return str(Path(results))
     
     def handle_documents(self):
         folderP = self.select_folder()
+        if not folderP:
+            print("Canceled")
+            return
+        folder_res = self.file_scanner.scan_and_track(folderP)
+        folderPath = Path(folder_res)
         print("Success")
         print(folderP)
-        process_all_documents(data_extractor, file_scanner, folderP,  database)
+        try:
+            process_all_documents(self.data_extractor, self.file_scanner, folderPath,  self.database)
+        except Exception as e:
+            print(f"Error in process_all_documents: {e}")
+            raise
 
     def search_text(self, query: str):
         query_doc = self.search_engine.process_query(query)
@@ -264,7 +276,7 @@ if __name__ == "__main__":
             process_document(data_extractor, file_scanner, folder, name, database)
 
     elif start_view == "2":
-        bridge = DesktopBridge(search_engine)
+        bridge = DesktopBridge(search_engine, data_extractor, file_scanner, database)
         window = webview.create_window(
             title="SuSearch",
             url="http://localhost:5173",

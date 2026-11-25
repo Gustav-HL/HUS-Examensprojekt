@@ -70,12 +70,11 @@ export default function App() {
     }
 
     try {
-      const folder = await window.pywebview.api.select_folder();
+      const folder = await window.pywebview.api.handle_documents();
 
       if (folder) {
         setSelectedFolder(folder);
         localStorage.setItem('selectedFolder', folder);
-        await window.pywebview.api.handle_documents();
       }
     } catch (error) {
       console.error('Failed to select folder', error);
