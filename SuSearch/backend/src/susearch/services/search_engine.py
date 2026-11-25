@@ -156,15 +156,13 @@ class SearchEngine:
             if effective_query_ner and has_doc_ner:
                 ner_score, matched_ner = matcher.score_ner_chunks(effective_query_ner, doc_ner_chunks)
                 total_score = round(
-                    (0.55 * cos_score) + (0.30 * keyword_score) + (0.15 * ner_score),
-                    4,
+                    (0.55 * cos_score) + (0.30 * keyword_score) + (0.15 * ner_score), 4,
                 )
 
             else:
                 ner_score, matched_ner = 0.0, []
                 total_score = round(
-                    (0.55 * cos_score) + (0.45 * keyword_score),
-                    4,
+                    (0.55 * cos_score) + (0.45 * keyword_score), 4,
                 )
 
             ranked_results.append({

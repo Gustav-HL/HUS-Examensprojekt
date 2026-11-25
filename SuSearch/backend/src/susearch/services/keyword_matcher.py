@@ -76,6 +76,7 @@ class KeywordMatcher:
         # Skip the first return value from score keywords as it is more relevant for keyword scoring. Might change later!
         _, matched_ner = self.score_keywords(query_ner, combine_document_ner, key_name="word")
 
+        # Get the amount of matched entities
         unique_hits = len({
             item.get("matched_word") or item.get("word") or str(sorted(item.items()))
             for item in matched_ner
