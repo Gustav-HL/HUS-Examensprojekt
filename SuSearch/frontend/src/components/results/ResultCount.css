@@ -1,0 +1,10 @@
+
+@reference "../../index.css";
+
+.result-count {
+  @apply mt-1 font-ui text-sm font-medium text-navy/70;
+
+  @variant dark {
+    @apply text-white/75;
+  }
+}

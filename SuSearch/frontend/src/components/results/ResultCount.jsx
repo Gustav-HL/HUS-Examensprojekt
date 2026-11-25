@@ -1,4 +1,4 @@
-
+import './ResultCount.css';
 /**
  * Visar hur många projekt som hittades vid en sökning.
  *
