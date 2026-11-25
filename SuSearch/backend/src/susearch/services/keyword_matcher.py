@@ -4,7 +4,7 @@ class KeywordMatcher:
     """
     Checks keyword matching by checking string character overlap/similarity of search query and stored database documents
     """
-    def __init__(self, document_list: list, fuzzy_match_limit: float = 0.75):
+    def __init__(self, document_list: list, fuzzy_match_limit: float = 0.85):
         self.document_list = document_list
         self.fuzzy_match_limit = fuzzy_match_limit
 
@@ -73,7 +73,16 @@ class KeywordMatcher:
         if not combine_document_ner:
             return 0.0, []
 
-        return self.score_keywords(query_ner, combine_document_ner, key_name="word")
+        # Skip the first return value from score keywords as it is more relevant for keyword scoring. Might change later!
+        _, matched_ner = self.score_keywords(query_ner, combine_document_ner, key_name="word")
+
+        unique_hits = len({
+            item.get("matched_word") or item.get("word") or str(sorted(item.items()))
+            for item in matched_ner
+        })
+        ner_score = round(unique_hits / (unique_hits + 1), 4) if unique_hits > 0 else 0.0
+
+        return ner_score, matched_ner
     
     def match(self, query_keywords: list) -> list[dict]:
         """

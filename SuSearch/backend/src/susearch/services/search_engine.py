@@ -91,7 +91,7 @@ class SearchEngine:
         return processed_query
 
 
-    def search(self, search_query_or_document: Document, return_amount = 10):
+    def search(self, search_query_or_document: Document, return_amount = 30):
         """
         Match a processed query against stored documents in the database
 
@@ -155,11 +155,17 @@ class SearchEngine:
             # check if there is NER entities in the query and the db document
             if effective_query_ner and has_doc_ner:
                 ner_score, matched_ner = matcher.score_ner_chunks(effective_query_ner, doc_ner_chunks)
-                total_score = round((cos_score + keyword_score + ner_score) / 3, 4)
+                total_score = round(
+                    (0.55 * cos_score) + (0.30 * keyword_score) + (0.15 * ner_score),
+                    4,
+                )
 
             else:
                 ner_score, matched_ner = 0.0, []
-                total_score = round((cos_score + keyword_score) / 2, 4)
+                total_score = round(
+                    (0.55 * cos_score) + (0.45 * keyword_score),
+                    4,
+                )
 
             ranked_results.append({
                 "doc_id": doc_row["id"],
