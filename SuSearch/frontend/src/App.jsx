@@ -2,9 +2,6 @@
 import { useState, useEffect } from 'react';
 import FolderSelector from './components/settings/FolderSelector';
 import Test from './BackendTest';
-import TextSearch from './components/search/TextSearch';
-import DocumentSearch from './components/search/DocumentSearch';
-import DisplaySelectedDocumentTitle from './components/search/DisplaySelectedDocumentTitle';
 import SearchPage from './pages/SearchPage';
 import ProjectPage from './pages/ProjectPage';
 import Header from './components/layout/Header';
@@ -45,7 +42,7 @@ export default function App() {
   const [results, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
- 
+
   /**
    * Opens the selected project.
    */
@@ -80,45 +77,53 @@ export default function App() {
       console.error('Failed to select folder', error);
     }
   }
-  
-   /**
-   * Sends a document or text query to the backend. 
-   * Stores the returned search results in state.
-   */
+
+/**
+ * Sends a document or text query to the backend.
+ * Stores the returned search results in state.
+ */
   async function handleSearch(searchData) {
-      console.log('Sökning: ', searchData);
-      setIsLoading(true);
+    console.log('Sökning: ', searchData);
+    setIsLoading(true);
 
-      try {
-        let results = null;
+    try {
+      let results = null;
 
-        if (searchData.document) {
-          const base64data = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(searchData.document);
-          });
+      if (searchData.document) {
+        const base64data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(searchData.document);
+        });
 
-          results = await window.pywebview.api.search_by_document({
-            name: searchData.document.name,
-            data: base64data,
-          });
-        }
-
-        else if (searchData.query) {
-          results = await window.pywebview.api.search_text(searchData.query);
-        }
-        console.log(results)
-        setSearchResults(results ?? []);
-
-      } catch (error) {
-        console.error('Search failed', error);
-        setSearchResults([]);
-
-      } finally {
-        setIsLoading(false);
+        results = await window.pywebview.api.search_by_document({
+          name: searchData.document.name,
+          data: base64data,
+        });
       }
+
+      else if (searchData.query) {
+        results = await window.pywebview.api.search_text(searchData.query);
+      }
+      console.log(results);
+      const projects = Array.isArray(results)
+        ? results.map((item) => ({
+          ...item,
+          id: item.id ?? item.doc_id,
+          description: item.description ?? item.preview_text ?? ''
+        }))
+        : [];
+
+      setSearchResults(projects);
+
+    } catch (error) {
+      console.error('Search failed', error);
+      setSearchResults([]);
+
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -139,11 +144,11 @@ export default function App() {
 
       {/* Preserve search state when navigating between pages. */}
       <div hidden={selectedProject !== null}>
-       
-      {/* SearchPage receives the search results and loading status.
+
+        {/* SearchPage receives the search results and loading status.
           When the user searches or selects a project,
           it calls the corresponding function in App. */}
-       <SearchPage
+        <SearchPage
           results={results}
           loading={isLoading}
           onSearch={handleSearch}

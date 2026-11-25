@@ -155,7 +155,7 @@ class SearchEngine:
             # check if there is NER entities in the query and the db document
             if effective_query_ner and has_doc_ner:
                 ner_score, matched_ner = matcher.score_ner_chunks(effective_query_ner, doc_ner_chunks)
-                total_score = round((cos_score + keyword_score + ner_score) / 3, 4)
+                total_score = round((keyword_score + ner_score) / 2, 4)
 
             else:
                 ner_score, matched_ner = 0.0, []
@@ -173,5 +173,13 @@ class SearchEngine:
             })
 
         # sort by score from match
-        ranked_results.sort(key=lambda x: x["score"], reverse=True)
-        return ranked_results[:return_amount]
+        ranked_results.sort(key=lambda item: item["score"], reverse=True)
+        top_results = ranked_results[:return_amount]
+
+        matched_doc_ids = [item["doc_id"] for item in top_results]
+        first_chunk_text = self._database.get_first_chunk_texts(matched_doc_ids)
+
+        for item in top_results:
+            item["preview_text"] = first_chunk_text.get(item["doc_id"], "")
+
+        return top_results
