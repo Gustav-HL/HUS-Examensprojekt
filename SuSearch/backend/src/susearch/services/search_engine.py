@@ -180,6 +180,7 @@ class SearchEngine:
         # sort by score from match
         ranked_results.sort(key=lambda item: item["score"], reverse=True)
         top_results = ranked_results[:return_amount]
+        bottom_results = ranked_results[-5:][::-1]
 
         matched_doc_ids = [item["doc_id"] for item in top_results]
         first_chunk_text = self._database.get_first_chunk_texts(matched_doc_ids)
@@ -187,4 +188,4 @@ class SearchEngine:
         for item in top_results:
             item["preview_text"] = first_chunk_text.get(item["doc_id"], "")
 
-        return top_results
+        return top_results, bottom_results
