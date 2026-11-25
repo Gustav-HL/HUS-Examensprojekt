@@ -7,6 +7,7 @@
  * @param {Function} props.onSelectFolder - Handles folder selection.
  */
 export default function FolderSelector({selectedFolder, onSelectFolder}) {
+
     return (
         <section>
             <h2>Projektmapp</h2>

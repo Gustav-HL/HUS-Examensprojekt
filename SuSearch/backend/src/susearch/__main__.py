@@ -18,6 +18,9 @@ from services.file_scanner import DocumentScanner
 from services.search_engine import SearchEngine
 from repositories.database import LocalDataStorage
 
+import time
+import logging
+
 logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 # Get the directory where database_test file is located
@@ -48,15 +51,37 @@ class DesktopBridge:
     """ 
     Acts as a bridge between frontend and backend.
     """
-    def __init__(self, search_engine: SearchEngine):
+    def __init__(self, search_engine: SearchEngine, data_extractor: DataExtractor, file_scanner: DocumentScanner, database: LocalDataStorage):
         self.search_engine = search_engine
         self._window = None
+        self.data_extractor = data_extractor
+        self.file_scanner = file_scanner
+        self.database = database
 
     def select_folder(self):
         if not self._window:
             return None
-        result = self._window.create_file_dialog(webview.FOLDER_DIALOG)
-        return result[0] if result else None
+        result = self._window.create_file_dialog(webview.FileDialog.FOLDER)
+        if not result:
+            return None
+        if result:
+            results = result[0] 
+        return str(Path(results))
+    
+    def handle_documents(self):
+        folderP = self.select_folder()
+        if not folderP:
+            print("Canceled")
+            return
+        folder_res = self.file_scanner.scan_and_track(folderP)
+        folderPath = Path(folder_res)
+        print("Success")
+        print(folderP)
+        try:
+            process_all_documents(self.data_extractor, self.file_scanner, folderPath,  self.database)
+        except Exception as e:
+            print(f"Error in process_all_documents: {e}")
+            raise
 
     def search_text(self, query: str):
         query_doc = self.search_engine.process_query(query)
@@ -179,8 +204,8 @@ def process_all_documents(data_extractor: DataExtractor, file_scanner: DocumentS
             name = file_info["name"]
             file_full_path = folder / file_path
             
-            # with open(BASE_DB/"services/file_tracker.json", "r") as file:
-            #     data = json.load(file)
+            with open(BASE_DB/"services/file_tracker.json", "r", encoding="utf-8") as file:
+                data = json.load(file)
 
             #     file_record = data.get("files", {}).get(file_path, {})
 
@@ -288,6 +313,7 @@ if __name__ == "__main__":
     data_extractor = DataExtractor()
     file_scanner = DocumentScanner()
     database = LocalDataStorage(DB_PATH)
+    
     search_engine = SearchEngine(data_extractor, database)
 
     start_view = input("Start in react? \n   1.No\n   2.Yes (You need to have npm running'.\Start.ps1') \n 3. Amelies test thing \n")
@@ -309,7 +335,7 @@ if __name__ == "__main__":
             process_document(data_extractor, file_scanner, folder, name, database)
 
     elif start_view == "2":
-        bridge = DesktopBridge(search_engine)
+        bridge = DesktopBridge(search_engine, data_extractor, file_scanner, database)
         window = webview.create_window(
             title="SuSearch",
             url="http://localhost:5173",

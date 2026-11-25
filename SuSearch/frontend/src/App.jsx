@@ -67,7 +67,7 @@ export default function App() {
     }
 
     try {
-      const folder = await window.pywebview.api.select_folder();
+      const folder = await window.pywebview.api.handle_documents();
 
       if (folder) {
         setSelectedFolder(folder);
