@@ -88,9 +88,9 @@ class DesktopBridge:
         if not query_doc:
             return []
 
-        search_match = self.search_engine.search(query_doc)
+        search_match, search_low = self.search_engine.search(query_doc)
 
-        for i, item in enumerate(search_match):
+        for i, item in enumerate(search_low):
             title = item.get("title") or "No Name"
             keyword_score = item.get("keyword_score", 0.0)
 
@@ -137,9 +137,9 @@ class DesktopBridge:
                     if not doc:
                         return []
                     doc.name = original_name
-                    doc_search = self.search_engine.search(doc)
+                    doc_search, search_low = self.search_engine.search(doc)
                     
-                    for i, item in enumerate(doc_search):
+                    for i, item in enumerate(search_low):
                         title = item.get("title") or "No Name"
                         keyword_score = item.get("keyword_score", 0.0)
             
