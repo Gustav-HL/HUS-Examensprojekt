@@ -11,6 +11,7 @@ import FilterPanel from '../components/filters/FilterPanel';
 
 import ResultCount from '../components/results/ResultCount';
 import SearchResults from '../components/results/SearchResults';
+import ProjectCardSkeleton from '../components/results/ProjectCardSkeleton';
 
 import './SearchPage.css';
 
@@ -149,7 +150,16 @@ export default function SearchPage({
             <ResultCount count={results.length} />
           )}
           {loading ? (
-            <LoadingSpinner message="Söker efter projekt..." />
+            <div role="status">
+              <span className="sr-only">Söker efter projekt...</span>
+              <div className="search-results" aria-hidden="true">
+                <div className="project-list">
+                  {[0, 1, 2].map((index) => (
+                    <ProjectCardSkeleton key={index} />
+                  ))}
+                </div>
+              </div>
+            </div>
           ) : results.length > 0 ? (
             <SearchResults
               results={results}

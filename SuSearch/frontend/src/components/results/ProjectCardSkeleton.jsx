@@ -1,4 +1,5 @@
 
+import './ProjectCardSkeleton.css';
 /**
  * Displays a placeholder project card while project
  * information is loading.
