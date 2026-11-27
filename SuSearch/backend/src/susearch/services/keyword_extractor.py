@@ -13,8 +13,12 @@ STOPWORDS = {
     "när", "hur", "vad", "vilken", "vilket", "vilka", "alla", "andra",
     "olika", "även", "också", "dock", "bara", "mer", "mest", "mycket",
     "oss", "vem", "stad", "skåne", "region", "gäller", "dokument",
-    "orginal", "dokumentid", "gällande", "projekt", "ange",
-    "medel", "version", "projektet", 
+    "orginal", "dokumentid", "gällande", "projekt", "ange", "gör",
+    "medel", "version", "projektet", "göra", "dagen", "bra", "idag",
+    "dig", "saker", "nej", "man", "kommer", "går", "välkommen", "bli",
+    "vill", "dig", "jag", "vara", "finns", "gick", "varit", "namn",
+    "visa", "varje", "mängder", "följas", "gärna", "kom", "tycker",
+    "ofta", "utan", "får", "ser", "vara", "han", "hon", "gång",
 
     "and", "the", "for", "with", "that", "this", "from", "are", "was",
     "were", "been", "have", "has", "had", "will", "would", "could",
@@ -23,6 +27,7 @@ STOPWORDS = {
     "then", "there", "their", "they", "them", "these", "those", "its",
     "our", "your", "more", "most", "other", "some", "such", "only",
     "also", "very", "just", "about", "over", "after", "before", "between",
+    "you", "now",
 }
 
 class KeywordExtractor:
