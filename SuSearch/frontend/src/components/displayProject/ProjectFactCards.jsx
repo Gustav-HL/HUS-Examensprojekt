@@ -1,4 +1,5 @@
 
+import './ProjectFactCards.css';
 /**
  * Displays reusable fact cards with key project information.
  * Handles missing information and supports multiple values.
