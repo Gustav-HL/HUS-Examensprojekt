@@ -390,6 +390,21 @@ if __name__ == "__main__":
             match_number += 1
             print()
 
+    elif start_view == "4":
+        rows = database.get_document_data()
+
+        docs = [
+            {
+                "doc_id": row["id"],
+                "title": row["name"],
+                "file_path": row["path"],
+                "keywords": row.get("keywords") or [],
+            }
+            for row in rows
+        ]
+
+        with open("documents.json", "w", encoding="utf-8") as f:
+            json.dump(docs, f, ensure_ascii=False, indent=2)
 
     else:
         print("Wrong Choice Buddy")
