@@ -9,7 +9,7 @@ import DisplaySelectedDocumentTitle from '../components/search/DisplaySelectedDo
 
 import FilterPanel from '../components/filters/FilterPanel';
 
-// import ResultCount from '../components/results/ResultCount';
+import ResultCount from '../components/results/ResultCount';
 import SearchResults from '../components/results/SearchResults';
 
 import './SearchPage.css';
@@ -145,12 +145,9 @@ export default function SearchPage({
             Sökresultat
           </h2>
 
-          {/*
-          {!loading && hasSearched && (
+          {!loading && hasSearched && results.length > 0 && (
             <ResultCount count={results.length} />
           )}
-          */}
-
           {loading ? (
             <LoadingSpinner message="Söker efter projekt..." />
           ) : results.length > 0 ? (
